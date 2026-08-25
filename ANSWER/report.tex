@@ -26,6 +26,7 @@
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\cN}{c_{N}}
 \newcommand{\cO}{c_{0}}
+\DeclareMathOperator{\lcm}{lcm}
 
 \title{Erd\H{o}s Problem 7: Odd Distinct Covering Systems\\
 \large Theoretical Sieve Analysis, Prime-Power Obstruction, Candidate-$L$ and Pruning Invariants}
@@ -100,7 +101,7 @@ so $L$ is abundant. If all $m_{i}$ odd then $L$ is odd abundant, hence $L\ge945=
 Each $a_{i}\bmod m_{i}$ contributes $L/m_{i}$ residues mod $L$. To cover $[0,L-1]$ need $\sum L/m_{i}\ge L$. Since $\{m_{i}\}\subseteq\{d\mid L,d>1\}$, the sum over all divisors dominates. The identity $\sigma(L)=\sum_{d\mid L}d=L\sum_{d\mid L}1/d$ gives equivalence. Minimality of 945 is by direct divisor-sum enumeration; see \texttt{verify\_solution.py} exhaustive check: no odd $L<945$ has $\sigma(L)\ge2L$ or $\sum_{d\mid L,d>1}1/d\ge1$.
 \end{proof}
 
-\textit{Conjectural:} Full Erd\H{o}s--Selfridge ``no odd distinct covering at all (allowing prime powers)'' remains \textbf{open}; no counterexample exhibited, no proof published. Two 2026 Lean attempts (``spicylemonade/erdos-007'' two axioms, ``axxen95'' three axioms via sieve monotonicity) are invalid: see forum \#6298 natso26 refutation -- \texttt{sieveProd}=\texttt{\textprod}(1+x/s) with $s>0$ is always $>1$ at $x=1$, so axiom \texttt{sieveProd<1} contradictory; missing baseline LP value $\cO\approx0.098$. Author \#6302 admits omission; moderator \#6316 blocks further axiomatic discussion without complete sorry/axiom-free formalisation.
+\textit{Conjectural:} Full Erd\H{o}s--Selfridge ``no odd distinct covering at all (allowing prime powers)'' remains \textbf{open}; no counterexample exhibited, no proof published. Two 2026 Lean attempts (``spicylemonade/erdos-007'' two axioms, ``axxen95'' three axioms via sieve monotonicity) are invalid: see forum \#6298 natso26 refutation -- \texttt{sieveProd}=$\prod(1+x/s)$ with $s>0$ is always $>1$ at $x=1$, so axiom \texttt{sieveProd<1} contradictory; missing baseline LP value $\cO\approx0.098$. Author \#6302 admits omission; moderator \#6316 blocks further axiomatic discussion without complete sorry/axiom-free formalisation.
 
 Selfridge reduction via \cite{Sc67} (odd covering would follow from covering with $n_{i}\nmid n_{j}$) is \textbf{proved irrelevant}: antecedent does not exist by \cite{ErGr80} (see problem 586).
 
@@ -135,7 +136,7 @@ Factor $\Z_{Q_{i}}\cong\Z_{Q_{i-1}}\times\Z_{p_{i}^{\gamma_{i}}}$ (CRT, coprime)
 F(x):=\{(x,y):y\in\Z_{p_{i}^{\gamma_{i}}}\}\subseteq\Z_{Q_{i}},\qquad|F(x)|=p_{i}^{\gamma_{i}}.
 \]
 
-\subsection{Fibre proportion $\alpha_{i}(x)$}
+\subsection{Fibre proportion \texorpdfstring{$\alpha_{i}(x)$}{alpha\_i(x)}}
 
 Uniform count proportion
 \[
@@ -149,7 +150,7 @@ where the condition is $Q_{i-1}$-measurable. Inclusion--exclusion overlap gives 
 
 No scalar $p_{i}^{\gamma_{i}}-1$ appears as block size; effective weight is $\sum_{j}p_{i}^{-j}=(1-p_{i}^{-\gamma_{i}})/(p_{i}-1)$.
 
-\subsection{Distorted measures $\PP_{i}$ and parameters $\delta_{i}$}
+\subsection{Distorted measures \texorpdfstring{$\PP_{i}$}{P\_i} and parameters \texorpdfstring{$\delta_{i}$}{delta\_i}}
 
 Fix $\delta_{i}\in[0,1/2]$. $\PP_{0}$ uniform on $\Z_{Q}$. Inductively $\PP_{i}$ is the unique probability on $\Z_{Q_{i}}$ coinciding with $\PP_{i-1}$ on $Q_{i-1}$-measurable sets and redistributing mass fibrewise to cap $B_{i}$ at $\delta_{i}$: for $x\in\Z_{Q_{i-1}}$,
 \begin{itemize}
@@ -178,7 +179,7 @@ M_{i}^{(2)}\le\frac1{(p_{i}-1)^{2}}\prod_{j<i}\Bigl(1+\frac{3p_{j}-1}{(1-\delta_
 \]
 For general $\gamma_{i}$ the prefactor is \emph{not} $1/(p_{i}^{\gamma_{i}}-1)^{2}$; summing $\sum_{j_{1},j_{2}\ge1}p_{i}^{-(j_{1}+j_{2})}=1/(p_{i}-1)^{2}\cdot(1-p_{i}^{-\gamma_{i}})^{2}$ leaves denominator $(p_{i}-1)^{2}$ and adds combinatorial multiplicity (more terms in $N_{i}$).
 
-\subsection{Accumulated operator $\cN(x)=\cO(x)\prod U_{p_{k}}(x)$}
+\subsection{Accumulated operator \texorpdfstring{$\cN(x)=\cO(x)\prod U_{p_{k}}(x)$}{N(x)=O(x) prod U\_pk(x)}}
 
 Package Sections 5--6 and 1901.11465 \S3: define numerical sieve
 \[
@@ -200,13 +201,13 @@ U_{p_{k}}^{(\gamma_{k})}(x)=1+\frac{x}{1-\delta_{k}}\;\omega_{k}^{(\gamma_{k})},
 \]
 $\omega_{k}^{(\gamma_{k})}$ encodes $\sum_{j}p_{k}^{-j}$ and $\nu$-sums, not $1/(p_{k}^{\gamma_{k}}-1)$.
 
-\subsection{Baseline LP value $\cO(x)$}
+\subsection{Baseline LP value \texorpdfstring{$\cO(x)$}{O(x)}}
 
 For small primes (first 5 primes $p\le13$ or full $p\le73$, $k_{0}=21$) BBMST do \emph{not} use moment bound; they enumerate partition of $\Z_{Q_{0}}$, $Q_{0}=\prod_{j\le k_{0}}p_{j}$ (squarefree $\prod p_{j}$ atoms; with prime powers $\prod p_{j}^{\gamma_{j}}$ atoms exponentially more) and solve LP to minimise maximal fibre density of uncovered set under admissible residue assignments. Numerically (1901.11465 \S5, $N=500$):
 \[
 \boxed{\cO(1)\approx0.097\text{--}0.098},\qquad\prod_{k}U_{p_{k}}(1)\approx6.25,\qquad\cN(1)=\cO(1)\prod U_{p_{k}}(1)\approx0.612<1.
 \]
-Because $\cO<1$ and each $U>1$, product staying $<1$ is non-trivial. The false Lean axiom \texttt{sieveProd}=\texttt{\textprod}(1+x/s)<1 omitted $\cO$; indeed $\prod(1+x/s)>1$ for any $x=1$, $s>0$, $U>1$.
+Because $\cO<1$ and each $U>1$, product staying $<1$ is non-trivial. The false Lean axiom \texttt{sieveProd}=$\prod(1+x/s)<1$ omitted $\cO$; indeed $\prod(1+x/s)>1$ for any $x=1$, $s>0$, $U>1$.
 
 Prime-power $\cO^{(\boldsymbol\gamma)}(x)$ optimises over finer partition with moduli $p_{j}^{\gamma_{j}}$; feasible region differs: more variables (each $mp_{j}^{j}$) and constraints. No theorem gives $\cO^{(\boldsymbol\gamma)}\le\cO^{\mathrm{SF}}$; allowing $9,25,27,45,49,\dots$ enlarges adversary's options, likely \emph{increasing} LP optimum.
 
@@ -281,6 +282,7 @@ Need $\cN^{(\gamma)}(1)=\cO^{(\gamma)}(1)\prod_{k\ge k_{0}}(1+\eta_{k}^{(\gamma)
 
 \subsubsection*{First obstruction isolated}
 
+\[
 \boxed{\text{FIRST obstruction = fibre coupling across exponents }j\text{ in }\alpha_{i}(x)\text{ and consequent }M_{i}^{(2)}\text{ prefactor }( \sum_{j}p_{i}^{-j})^{2}\text{ increasing with }\gamma_{i}, \text{ not }1/(p_{i}^{\gamma_{i}}-1)^{2}\text{ decreasing.}}
 \]
 Naive block-size monotonicity $p^{\gamma}-1$ mistakes the fibre cardinality for the moment weight; weight is $\sum p^{-j}$, which grows with $\gamma$, making second moment larger, LP feasible region larger, and $\cO^{(\gamma)}$ potentially larger. Correct comparison keeps denominator $(p-1)^{2}$ fixed and multiplies by $(1-p^{-\gamma})^{2}>1$ over SF. Hence product $\prod(1+x/((1-\delta)(p^{\gamma}-1)))$ is \emph{not} the true BBMST operator; true operator's factor is $1+x\eta^{(\gamma)}/(1-\delta)$ with $\eta^{(\gamma)}$ \emph{increasing} in $\gamma$. This breaks factorwise monotonicity at the \emph{first} fibre definition (34)--(35) before any LP or $\delta$ optimisation.
@@ -350,7 +352,7 @@ SMT variant: integer $a_{d}\in[-1,d-1]$ with $-1$ unused and clause $\forall n\b
 Correctness: assignment satisfying (C1)--(C3) and AMO yields $M=\{d:y_{d}=1\}$, $a_{d}$ unique with $x_{d,a_{d}}=1$, distinct odd, covering $\Z/L\Z$ hence $\Z$; conversely any covering induces such assignment (after possibly fixing $t$ translation). Finite decision per $L$.
 
 % ============================================================
-\section{7. Candidate-$L$ Analysis}
+\section{7. Candidate-\texorpdfstring{$L$}{L} Analysis}
 % ============================================================
 
 Necessary conditions: $L$ odd abundant ($\sigma(L)\ge2L$) and $9\mid L$ or $15\mid L$ (Thm~\ref{thm:BBMST-9or15}). Smallest odd abundant is $945$.
