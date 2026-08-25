@@ -1,2 +1,4 @@
 TODO.md
 output.log
+__pycache__/
+*.pyc
