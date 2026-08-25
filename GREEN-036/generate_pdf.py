@@ -380,6 +380,10 @@ story.append(P("<b>Reproducibility.</b> Everything regenerates by "
                "Artifacts: data/census_summary.json, data/census.csv.gz (first "
                "10^6 elements), data/run_output.txt reproduced verbatim in the "
                "Appendix. Standard library only; deterministic.", S_NOTE))
+story.append(P("The complete dossier is version-controlled at "
+               '<link href="https://github.com/GamebP/MathProblems/tree/main/GREEN-036">'
+               "https://github.com/GamebP/MathProblems/tree/main/GREEN-036</link>, "
+               "mirroring this folder file-for-file.", S_NOTE))
 
 story.append(PageBreak())
 

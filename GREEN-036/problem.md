@@ -33,6 +33,7 @@ d(A) = lim_{N→∞} |A ∩ [1, N]| / N  > 0 ?
 
 | file | role |
 |---|---|
+| `README.md` | entry point: results at a glance + reproduction |
 | `notes.md` | derivation log: proofs, heuristic, numerics |
 | `verify_solution.py` | exact census + all checks (CLI bound X, default 10^7) |
 | `data/run_output.txt` | verbatim captured output of the production run at X = 10^8 |
