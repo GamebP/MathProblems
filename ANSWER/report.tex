@@ -301,30 +301,47 @@ Variables for each $d\in D$, $a\in[0,d-1]$:
 \[
 x_{d,a}\in\{0,1\},\;x_{d,a}=1\iff\text{modulus }d\text{ used with residue }a,\qquad y_{d}\in\{0,1\},\;y_{d}=1\iff d\text{ used}.
 \]
-Total $V_{\mathrm{SAT}}=\sum_{d\in D}d$ (+$|D|$ if $y$ included): 1919--5807 for $L$ in $\mathcal L$.
+We also write $y\_d$ for $y_{d}$ and $x_{d,a}$ for $x_{d,a}$ in code. Total $V_{\mathrm{SAT}}=\sum_{d\in D}d$ (+$|D|$ if $y$ included): 1919--5807 for $L$ in $\mathcal L$.
 
-Constraints:
+Exact SAT/ILP variables and constraints (required spec):
+\begin{itemize}
+\item \textbf{Candidate moduli}: $D(L)=\{d\mid L:d>1,\;d\text{ odd}\}$ ($t=|D|=15$--$19$). Every modulus of a covering with $\operatorname{lcm}=L$ lies in $D(L)$.
+\item \textbf{Variables}: $x_{d,a}\in\{0,1\}$ for $d\in D(L),\;a\in[0,d-1]$; $y_{d}\in\{0,1\}$ with linking $y_{d}=1\iff\exists a:x_{d,a}=1$.
+\item \textbf{Oddness}: by construction $D(L)$ contains only odd divisors; enforced as $\forall d\text{ even}: y_{d}=0,\;x_{d,a}=0$ (no variable created). For odd $L$ this is $D(L)=\{d\mid L:d>1\}$ automatically odd.
+\item \textbf{Distinctness}: $\sum_{a=0}^{d-1}x_{d,a}=y_{d}\le1$ for each $d$ (at most one residue per modulus: AMO). Satisfies $\sum_{a}x_{d,a}=y_{d}$ and $\sum_{a}x_{d,a}\le1$.
+\item \textbf{Congruence-class choice}: selection of $a$ per used $d$ is exactly $x_{d,a}=1\iff$ progression $a\bmod d$ included.
+\item \textbf{Coverage}: for every residue $r\in[0,L-1]$,
+\[
+\boxed{\sum_{d\in D(L)} x_{d,\,r\bmod d}\;\ge\;1\qquad\forall r\in[0,L-1]},\quad\text{CNF }\bigvee_{d\in D}x_{d,\,r\bmod d}.
+\]
+$L$ clauses width $t$, literals $L\cdot t$.
+\item \textbf{LCM consistency}: $\forall d\,(y_{d}=1\Rightarrow d\mid L)$ (by $d\in D(L)$) and anchoring $\forall p^{e}\Vert L:\;\sum_{d:\,p^{e}\mid d}y_{d}\ge1$ (a multiple of each prime power divides some modulus), plus optional $\operatorname{lcm}(\{d:y_{d}=1\})=L$.
+\item \textbf{Optional minimality}: $\sum_{d}y_{d}$ minimal or $\sum y_{d}/d$ cut.
+\end{itemize}
+
+CNF details:
 \begin{enumerate}[label=(C\arabic*)]
 \item AMO per modulus: $\sum_{a}x_{d,a}\le1$, linking $\sum_{a}x_{d,a}=y_{d}$. CNF: pairwise $\bigwedge_{a<b}(\neg x_{d,a}\lor\neg x_{d,b})$ -- $\sum\binom{d}{2}$ binary clauses (532k for 945, 1.48M for 1575, 2.90M for 2205, 4.79M for 2835) or sequential ladder $O(d)$ auxiliaries ($\approx3\sum d$ clauses: 5757--17421).
-\item Covering: for each $n\in[0,L-1]$,
-\[
-\bigvee_{d\in D}x_{d,\,n\bmod d}\quad\iff\quad\sum_{d\in D}x_{d,n\bmod d}\ge1,
-\]
-$L$ clauses width $t=15$--$19$, literals $L\cdot t$.
-\item Non-empty distinctness via $y_{d}$; optional $\operatorname{lcm}=L$ anchoring $\forall p^{e}\Vert L\;\exists d:p^{e}\mid d$.
-\item Symmetry breaking (see \S8): translation $C_{L}$ invariance $x_{d,a}\mapsto x_{d,(a+t)\bmod d}$.
+\item Covering: as boxed above, $L$ clauses $\sum_{d}x_{d,r\bmod d}\ge1$.
+\item Oddness filter: $D(L)$ odd-only; even-$d$ variables eliminated (constraint $y_{d}=0$).
+\item LCM anchoring: $\forall p^{e}\Vert L\;\bigvee_{d:p^{e}\mid d}y_{d}$ (unit clause on $y$).
+\item Symmetry breaking (see \S8): translation $C_{L}$ invariance $x_{d,a}\mapsto x_{d,(a+t)\bmod d}$; fix $x_{3,0}=1$.
 \end{enumerate}
 
 \subsection{ILP 0--1 formulation}
 
 \[
+\boxed{
 \begin{aligned}
-\sum_{a}x_{d,a}&=y_{d} &&\forall d\\
-x_{d,a}&\le y_{d}\\
-\sum_{d}x_{d,n\bmod d}&\ge1 &&\forall n\in[0,L-1]\\
-x_{d,a},y_{d}&\in\{0,1\},\quad x_{3,0}=1\text{ (translation fix)},\\
-\sum_{d}y_{d}/d&\ge1 &&\text{(reciprocal cut)}.
-\end{aligned}
+\sum_{a=0}^{d-1}x_{d,a}&=y_{d}\le1 &&\forall d\in D(L) &&\text{(distinctness } \sum_{a}x_{d,a}=y_{d}\le1\text{)}\\
+x_{d,a}&\le y_{d} &&\forall d,a\\
+x_{d,a},y_{d}&\in\{0,1\} && &&\text{(variables }x_{d,a}\in\{0,1\},\,y_{d}\in\{0,1\}\text{)}\\
+y_{d}&=0 &&\forall d\notin D(L)\text{ or }2\mid d &&\text{(oddness)}\\
+\sum_{d\in D(L)}x_{d,\,r\bmod d}&\ge1 &&\forall r\in[0,L-1] &&\text{(coverage)}\\
+\sum_{d:p^{e}\mid d}y_{d}&\ge1 &&\forall p^{e}\Vert L &&\text{(LCM consistency)}\\
+x_{3,0}&=1 && &&\text{(translation fix)}\\
+\sum_{d}y_{d}/d&\ge1 && &&\text{(reciprocal cut)}\\
+\end{aligned}}
 \]
 Dimensions: vars $V+|D|$, constraints $|D|+L$, nonzeros $\approx V+\sum_{d}L/d$ sparse ($16$k--$60$k). Matrix entry $x_{d,a}$ appears in 1 linking equality and $L/d$ covering rows.
 
