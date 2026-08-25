@@ -1,0 +1,49 @@
+GREEN-036 verification run, X = 100000000
+========================================================================
+[1] exact census DP: |A cap [1,100000000]| = 55939931   (351.06s)
+[2] naive closure cross-check at X=3000: DP |A|=1358, naive |A|=1358, identical=True   (0.57s)
+[3] Lemma A: elements congruent to 1 (mod 3) in census: 0 (out of 55939931); predicted 0
+    observed raw density F(100000000)/100000000 = 0.559399  (proven upper bound 2/3 = 0.666667)
+[4] count table |A cap [1,10^k]| and per-decade increments (25.78s):
+      k   F(10^k)      increment   F/N       local exp  harm incr  delta_hat
+      1            5           5   0.500000       nan    1.2694  0.5513
+      2           39          34   0.390000    0.8921    0.8178  0.3552
+      3          422         383   0.422000    1.0342    0.9470  0.4113
+      4         4805        4383   0.480500    1.0564    1.1029  0.4790
+      5        51508       46703   0.515080    1.0302    1.1838  0.5141
+      6       535585      484077   0.535585    1.0170    1.2318  0.5350
+      7      5493428     4957843   0.549343    1.0110    1.2637  0.5488
+      8     55939931    50446503   0.559399    1.0079    1.2871  0.5590
+[5] Lemma B lower-bound families:
+    P-orbit 2^k+1, k=1..26: 26 values, all in A: True
+    Z-products (2^i+1)(2^j+1)-1 <= X (i<=j): generated 168, in A: 168, collisions: 0
+    proven counting formula floor((floor(log2 X)-1)^2/4) = 156 (<= actual 168)
+    lower bound achieved: 168 = 3.00322e-06 x F(100000000)
+    mixed (2^i+1)((3^j+1)/2)-1 <= X: generated 216, in A: 216, collisions: 0
+    asymptotic constants: pure-2 (PROVEN) 1/(4 ln^2 2) = 0.52034, mixed (if injective) 1/(2 ln2 ln3) = 0.65660
+    (0.00s)
+[6] residue census, 95 primes <= 500 (6.46s):
+    primes with PROPER S_p: [(3, 2)]
+    composite moduli 4..500 beating 2/3: none
+    S_3 = [0, 2] (Lemma A), |S_p| = p for all other primes p <= 500: True
+    combined CRT bound over proper prime constraints: 0.666667 (= proven 2/3 here); best single 0.666667
+[7] growth-exponent estimates:
+    OLS log-log fit over k=4..8: alpha_hat = 1.01600 (R^2 = 0.999981)
+    top local exponent ln(F_8/F_7)/ln 10 = 1.00788
+    truncated harmonic sum H_X = sum_(b in A cap [1,100000000]) 1/b = 9.103598
+    truncated zeta grid: S(0.0)=9.1039, S(0.25)=1.8511, S(0.5)=0.9483, S(0.75)=0.6321, S(1.0)=0.4615
+    solved S_X(alpha*) = 1: alpha*_trunc = 0.473442 (residual +2.51e-11)
+    mean-field prediction F(100000000) ~ X^alpha* = 6131 vs actual 55939931  (ratio 9124)
+[8] artifacts written in 0.9s: census_summary.json, census.csv.gz (first 1000000 elements) sizes: 3618B, 2285592B
+========================================================================
+[PASS] EXACTNESS      DP set == naive fixpoint closure on [1,3000] (|A| = 1358 both sides: True)
+[PASS] LEMMA-A        0 violations of n ≡ 1 (mod 3) among 55939931 census elements
+[PASS] PORBIT         all 26 values 2^k+1 <= X lie in A
+[PASS] LEMMA-B-Z      168/168 Z-products in A, 0 collisions, proven formula 156 <= actual
+[PASS] LEMMA-B-MIXED  216/216 mixed products in A, 0 collisions (injectivity COMPUTED, not proven)
+[PASS] RESIDUES       S_3 = {0,2}; proper-prime list [(3, 2)]; combined bound 0.666667 >= observed density 0.559399
+[PASS] MONOTONE       decade counts strictly increasing, e.g. 5 -> 55939931
+[PASS] ZETA-ROOT      S_X(alpha*) = 1 at alpha* = 0.473442, residual +2.51e-11
+[PASS] DENSITY-TREND  F/N still rising: 0.5493 -> 0.5594 (question OPEN)
+------------------------------------------------------------------------
+9/9 checks passed.  Problem GREEN-036 remains OPEN; this run establishes computational evidence only.
