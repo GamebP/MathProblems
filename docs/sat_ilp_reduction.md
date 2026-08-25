@@ -253,10 +253,10 @@ is necessary for extensibility. If $\sum_{M_{\text{fixed}}}1/d + \sum_{M_{\text{
 |---|---|---|---|
 | 945 | $32\,768$ ($|D|=15$) | 67 | 0.20% |
 | 1575 | $131\,072$ ($|D|=17$) | 431 | 0.33% |
-| 2205 | $131\,072$ | $\approx$ 200–300 (est.; sum threshold higher) | $\approx$0.2% |
-| 2835 | $524\,288$ ($|D|=19$) | $\approx$ 1 500 | $\approx$0.3% |
+| 2205 | $131\,072$ | 85 | 0.065% |
+| 2835 | $524\,288$ ($|D|=19$) | 1709 | 0.33% |
 
-*Computation: exhaustive enumeration for 945, 1575 via Python; others estimated by DP knap.* The reciprocal filter alone eliminates $>99.7\%$ of modulus subsets before residue search, leaving only 67–1500 candidate supports $M$ per $L$.
+*Computation: exhaustive enumeration for all L via Python `sympy.divisors` + brute-force `2^{|D|}` (32k–524k subsets); verified 2026-08-25 (see `docs/final_verification.md`).* The reciprocal filter alone eliminates $>99.7\%$ of modulus subsets before residue search, leaving only 67–1709 candidate supports $M$ per $L$.
 
 Within a surviving $M$, residue search is still $\prod_{d\in M} d$ possibilities. Greedy smallest $M$ achieving $\sum\ge1$ (10 smallest divisors for 945: $\{3,5,7,9,15,21,27,35,45,63\}$, $\prod\approx10^{11.9}$, $\sum\approx1.005$) already has $10^{11}$ residue combos. Full $D$ has $\prod\approx10^{23.8}$. So reciprocal pruning reduces modulus-subset branching drastically but residue branching remains huge.
 
@@ -535,7 +535,7 @@ def verify_covering(L, covering):
 
 **ILP variant** replaces `sat_solve_incremental` with `ilp_solve` (Gurobi/SCIP) on `ilp_cons`, branching on $y_d$ first, using LP bound for pruning; same `partial_pruner` is subsumed by LP.
 
-**Cube strategy:** Instead of enumerating supports externally, let SAT solver branch on $y_d$ with decision order $d$ increasing (small $d$ first) and use cube-and-conquer to split the $y$-cube space into $\sim67$–$524$k cubes (for $L=945$, 67 cubes exhaust $y$-space after reciprocal learning). Each cube fixes a complete $y$ pattern; the remaining residue SAT is then $|M|$ independent $d$-ary choices.
+**Cube strategy:** Instead of enumerating supports externally, let SAT solver branch on $y_d$ with decision order $d$ increasing (small $d$ first) and use cube-and-conquer to split the $y$-cube space into 67–1709 cubes after reciprocal filter (32k–524k total; for L=945, 67 cubes exhaust y-space; for L=2835, 1709 cubes). Each cube fixes a complete $y$ pattern; the remaining residue SAT is then $|M|$ independent $d$-ary choices.
 
 ---
 
@@ -555,8 +555,8 @@ No spurious solutions: any $M$ with $\operatorname{lcm}(M)\mid L$ still covers $
 |---|---|---|---|---|---|
 | **945** | 1.9k / 6.7k | $10^{23.8}$ | 67 | Hours–days (cube-and-conquer) | **UNSAT expected** (verifies no odd covering with $L=945$) |
 | 1575 | 3.2k / 11.2k | $10^{28.8}$ | 431 | Days–weeks, memory heavy | UNSAT expected but borderline infeasible |
-| 2205 | 4.4k / 15.5k | $10^{30.1}$ | $\sim250$ | Weeks, likely infeasible | — |
-| 2835 | 5.8k / 20.3k | $10^{34.5}$ | $\sim1500$ | Infeasible without new theory | — |
+| 2205 | 4.4k / 15.5k | $10^{30.1}$ | 85 | Weeks, likely infeasible | — |
+| 2835 | 5.8k / 20.3k | $10^{34.5}$ | 1709 | Infeasible without new theory | — |
 
 - **A SAT result** for any $L$ would immediately yield an explicit odd distinct covering $(a_d)_{d\in M}$, refuting the Erdős–Selfridge conjecture (solution verifiable in $O(L\cdot|M|)$ by checking $[0,L-1]$).
 - **An UNSAT result** for all $L\in\mathcal L$ certifies no odd covering uses lcm among the four minimal candidates. It does **not** prove global non-existence, but together with the BBMST distortion induction it would close the gap if the sieve product bound $c_N(1)<1$ can be formalized for prime powers on top of the certified base.

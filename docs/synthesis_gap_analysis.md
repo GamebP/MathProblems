@@ -309,4 +309,34 @@ The gap is exactly that `conditional_pow_extension` is **conjectural**.
 
 ---
 
+## 10. Corrigendum (Integrated Verification 2026-08-25)
+
+**Source:** `docs/final_verification.md` cross-read of `sieve_extension_obstruction.md` (Lemmas 4.1–4.5, Theorem 4.6) vs this file’s Conditional Lemmas A/B/C and `sat_ilp_reduction.md` invariants. `curl` live-checks of `https://www.erdosproblems.com/7`, `arXiv:1811.03547`, `arXiv:1703.02133` all PASS.
+
+### C1 — Conditional Lemma A product form (Major)
+
+Lemma A §4.1 as written `cN^{pow}(1):=c0^*∏(1+1/((1-δ*_k)s_k^{pow}))` with `s_k^{pow}=|B_k^{pow}∩[1,Q_k]|≥p_k-1` **oversimplifies** the BBMST operator for `γ≠1`. Per `sieve_extension_obstruction.md` Theorem 4.6(1)-(2) and (36)–(47),(84), the correct prime-power operator is
+
+```
+c_N^{(γ)}(x) = c0^{(γ)}(x) · ∏_k (1 + x/(1-δ_k^{(γ)}) · η_k^{(γ)})
+η_k^{(γ)} := Θ_k-function of {p_j,γ_j,δ_{<k}^{(γ)}} given by 1811.03547 (36)–(47) and Θ_i(s,t) recursion (84)
+Θ_i(s,t)=Θ_{i-1}(s,t)+1/(1-δ_i)∑_{j,k≥0,j+k>0} p_i^{-max{j,k}} Θ_{i-1}(⌈s/p_i^j⌉,⌈t/p_i^k⌉)
+```
+
+with prefactor `∑_{j=1}^{γ} p^{-j} = (1-p^{-γ})/(p-1)` so that `M_i^{(2)}` prefactor is `(∑p^{-j})^2=(1-p^{-γ})^2/(p-1)^2` which **increases** with `γ` (Cor. 4.2), not `1/(p^{γ}-1)^2`. The history product `∏_{j<i}(1+(3p_j-1)/((1-δ_j)(p_j-1)^2))` couples to earlier `γ`. Hence `s_k^{pow}≥s_k^{SF} ⇒ factor_pow≤factor_SF` holds pointwise for `U(s)=1+x/((1-δ)s)` but the list `blocks^{γ}` is **not** pointwise `≥blocks^{SF}` in the sense of Lemma 4.1 (cardinality/weights change) and `c0^{(γ)}≤c0^{SF}`, `δ^{(γ)}=δ^{SF}` are not theorems (Lemmas 4.4/4.5). The conditional claim must be restated as `c0^{(γ)}≤c0^{SF}` **and** `∏(1+η^{(γ)}/(1-δ^{(γ)}))≤∏(1+1/((1-δ^{SF})(p-1)))` after re-optimizing `δ^{(γ)}`; tail antitone in `s` alone is real but irrelevant. This file’s Lemma A should be read with that corrected operator; the quantitative `<1` target `cN^{SF}(1)≈0.612` with `c0≈0.0979` remains unchanged.
+
+### C2 — Candidate L subset counts (Minor)
+
+Exhaustive `2^{|D|}` enumeration (SymPy, `∑1/d≥1` exact rational) gives `L=945:67`, `1575:431`, **`2205:85`** (not `≈200–300`), **`2835:1709`** (not `≈1500`). Fractions `0.204%,0.329%,0.065%,0.326%` still `>99.7%` elimination; optimistic leaf bounds `~10^{13}–10^{15}` unchanged.
+
+### C3 — Minimal `k` bound (Minor)
+
+§1 table “`k≥15` for `L=945`” is inaccurate: minimal subset achieving `∑1/d≥1` is 10 smallest divisors `[3,5,7,9,15,21,27,35,45,63]` (`∑≈1.005`) for 945/1575/2835, and 12 for 2205 (`[3,5,7,9,15,21,35,45,49,63,105,147]`, `∑≈1.005`). Corrected: `10 ≤ k ≤ |D|` (`|D|=15,17,17,19`); max `|D|` unchanged.
+
+No change to barrier classification (technical, not intrinsic) or roadmap Phases 1–4; SAT/ILP invariants (`∑1/d≥1`, `L≥945` odd abundant, `9|∨15|`, CRT `L/lcm` vs `gcd`, AMO/covering/SB encodings) verified exact and consistent with sieve prerequisites; live citations `erdosproblems.com/7`, `1811.03547`, `1703.02133`, `c_N=c0∏U` all PASS.
+
+*End of corrigendum. Integrated state: `all_three_deliverables_consistent_and_complete` with above patches.*
+
+---
+
 *End of synthesis. Commit-ready.*
