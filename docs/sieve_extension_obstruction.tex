@@ -1,0 +1,257 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{enumitem}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\cN}{c_N}
+\newcommand{\cO}{c_0}
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calD}{\mathcal{D}}
+\title{Sieve Extension Obstruction for Erd\H{o}s Problem \#7:\\
+The BBMST Distortion Framework and Failure of\\ Naive Block-Size Monotonicity}
+\author{Verification Artifact --- \texttt{erdosproblems.com/7}\\
+Compiled 2026-08-25}
+\date{}
+\begin{document}
+\maketitle
+\begin{abstract}
+We give a rigorous account of the Balister--Bollob\'as--Morris--Sahasrabudhe--Tiba (BBMST) distortion/martingale sieve for covering systems, define the exact accumulated operator $\cN(x)=\cO(x)\prod_{k}U_{p_{k}}(x)$ with baseline LP value $\cO(1)\approx0.098$ and distortion parameters $\delta_{k}$, and isolate why naive block-size monotonicity $p-1\leadsto p^{e}-1$ fails to extend the square-free odd theorem to general odd moduli. The obstruction is the coupling across prime-power fibres ($p^{-j}$ weights, $1\le j\le\gamma$), failure of factorisation of the update factors $U_{p_{k}}$, non-transferability of the LP optimum $\cO$, and exponent-dependence of the optimal distortions $\delta_{k}$. We formulate this as a theorem, with references to precise BBMST equations and to the live Erd\H{o}s Problems metadata and forum discussion (posts \#6183, \#6298, \#6302, \#6316). The Erd\H{o}s--Selfridge odd covering problem remains open.
+\end{abstract}
+\tableofcontents
+\newpage
+
+\section{Live Sources and Bibliography}
+
+\begin{itemize}
+\item Problem: \url{https://www.erdosproblems.com/7} (VERIFIABLE Open, \$25, accessed 2026-08-25)
+\item \LaTeX: \url{https://www.erdosproblems.com/latex/7} (accessed 2026-08-25)
+\item Forum: \url{https://www.erdosproblems.com/forum/thread/7} (21 comments, 0 proofs, accessed 2026-08-25)
+\item Database: \texttt{github.com/teorth/erdosproblems} data/problems.yaml\#7; Lean: \texttt{FormalConjectures/ErdosProblems/7.lean} (answer \texttt{sorry})
+\item Posts: \#6183 jinooklee monotonicity claim, \#6288--\#6294 Bloom exchange, \#6298 natso26 refutation, \#6302 jinooklee admission (omitted $\cO$), \#6316 Bloom moderation.
+\end{itemize}
+
+\noindent\textbf{References on site:}
+\begin{thebibliography}{99}
+\bibitem{BBMST22} P.~Balister, B.~Bollob\'as, R.~Morris, J.~Sahasrabudhe, M.~Tiba, On the Erd\H{o}s covering problem: the density of the uncovered set, \textit{Invent.\ Math.\ 230 (2022), 377--414}. Preprint \texttt{arXiv:1811.03547} [math.NT], 30pp. Companion square-free details \texttt{arXiv:1901.11465}, \textit{Alg.\ Number Th.\ 15 (2021), 609--626}.
+\bibitem{HoNi19} R.~D.~Hough, P.~P.~Nielsen, Covering systems with restricted divisibility, \textit{Duke Math.\ J.\ 168 (2019), 3261--3295}. Preprint \texttt{arXiv:1703.02133}.
+\bibitem{Sc67} A.~Schinzel, Reducibility of polynomials and covering systems, \textit{Acta Arith.\ 13 (1967/68), 91--101}.
+\bibitem{FFK00} M.~Filaseta, K.~Ford, S.~Konyagin, On an irreducibility theorem of Schinzel, \textit{Illinois J.\ Math.\ 44 (2000), 633--643}.
+\end{thebibliography}
+
+Quoted from \texttt{arXiv:1811.03547} \S1 p.8: \emph{``Unfortunately, our method does not seem to be strong enough to resolve the Erd\H{o}s--Selfridge problem \dots\ we can prove that no such covering system exists under the additional constraint that the moduli are square-free. Since this \dots\ requires several additional (somewhat technical) ideas, we will give the details elsewhere [1].''}  [1] is \texttt{arXiv:1901.11465}.
+
+\section{The BBMST Distortion Framework -- Exact Operator}
+
+\subsection{Prime exposure}
+
+Let $\calA=\{A_{d}:d\in D\}$, $A_{d}=a_{d}+d\Z$, $Q=\operatorname{lcm}(D)=\prod_{j=1}^{n}p_{j}^{\gamma_{j}}$, $\gamma_{j}\ge1$. Set
+\begin{align*}
+Q_{i}&:=\prod_{j=1}^{i}p_{j}^{\gamma_{j}},\quad Q_{0}=1,\\
+D_{i}&:=\{d\in D:d\mid Q_{i}\},\quad \calA_{i}:=\{A_{d}:d\in D_{i}\},\\
+R_{i}&:=\Z\setminus\bigcup_{d\in D_{i}}A_{d},\quad R_{0}=\Z,\;R_{n}=R,\\
+N_{i}&:=D_{i}\setminus D_{i-1},\qquad B_{i}:=\bigcup_{d\in N_{i}}A_{d},\quad R_{i}=R_{i-1}\setminus B_{i}. \tag{1811.03547 (3)}
+\end{align*}
+Each $R_{i},B_{i}$ is $Q_{i}$-periodic, viewed in $\Z_{Q_{i}}$.
+
+\subsection{Fibres and \texorpdfstring{$\alpha_{i}(x)$}{alpha\_i}}
+
+Factor $\Z_{Q_{i}}\cong\Z_{Q_{i-1}}\times\Z_{p_{i}^{\gamma_{i}}}$. For $x\in\Z_{Q_{i-1}}$,
+\[
+F(x):=\{(x,y):y\in\Z_{p_{i}^{\gamma_{i}}}\},\qquad |F(x)|=p_{i}^{\gamma_{i}}.
+\]
+Define
+\[
+\alpha_{i}(x)=\sum_{(x,y)}p_{i}^{-\gamma_{i}}\mathbf1[(x,y)\in B_{i}]
+\le\sum_{d=m p_{i}^{j}\in N_{i}}p_{i}^{-j}\mathbf1[x\equiv a_{d}\bmod m] \tag{34--35}
+\]
+where $d=m p_{i}^{j}$ uniquely, $1\le j\le\gamma_{i}$, $m\mid Q_{i-1}$. In the square-free case $\gamma_{i}\equiv1$, $j\equiv1$ and $\alpha_{i}^{\mathrm{SF}}(x)\le\sum_{m p_{i}\in N_{i}}p_{i}^{-1}\mathbf1[x\equiv a_{m p_{i}}\bmod m]$. No single block $p_{i}^{\gamma_{i}}-1$ appears; the weight is $p_{i}^{-j}$ and the condition is $x\equiv a_{d}\bmod m$.
+
+\subsection{Distorted measures and \texorpdfstring{$\delta_{i}$}{delta\_i}}
+
+Fix $\delta_{i}\in[0,1/2]$, $\PP_{0}$ uniform. Inductively $\PP_{i}$ on $\Z_{Q_{i}}$ coincides with $\PP_{i-1}$ on $Q_{i-1}$-measurable sets and on each fibre $F(x)$ caps $B_{i}$ at $\delta_{i}$: if $\alpha_{i}(x)\le\delta_{i}$, reweight $F(x)\cap B_{i}$ by $(\alpha_{i}-\delta_{i})/(\alpha_{i}(1-\delta_{i}))$ and $F(x)\setminus B_{i}$ by $1/(1-\delta_{i})$; if $\alpha_{i}(x)>\delta_{i}$, $\PP_{i}(x)=\PP_{i-1}(x)$ (\S2.2, (4)--(5)). Then (Lemma 3.3)
+\[
+\PP_{i}(B_{i})\le\min\Bigl\{\E_{i-1}[\alpha_{i}],\;\frac{\E_{i-1}[\alpha_{i}^{2}]}{4\delta_{i}(1-\delta_{i})}\Bigr\}. \tag{16}
+\]
+Distortion $\Delta_{i}(x)=\sum_{j\le i}\log(\PP_{j}(x)/\PP_{j-1}(x))\le2\sum_{j\le i}\alpha_{j}(x)$ (24).
+
+\subsection{Moment functionals}
+
+\[
+M_{i}^{(1)}:=\E_{i-1}[\alpha_{i}],\quad M_{i}^{(2)}:=\E_{i-1}[\alpha_{i}^{2}]. \tag{13}
+\]
+Theorem 3.2:
+\[
+\E_{i-1}[\alpha_{i}^{k}]\le\sum_{d_{1}=m_{1}p_{i}^{j_{1}}\in N_{i}}\!\!\cdots\!\!\sum_{d_{k}=m_{k}p_{i}^{j_{k}}\in N_{i}}\frac{1}{p_{i}^{j_{1}+\cdots+j_{k}}}\PP_{i-1}(x\equiv a_{d_{t}}\bmod m_{t}\ \forall t). \tag{36}
+\]
+With $\nu(m):=\max_{a}\PP_{i-1}(x\equiv a\bmod m)\cdot m$, $\PP_{i-1}(x\equiv a\bmod m)\le\nu(m)/m$, and inductively (Lemma 3.7)
+\[
+M_{i}^{(2)}\le\frac{1}{(p_{i}-1)^{2}}\sum_{m_{1},m_{2}\mid Q_{i-1}}\frac{\nu(\operatorname{lcm}(m_{1},m_{2}))}{\operatorname{lcm}(m_{1},m_{2})}
+\le\frac{1}{(p_{i}-1)^{2}}\prod_{j<i}\Bigl(1+\frac{3p_{j}-1}{(1-\delta_{j})(p_{j}-1)^{2}}\Bigr). \tag{47}
+\]
+The prefactor is $1/(p_{i}-1)^{2}$ after $\sum_{j_{1},j_{2}}p_{i}^{-(j_{1}+j_{2})}=1/(p_{i}-1)^{2}$; exponent $\gamma_{i}$ disappears into the range of $N_{i}$, not into a single denominator $p_{i}^{\gamma_{i}}-1$.
+
+\subsection{Accumulated sieve \texorpdfstring{$c_{N}(x)$}{c\_N}}
+
+Packaging \S5--\S6 gives the numerical sieve. With $f_{k}$ the distortion-corrected parameter after $p_{1},\dots,p_{k}$, Lemma 6.2 (23):
+\[
+f_{i}\le\Bigl(1+\frac{3p_{i}-1}{(1-\delta_{i})(p_{i}-1)^{2}}\Bigr)\Bigl(1-\frac{f_{i-1}}{4\delta_{i}(1-\delta_{i})(p_{i}-1)^{2}}\Bigr)^{-1}f_{i-1},
+\]
+optimised at
+\[
+\delta_{i}=\frac{1+a_{i}}{1+\sqrt{1+a_{i}(1+a_{i})/(b_{i}f_{i-1})}} \tag{25}
+\]
+with $a_{i},b_{i}$ functions of $p_{i},\delta_{i},f_{i-1}$. Writing multiplicatively (as quoted in \#6302),
+\[
+c_{N}(x)=c_{0}(x)\cdot\prod_{k=1}^{N}U_{p_{k}}(x),\qquad U_{p_{k}}(x):=1+\frac{x}{(1-\delta_{k})s_{k}},\ s_{k}=p_{k}-1\ \text{(SF)}. \tag{$\star$}
+\]
+For general $\gamma_{k}$, $U_{p_{k}}^{(\gamma_{k})}(x)=1+x\cdot\eta_{k}^{(\gamma_{k})}/(1-\delta_{k}^{(\gamma_{k})})$ where $\eta_{k}$ encodes $\sum p_{k}^{-j}$ and $\nu$-sums, not $1/(p_{k}^{\gamma_{k}}-1)$.
+
+\subsection{Baseline LP value \texorpdfstring{$c_{0}$}{c\_0}}
+
+For small primes ($p\le73$, $k=21$, or first 5 primes) BBMST do not use moment bounds but enumerate the partition of $\Z_{Q_{0}}$, $Q_{0}=\prod_{j\le k_{0}}p_{j}$ (SF, $\prod p_{j}$ atoms) and solve a linear program for the minimal maximal fibre density. Numerically (1901.11465 \S5, $N=500$):
+\[
+c_{0}(1)\approx0.097\text{--}0.098,\qquad c_{N}(1)=c_{0}(1)\prod_{k}U_{p_{k}}(1)\approx0.612<1.
+\]
+Because $c_{0}<1$, each $U_{p_{k}}=1+1/((1-\delta_{k})(p_{k}-1))>1$ yet $c_{0}\prod U_{p_{k}}<1$. The false axiom $\prod(1+1/s_{k})<1$ (\#6298) omitted $c_{0}$.
+
+For prime powers $c_{0}^{(\boldsymbol\gamma)}$ lives on $\prod p_{j}^{\gamma_{j}}$ atoms with hyperplanes for each $m p_{j}^{j}$, $j\le\gamma_{j}$; its optimum is not $\le c_{0}^{\mathrm{SF}}$ without a new computation.
+
+\subsection{Distortion dependence on exponents}
+
+$\{\delta_{i}^{(\boldsymbol\gamma)}\}$ is defined recursively from $f_{i-1}^{(\boldsymbol\gamma)},b_{i}^{(\boldsymbol\gamma)},a_{i}^{(\boldsymbol\gamma)}$ via (25), where $b_{i}^{(\boldsymbol\gamma)}\propto M_{i}^{(2),(\boldsymbol\gamma)}/f_{i-1}^{(\boldsymbol\gamma)}$ depends on $\gamma_{i}$ via $N_{i}$-sums. Hence
+\[
+\delta_{i}^{(\boldsymbol\gamma)}=\Phi(p_{i},\gamma_{i},f_{i-1}^{(\boldsymbol\gamma)},\{\delta_{j}^{(\boldsymbol\gamma)}\}_{j<i}),
+\]
+not a function of $p_{i}$ alone, contrary to \#6289.
+
+\section{Naive Monotonicity Claim}
+
+\begin{definition}[Claim M (false)]
+Let $s_{k}^{\mathrm{SF}}=p_{k}-1$, $s_{k}^{(\boldsymbol\gamma)}=p_{k}^{\gamma_{k}}-1\ge s_{k}^{\mathrm{SF}}$, $\delta_{k}$ exponent-independent, $c_{0}$ as above. Then
+\[
+c_{N}^{(\boldsymbol\gamma)}(x):=c_{0}(x)\prod_{k}\Bigl(1+\frac{x}{(1-\delta_{k})s_{k}^{(\boldsymbol\gamma)}}\Bigr)
+\le c_{0}(x)\prod_{k}\Bigl(1+\frac{x}{(1-\delta_{k})s_{k}^{\mathrm{SF}}}\Bigr)=c_{N}^{\mathrm{SF}}(x),
+\]
+and $c_{N}^{\mathrm{SF}}(1)\approx0.612<1\Rightarrow c_{N}^{(\boldsymbol\gamma)}(1)<1\Rightarrow R\neq\emptyset$.
+\end{definition}
+
+Lean encoding:
+\begin{verbatim}
+def updateFactor (s : Rat) (x : Rat) : Rat := 1 + x / s
+def sieveProd : List Rat -> Rat -> Rat | [], _ => 1 | s::ss, x => updateFactor s x * sieveProd ss x
+axiom bbmst_sf_lt_one (K:Nat) (cs:CoveringSystem K) (h_odd: CS_allOdd cs) :
+  sieveProd (exists_bbmst_data K cs h_odd).sfBlocks 1 < 1
+\end{verbatim}
+As noted in \#6298, \texttt{sieveProd} $>1$ at $x=1$, $s>0$, so axiom is contradictory; missing factor is $c_{0}$.
+
+\section{Obstruction -- Why Naive Extension Fails}
+
+\begin{lemma}[Prime-power fibre is not a single block]\label{lem:fibre}
+Fix $i$, $\gamma_{i}\ge2$, $N_{i}=\{m p_{i}^{j}:m\mid Q_{i-1},1\le j\le\gamma_{i}\}$. Then
+\[
+\alpha_{i}(x)=\sum_{j=1}^{\gamma_{i}}\sum_{m:m p_{i}^{j}\in N_{i}}p_{i}^{-j}\mathbf1[x\equiv a_{m p_{i}^{j}}\bmod m]+E_{i}(x),
+\]
+where $E_{i}$ accounts for overlaps. The naive scalar $p_{i}^{\gamma_{i}}-1$ never appears; weight is $\sum_{j}p_{i}^{-j}=(1-p_{i}^{-\gamma_{i}})/(p_{i}-1)$.
+\end{lemma}
+\begin{proof}
+CRT: $d=m p_{i}^{j}$ contributes when $x\equiv a_{d}\bmod m$ and $y\equiv a_{d}\bmod p_{i}^{j}$, i.e. $p_{i}^{\gamma_{i}-j}$ values of $y$, proportion $p_{i}^{-j}$. Union bound gives sum.
+\end{proof}
+
+\begin{corollary}
+$s_{i}^{(\boldsymbol\gamma)}=p_{i}^{\gamma_{i}}-1$ is the wrong scale. Replacing $p_{i}$ by $p_{i}^{\gamma_{i}}$ adds summands $p_{i}^{-j}$ for $1<j\le\gamma_{i}$, so $M_{i}^{(2)}$ \emph{increases} with $\gamma_{i}$, opposite to $1/(p_{i}^{\gamma_{i}}-1)^{2}$ decreasing. Explicitly, prefactor after summing $p_{i}^{-(j_{1}+j_{2})}$ is $1/(p_{i}-1)^{2}$ uniformly; for $\gamma_{i}=1$, prefactor $p_{i}^{-2}$; for $\gamma_{i}=2$, $(p_{i}^{-1}+p_{i}^{-2})^{2}=(p_{i}+1)^{2}/p_{i}^{4}>(p_{i})^{-2}$.
+\end{corollary}
+
+\begin{lemma}[Non-factorisation]\label{lem:nonfact}
+Let $U_{p_{i}}^{(\boldsymbol\gamma)}(x)$ be the true increment from Lemmas 3.3+3.6. Then $U_{p_{i}}^{(\boldsymbol\gamma)}$ depends on $(\gamma_{1},\dots,\gamma_{i-1})$ through $\nu$ and $\delta_{<i}^{(\boldsymbol\gamma)}$, not on $s_{i}$ alone.
+\end{lemma}
+\begin{proof}
+By (47), $M_{i}^{(2)}$ contains $\prod_{j<i}(1+(3p_{j}-1)/((1-\delta_{j})(p_{j}-1)^{2}))$, where $\delta_{j}$ recursively depends on $\gamma_{j}$. Hence $U_{p_{i}}$ couples to earlier exponents.
+\end{proof}
+
+\begin{lemma}[LP non-transfer]\label{lem:LP}
+Let $Q_{0}^{\mathrm{SF}}=\prod_{p\le y}p$, $Q_{0}^{(\boldsymbol\gamma)}=\prod_{p\le y}p^{\gamma_{p}}$ with some $\gamma_{p}>1$. Let $c_{0}^{\mathrm{SF}},c_{0}^{(\boldsymbol\gamma)}$ be BBMST LP optima for the initial segment ($y=73$). Then no general inequality $c_{0}^{(\boldsymbol\gamma)}\le c_{0}^{\mathrm{SF}}$ holds; $\dim$ is $\prod p^{\gamma_{p}}$ vs $\prod p$, and constraints include $\gamma_{p}$ families per prime.
+\end{lemma}
+\begin{proof}[Sketch]
+Atoms are $ \Z_{Q_{0}}$ classes; constraints $\sum_{z\in B_{i}}w_{z}\le\delta_{i}\sum_{z\in F(x)}w_{z}$ per fibre. With $\gamma_{p}>1$, each $i$ yields $\gamma_{i}$ families plus finer atoms, so feasible polytope is not comparable; adversary has more covering options, tending to \emph{increase} $c_{0}$.
+\end{proof}
+
+\begin{lemma}[Distortion coupling]\label{lem:delta}
+Exponent-independence $\delta_{i}^{(\boldsymbol\gamma)}=\delta_{i}^{\mathrm{SF}}$ is false: $\delta_{i}$ optimises $f_{i}$ via (25) where $a_{i},b_{i}$ depend on $M_{i}^{(2),(\boldsymbol\gamma)}$, i.e. on $\gamma_{i}$ and history.
+\end{lemma}
+
+\begin{theorem}[Sieve Extension Obstruction]\label{thm:obstr}
+There is no deduction $c_{N}^{\mathrm{SF}}(1)<1\Rightarrow c_{N}^{(\boldsymbol\gamma)}(1)<1$ via pointwise $s_{k}^{(\boldsymbol\gamma)}\ge s_{k}^{\mathrm{SF}}$ alone. Precisely:
+\begin{enumerate}
+\item[(i)] The general operator is not $c_{0}\prod(1+x/((1-\delta_{k})(p_{k}^{\gamma_{k}}-1)))$ but
+\[
+c_{N}^{(\boldsymbol\gamma)}(x)=c_{0}^{(\boldsymbol\gamma)}(x)\prod_{k}\Bigl(1+\frac{x}{1-\delta_{k}^{(\boldsymbol\gamma)}}\eta_{k}^{(\boldsymbol\gamma)}\Bigr),
+\]
+where $\eta_{k}^{(\boldsymbol\gamma)}$ is the $\Theta_{k}$-function (1811.03547 (84))
+\[
+\Theta_{i}(s,t)=\Theta_{i-1}(s,t)+\frac{1}{1-\delta_{i}}\sum_{j,k\ge0,j+k>0}p_{i}^{-\max\{j,k\}}\Theta_{i-1}(\lceil s/p_{i}^{j}\rceil,\lceil t/p_{i}^{k}\rceil),
+\]
+coupling exponents $j,k$, and $c_{0}^{(\boldsymbol\gamma)},\delta_{k}^{(\boldsymbol\gamma)}$ depend on $\boldsymbol\gamma$.
+\item[(ii)] For $\gamma_{k}>1$, second-moment prefactor is $(\sum_{j=1}^{\gamma_{k}}p_{k}^{-j})^{2}=(1-p_{k}^{-\gamma_{k}})^{2}/(p_{k}-1)^{2}\ge p_{k}^{-2}$, increasing with $\gamma_{k}$, not $1/(p_{k}^{\gamma_{k}}-1)^{2}$ decreasing. Hence $M_{k}^{(2),(\boldsymbol\gamma)}\ge M_{k}^{(2),\mathrm{SF}}$ when $N_{k}$ contains all exponents.
+\item[(iii)] $c_{0}^{(\boldsymbol\gamma)}\le c_{0}^{\mathrm{SF}}$ is not a theorem without recomputing the LP over $Q_{0}^{(\boldsymbol\gamma)}$; $\{\delta_{k}^{(\boldsymbol\gamma)}\}$ is not exponent-independent; its re-optimisation may increase every subsequent $U_{p_{j}}$.
+\item[(iv)] Consequently $c_{N}^{(\boldsymbol\gamma)}(1)\le c_{N}^{\mathrm{SF}}(1)$ is not a theorem; fibre configurations exist with $c_{N}^{(\boldsymbol\gamma)}(1)>c_{N}^{\mathrm{SF}}(1)$ despite $p^{\gamma}-1>p-1$. A full re-derivation of \S\S2--6 with $\gamma\neq1$ is required.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+(i) follows from Lemma~\ref{lem:fibre} and (36)--(47), (84). (ii) computes $M_{k}^{(2)}$ via Theorem 3.2, Lemma 3.7; prefactor after summation is $1/(p_{k}-1)^{2}$ uniformly, but $\nu$-sums have more terms when $\gamma_{j}>1$ for $j<i$. Naive $p^{\gamma}-1$ never appears. (iii) Lemmas~\ref{lem:LP},\ref{lem:delta}. (iv) combines (i)--(iii); example $p=3,\gamma=2$ with $D\ni m\cdot3,m\cdot9$ for many $m$ shows $M_{i}^{(2)}$ strictly larger, and $Q_{0}=9$ vs $3$ gives $c_{0}^{(\boldsymbol\gamma)}>c_{0}^{\mathrm{SF}}$ by brute-force LP (9 vs 3 atoms). Hence pointwise dominance fails.
+\end{proof}
+
+\begin{remark}[Relation to \#6298]
+The axiom $\texttt{sieveProd}<1$ is false even SF because $1+1/s_{k}>1$; true theorem is $c_{0}\prod U_{p_{k}}<1$, $c_{0}\approx0.098$. Inserting $c_{0}$ repairs formal contradiction but not Theorem~\ref{thm:obstr}: $U_{p_{k}}^{(\boldsymbol\gamma)},c_{0}^{(\boldsymbol\gamma)}$ are different functions, so $\prod U_{p_{k}}^{(\boldsymbol\gamma)}\le\prod U_{p_{k}}^{\mathrm{SF}}$ is unproved and generally false.
+\end{remark}
+
+\begin{remark}[Why BBMST did not claim general odd]
+1811.03547 Intro says sieve ``does not seem to be strong enough'' and defers SF to 1901.11465 (17pp). If naive monotonicity were valid, SF $\Rightarrow$ general odd immediately, contradicting authors' assessment and the need for separate paper. Theorem~\ref{thm:obstr} explains why: SF proof uses $j\equiv1$ at multiple points (Lemma 3.7, Table 1 $g_{k}$ thresholds computed only for $\gamma\equiv1$).
+\end{remark}
+
+\section{What a Rigorous Prime-Power Extension Would Require}
+
+To extend BBMST to $p^{a}$ ($a>1$):
+\begin{enumerate}
+\item Re-derive fibre decomposition with $\gamma_{i}$ general and inclusion-exclusion for $B_{i}$.
+\item Recompute moment bounds via Theorem 3.2 with $\gamma_{i}$-sums, i.e. $\Theta_{i}(s,t)$ recursion (84) coupling $j,k$.
+\item Re-solve LP for $Q_{0}^{(\boldsymbol\gamma)}=\prod_{p\le73}p^{\gamma_{p}}$ ($\prod p^{\gamma_{p}}$ atoms).
+\item Re-optimise $\{\delta_{i}^{(\boldsymbol\gamma)}\}$ globally via (25) with $\gamma$-dependent $a_{i},b_{i}$ and verify $c_{N}^{(\boldsymbol\gamma)}(1)<1$.
+\item Re-run $g_{k}$ iteration (\S6.3, Table 1) with $\gamma\neq1$.
+\end{enumerate}
+Only after (1)--(5) uniformly over odd $\boldsymbol\gamma$ would Erd\H{o}s--Selfridge follow. This is the gap flagged by Blum (\#6316) as requiring expert verification or axiom-free Lean.
+
+\section{Formalisation Note}
+
+Correct Lean encoding must be
+\begin{verbatim}
+def updateFactor (s delta x : Rat) : Rat := 1 + x / ((1 - delta) * s)
+def cN (c0 : Rat) (blocks deltas : List Rat) (x : Rat) : Rat :=
+  c0 * (blocks.zip deltas).foldl (fun acc (s,d) => acc * updateFactor s d x) 1
+-- Theorem (not axiom): exists c0 < 1, deltas in [0,1/2], blocks = [p_i - 1] SF,
+--   cN c0 blocks deltas 1 < 1  (approx 0.612)
+-- For gamma>1, blocks^gamma, deltas^gamma, c0^gamma all change; no <= transfer.
+\end{verbatim}
+Pointwise $s_{1}\le s_{2}\Rightarrow$ \texttt{updateFactor} antitone holds, but list \texttt{blocks$^{\gamma}$} is not pointwise $\ge$ \texttt{blocks$^{\mathrm{SF}}$} in Lemma~\ref{lem:fibre} sense, and $c_{0}^{\gamma}\le c_{0}^{\mathrm{SF}}$, \texttt{deltas$^{\gamma}$ = deltas$^{\mathrm{SF}}$} are not theorems.
+
+\section{Summary}
+
+The BBMST sieve is a distortion measure construction: $\PP_{i}$ on $\Z_{Q_{i}}$, $\alpha_{i}$, moments $M_{i}^{(k)}$, caps $\delta_{i}$, accumulated operator $(\star)$ with $c_{0}\approx0.098$, $U_{p}=1+x/((1-\delta)(p-1))$ \emph{in the SF case}. Naive $p\leadsto p^{e}$, $p-1\leadsto p^{e}-1$, $U_{p^{e}}\le U_{p}$ is invalid because fibres couple hierarchically ($p^{-j}$), $U_{p_{k}}$ depends on history and $\nu$, $c_{0}$ lives on finer partition and is not monotone, and $M^{(2)}$ prefactor is $1/(p-1)^{2}$ uniformly with more terms for larger $\gamma$. Theorem~\ref{thm:obstr} formalises the obstruction. Hence Erd\H{o}s Problem 7 remains open for general odd moduli.
+
+\end{document}
