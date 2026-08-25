@@ -118,4 +118,29 @@ Cross-read with bounded reads and `grep` + live `curl` checks confirms:
 * R.D. Hough, *Solution of minimum modulus problem*, Ann. Math. 181 (2015).
 * A. Schinzel, Acta Arith. 13 (1967); M. Filaseta et al., Illinois J. Math. 44 (2000).
 
+---
+
+## 10. Addendum — Vibemathed Cross-Check (2026-08-25)
+
+**Source:** `https://vibemathed.com/problem/erdos-7` — fetched 2026-08-25 via `webfetch` (markdown + raw `curl -skL` JSON-LD `Article` + HTML `katex` statement). Schema `description`: *“Can there be a finite covering system of the integers with distinct moduli, all of which are odd and greater than 1?”* — `katex` `$1$` rendering; earlier markdown `111` artifact resolved to `1` via raw JSON-LD `>1?`.
+
+**Extracted (verbatim):**
+* Statement: above `>1` — no delta vs `https://www.erdosproblems.com/7` *“Is there a distinct covering system all of whose moduli are odd?”* (`>1` implicit; docs/sieve §1). 
+* Metadata: Result `Proved` → Status `Retracted`, Verification `Contested` (⚠), Method `Argument`, Field `Number Theory, Covering Systems`, Posed by `—`, Year `—`, Solved `2026-05-07`, Model `Aristotle` / Vendor `Harmonic`, Collaborators `—`, Publication `Announced`, Significance `12 / 100*` (*“16 sources, dense reference trail”*), Wikipedia `No dedicated article`, Disclosed cost `—`, AI contribution `—`.
+* What AI did: *“Both the failed formalization and the audit that exposed its false axiom were AI-assisted.”*
+* Verification: *“Claim withdrawn; see the claim issue. Recorded because failed formalizations are part of honest history of AI mathematics.”*
+* Claim issue (exact): *“The claimed Lean proof that no such covering system exists was withdrawn after audit: its central axiom asserted that a product of factors greater than one is less than one, and a statement-fidelity audit confirmed the gap. The problem remains open.”*
+* Source list: single `Problem record → erdosproblems.com/7`; Discussion empty.
+
+**Cross-validation vs documented constraints (already in docs/sieve_extension_obstruction.md §1/§2, docs/sat_ilp_reduction.md §1.2, docs/synthesis_gap_analysis.md §1, this file §2/§5):**
+* BBMST22 square-free theorem (`Invent. Math. 230`, `arXiv:1811.03547` + `1901.11465`), HoNi19 `2|d ∨ 3|d` (`Duke 168`, `arXiv:1703.02133`), BBMST refinement `9|L ∨ 15|L`, folklore abundant `σ(L)≥2L → L≥945=3³·5·7` — all PASS on `erdosproblems.com/7` live check (final_verification §5) and **not contradicted** by vibemathed (cites same primary source). Vibemathed adds **no new theorem** beyond that source.
+* References delta: **none** — vibemathed cites only `erdosproblems.com/7`; no new arXiv/OEIS/computational benchmark vs docs refs (`Sc67`, `FFK00`, `Hough 2015`, `A005231`, `Zenodo 18360978` already cited). No SAT/ILP benchmarks (cost `—`).
+* Computational benchmarks delta: **none** — vibemathed provides no CNF/ILP sizes, no `L=945` subset counts (docs SAT `V=1919–5807`, `∏d≈10^{23}–10^{34}`, subsets `67/431/85/1709` after `∑1/d≥1` filter remain authoritative; see `final_verification.md` §3 Gap2).
+* Alternative formulations delta: **none** — `>1` clarification matches existing `>1`; `>111` is rendering artifact, not a new modulus lower bound (no impact on `L≥945` sieve/SAT analysis). Bounty remains `$25` VERIFIABLE Open on erdosproblems.com (Bloom 22 Jan 2026); vibemathed `12/100` is catalog significance, not bounty.
+* Status delta: vibemathed `Proved→Retracted/Contested` is **consistent** with docs `OPEN (VERIFIABLE)` (synthesis §7) and `final_verification.md` Gap1/§6 operator exactness `c_N=c0∏U`, `c0≈0.098`, `cN≈0.612<1` vs false axiom `sieveProd=∏(1+x/s)<1` impossible (`>1`). Vibemathed’s `Aristotle/Harmonic 2026-05-07` provenance corroborates sieve doc posts `#6183/#6298/#6302/#6316` (jinooklee `updateFactor`/`sieveProd` false axiom, natso26 refutation, Bloom block) already isolated in Theorem 4.6.
+
+**Delta summary:** **No corrections required** to Gaps 1–4 or integrated state. Vibemathed provides independent provenance for failed 2026 AI claim + audit, reinforcing obstruction (naive `p^e-1≥p-1` monotone heuristic invalid without `c0^{pow}`/`δ^{pow}` re-derivation). Integrated verification remains `VERIFIED with corrigenda (non-blocking)` per §8 boxed conclusion. This addendum + `sieve_extension_obstruction.md` §0 live-source table + `synthesis_gap_analysis.md` §10 corrigendum jointly satisfy vibemathed cross-check.
+
+*End of addendum.*
+
 *End of final verification.*
