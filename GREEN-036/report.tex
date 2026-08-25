@@ -47,7 +47,13 @@ that membership correlations, not pseudorandomness, govern $\A$; and (iv) a
 residue-class census showing that among all moduli $m\le500$, only $m=3$
 yields a proper closed residue set, so no improvement on the bound $2/3$ is
 known. All computational claims are exactly verified by the accompanying
-script; proved, computed, and heuristic statements are labeled throughout.
+scripts; proved, computed, and heuristic statements are labeled throughout.
+An attack iteration additionally proves two obstructions --- an affine-image
+overlap collapse $S(B)=\frac{1}{\pi^2}(\log B)^3+O((\log B)^2)$ and a
+multiplication-table cap (Erd\H{o}s/Ford) ruling out one-step bootstraps ---
+plus complement rigidity along primes and the exact powers-of-two membership
+pattern up to $2^{40}$; the problem remains open, with the decisive gap now
+isolated.
 \end{abstract}
 
 \section{Problem statement and status}\label{sec:problem}
@@ -438,12 +444,150 @@ the proven growth floor is $(\ln N)^2/(4\ln^22)$. Finding any genuinely new
 constraint---larger-modulus rigidity, $p$-adic restrictions, or complement
 stability---would constitute real progress on GREEN-036.
 
+The attack iteration of Section~\ref{sec:attack} adds two rigorous
+obstructions (image-overlap collapse; multiplication-table cap), rigidity
+lemmas for complements along primes, and an exact computed membership pattern
+for powers of two; it also isolates the single open statement (the GAP below)
+that separates the current technology from a resolution.
+
+\section{Attack iteration: obstructions and rigidity}\label{sec:attack}
+
+Throughout, $T_b(x)=bx-1$ for $b\in\A$.
+
+\subsection{L1: image counting cap}
+
+\begin{proposition}[exact image sizes and overlaps]\label{prop:L1}
+For $b\ge2$: $|T_b(\A)\cap[1,N]|=\F(\lfloor (N+1)/b\rfloor)$ exactly, and for
+$b_1\ne b_2$,
+$\;|(T_{b_1}\A)\cap(T_{b_2}\A)\cap[1,N]|\le\lfloor (N+1)/\operatorname{lcm}(b_1,b_2)\rfloor$.
+\end{proposition}
+
+\begin{proof}
+$T_b$ is injective and $T_b(a)\le N \iff a\le(N+1)/b$, giving the first claim.
+An element of the intersection satisfies $x+1=b_1a_1=b_2a_2\le N+1$, hence is
+one below a multiple of $\operatorname{lcm}(b_1,b_2)$; multiples of $L$ in
+$[1,N+1]$ number exactly $\lfloor(N+1)/L\rfloor$.
+\end{proof}
+
+\begin{proposition}[overlap load]\label{prop:overlap}
+Let $\displaystyle S(B)=\sum_{2\le b_1<b_2\le B}\frac{\gcd(b_1,b_2)}{b_1b_2}$.
+Then $\;S(B)=\frac{1}{\pi^2}(\log B)^3+O((\log B)^2)$.
+\end{proposition}
+
+\begin{proof}
+Using $\gcd(m,n)=\sum_{d\mid\gcd(m,n)}\varphi(d)$,
+\[
+\sum_{m,n\le B}\frac{\gcd(m,n)}{mn}
+=\sum_{d\le B}\frac{\varphi(d)}{d^2}\,H_{\lfloor B/d\rfloor}^{\,2},
+\qquad
+\sum_{d\le B}\frac{\varphi(d)}{d^2}=\frac{6}{\pi^2}\log B+O(1),
+\]
+and $H_{\lfloor B/d\rfloor}^2=(\log(B/d))^2+O(\log(B/d))$; integrating the
+quadratic against the logarithmic density gives $(2/\pi^2)(\log B)^3/3$
+before halving to ordered pairs $m<n$.
+\end{proof}
+
+Bonferroni on Propositions~\ref{prop:L1}--\ref{prop:overlap} yields a
+deterministic lower bound for unions of affine images whose positive part
+collapses once $(\log B)^3/\pi^2\gtrsim\delta\log B$. Even under the optimistic
+ansatz $\F(M)\approx\delta M$, images of a dense low-scale region therefore
+cannot certify density growth: pairwise overlap mass is \emph{cubic} in
+log-scale while image mass is only linear. Finite evidence at $X=2\cdot10^6$:
+$|(3\A{-}1)\cap(5\A{-}1)\cap[1,X]|=132{,}814\le133{,}333$ --- near-tight
+(99.6\%), so these overlaps are structural, not accidental.
+
+\subsection{L2: multiplication-table cap; no one-step bootstrap}
+
+\begin{theorem}[Erd\H{o}s 1960; quantitative form by Ford, Annals 2008]
+With $M(N)=|\{ab:\ 1\le a,b\le N\}|$ distinct products,
+\[
+M(N)\asymp\frac{N^2}{(\log N)^{\delta_F}}(\log\log N)^{3/2},
+\qquad
+\delta_F=1-\frac{1+\log\log 2}{\log 2}\approx0.08607 .
+\]
+\end{theorem}
+
+Ford counts products over the full square $[1,N]^2$; restricting to any
+$S\times S$, $S\subseteq[2,N]$, only shrinks the set, and $ab\mapsto ab-1$ is a
+bijection on values. Hence:
+
+\begin{corollary}[obstruction]\label{cor:L2}
+For every $S\subseteq[2,N]$:
+$|\{ab-1:\ a,b\in S\}\cap[1,N^2]|\le M(N)=o(N^2)$.
+One closure step applied to an arbitrary dense seed produces relative density
+$o(1)$ at height $N^2$: no implication
+$\F(N)\ge\delta N\Rightarrow F(N^2)\ge\Phi'(\delta)N^2$ follows from the
+closure rule alone. Density at height $N^2$ must be built through
+$\sim\log N$ intermediate scales.
+\end{corollary}
+
+This kills the naive forms of interval-coverage and product-set bootstrapping.
+
+\subsection{L3: complement propagation along primes}
+
+\begin{proposition}\label{prop:L3}
+If $p\notin\A$ is prime then $pq-1\notin\A$ for every prime $q$.
+\end{proposition}
+
+\begin{proof}
+If $pq-1\in\A$ then $pq=ab$ with $a,b\in\A$, $a,b\ge2$; the only factorizations
+of the semiprime $pq$ into two factors $\ge2$ are $(p,q)$ and $(q,p)$, forcing
+$p\in\A$. \end{proof}
+
+Anchor: $11\notin\A$, since $12=2\cdot6=3\cdot4$ and $4\notin\A$ (5 prime),
+$6\notin\A$ (7 prime). All $9{,}592$ numbers $\{11q-1:\ q\le10^5\text{ prime}\}$
+are outside $\A$ (finite evidence). Every family produced this way has
+counting function $O(N/\log N)$: complements generated by propagation have
+density $0$ and cannot obstruct $d(\A)>0$; route 2 yields structure, not a
+zero-density mechanism.
+
+\subsection{L4: the 2-chain test and prime rigidity}
+
+\begin{proposition}\label{prop:L4}
+For $m\ge2$: $\;2m-1\in\A$ iff $m\in\A$ or some divisor pair $(a,b)$ of $2m$
+with $\{a,b\}\ne\{2,m\}$ satisfies $a,b\in\A$. In particular, if $p\ge5$ is
+prime, then $p\in\A\iff qp-1\in\A$ for every prime $q\ne p$.
+\end{proposition}
+
+\begin{proof}
+Immediate from the divisor-pair characterization applied to $2m$: its pairs
+are $(2,m),(m,2)$ and $(d,2m/d)$ over further divisors; for prime $p$, all
+pairs of $2p$ and of $qp$ involve $p$ itself.
+\end{proof}
+
+\subsection{L5: powers of two (finite evidence)}
+
+Exact memoized recursion on divisor pairs gives, for $k\le40$:
+\[
+2^k\in\A \iff k\in\{1,3,9,15,17,21,23,25,27,29,33,35,39\}.
+\]
+No even $k>0$ occurs; for odd $k$, $3\mid 2^k+1$ and membership cascades
+through $(2^k+1)/3$ with unbounded certificate depth --- e.g.
+$512\in\A$ via $513=3\cdot171$, $172=2\cdot86$, $87=3\cdot29$, $30=2\cdot15$,
+$16=2\cdot8$, $9=3\cdot3$ (depth $\ge5$). A shallow hand analysis claiming
+$\{1,3\}$ only was falsified by this computation: no bounded-depth local rule
+captures $\A$.
+
+\subsection{The GAP}
+
+The single statement blocking all routes:
+\begin{quote}
+no method is known to lower-bound the count of $n\le X$ for which $n+1$ has a
+divisor pair in $\A\times\A$ beyond the $O((\log X)^2)$ families of
+Lemma~B; positive density requires $\ge cX$ such $n$.
+\end{quote}
+Status after this iteration: \textbf{STILL OPEN}, with sharpened obstruction
+theory.
+
 \section*{Computational reproducibility}
 All results are regenerated by the standard-library-only script
 \texttt{verify\_solution.py} (argument $X$, default $10^7$; production run
 $X=10^8$, $6$ min $31$ s, nine of nine checks passed). Artifacts:
 \texttt{data/census\_summary.json}, \texttt{data/census.csv.gz} (first
 $10^6$ elements), captured console output reproduced in the Appendix.
+The targeted structural checks of Section~\ref{sec:attack} (powers of two,
+hole families, lcm intersection bounds) are regenerated by
+\texttt{attack\_verify.py}; its output is reproduced in the Appendix as well.
 The complete dossier is version-controlled at
 \begin{center}
 \url{https://github.com/GamebP/MathProblems/tree/main/GREEN-036}
@@ -503,6 +647,29 @@ GREEN-036 verification run, X = 100000000
 [PASS] DENSITY-TREND  F/N still rising: 0.5493 -> 0.5594 (question OPEN)
 ------------------------------------------------------------------------
 9/9 checks passed.  Problem GREEN-036 remains OPEN; this run establishes computational evidence only.
+\end{verbatim}
+\normalsize
+
+\section{Verbatim attack-check output (\texttt{attack\_verify.py}, $X=2\cdot10^6$)}
+\tiny
+\begin{verbatim}
+GREEN-036 attack checks — every output below is FINITE EVIDENCE
+======================================================================
+[0] census rebuilt to X=2000000: F(X)=1080418
+(i) 2^k in A for k<=40: k in [1, 3, 9, 15, 17, 21, 23, 25, 27, 29, 33, 35, 39]   (FINITE EVIDENCE, k range 1..40)
+(ii) 11 in A: False
+(ii) holes 11q-1 (q prime <= 1e5): 9592 tested, 0 members of A (expect 0)   (FINITE EVIDENCE)
+(iii) b=(2,3) lcm=6: |intersection|=324421 <= floor((X+1)/lcm)=333333  [OK]   (FINITE EVIDENCE)
+(iii) b=(2,5) lcm=10: |intersection|=132779 <= floor((X+1)/lcm)=200000  [OK]   (FINITE EVIDENCE)
+(iii) b=(3,5) lcm=15: |intersection|=132814 <= floor((X+1)/lcm)=133333  [OK]   (FINITE EVIDENCE)
+(iii) b=(8,9) lcm=72: |intersection|=27675 <= floor((X+1)/lcm)=27777  [OK]   (FINITE EVIDENCE)
+(iv) 19 in A: False (expect False)   (FINITE EVIDENCE)
+(iv) 25 in A: False (expect False)   (FINITE EVIDENCE)
+(iv) 205 in A: False (expect False)   (FINITE EVIDENCE)
+(iv) 1024 in A: False (expect False)   (FINITE EVIDENCE)
+(iv) support facts: 41 in A: True ; 14 in A: True ; 13 mod 3 = 1; 103 mod 3 = 1
+======================================================================
+done
 \end{verbatim}
 \normalsize
 

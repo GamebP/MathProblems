@@ -374,12 +374,55 @@ story.append(P("<b>[OPEN]</b> To prove d(A) &gt; 0 one wants F(N) &gt;= cN, "
                "(ln N)^2/(4 ln^2 2). Any genuinely new constraint - larger-"
                "modulus rigidity, p-adic restrictions, complement stability - "
                "would constitute real progress on GREEN-036."))
+
+# ----------------------------------------------------------------------
+# 9 attack iteration (obstructions + rigidity)
+# ----------------------------------------------------------------------
+story.append(P("9. Attack iteration: obstructions and rigidity", S_H1))
+story.append(P("<b>L1 (image counting cap).</b> T_b(x) = bx - 1 is injective, so "
+               "|T_b(A) cap [1,N]| = F(floor((N+1)/b)) exactly; and "
+               "|(T_b1 A) cap (T_b2 A) cap [1,N]| &lt;= floor((N+1)/lcm(b1,b2)). "
+               "The pairwise overlap load over seeds b &lt;= B satisfies "
+               "S(B) = sum gcd(b1,b2)/(b1 b2) = (1/pi^2)(log B)^3 + O((log B)^2) "
+               "(phi-identity), so Bonferroni's positive part collapses once "
+               "(log B)^3 / pi^2 &gt;~ delta log B: images of a dense low-scale "
+               "region cannot certify density growth. Finite evidence at "
+               "X = 2e6: |(3A-1) cap (5A-1)| = 132,814 &lt;= 133,333 (99.6% tight)."))
+story.append(P("<b>L2 (multiplication-table cap; no one-step bootstrap).</b> By "
+               "Erdos 1960 (quantified by Ford, Annals 2008): M(N) = |{ab: a,b &lt;= N}| "
+               "= N^2/(log N)^delta_F (log log N)^{3/2}, delta_F = 1 - (1+log log 2)/log 2 "
+               "= 0.08607. Restricting to any S x S, S subset [2,N], only shrinks the "
+               "table and ab -&gt; ab - 1 is a value bijection; hence one closure step on "
+               "ANY dense seed yields relative density o(1) at height N^2. No implication "
+               "F(N) &gt;= delta N =&gt; F(N^2) &gt;= Phi'(delta) N^2 follows from the closure rule "
+               "alone: density at height N^2 must be built through ~log N intermediate scales."))
+story.append(P("<b>L3 (complement propagation along primes).</b> If p is prime and "
+               "p notin A, then pq - 1 notin A for every prime q (semiprime pq has no "
+               "other factor pairs). Anchor: 11 notin A since 12 = 2*6 = 3*4 with 4, 6 out. "
+               "All 9,592 numbers 11q - 1 (q prime &lt;= 1e5) are outside A (finite "
+               "evidence). Such families count O(N/log N): propagation complements have "
+               "density 0 and cannot obstruct d(A) &gt; 0."))
+story.append(P("<b>L4 (2-chain test; prime rigidity).</b> For m &gt;= 2: 2m - 1 in A iff "
+               "m in A or some other divisor pair (a,b) of 2m lies in A x A. In particular "
+               "for primes p &gt;= 5: p in A &lt;=&gt; qp - 1 in A for every prime q != p."))
+story.append(P("<b>L5 (powers of two; finite evidence).</b> Exact memoized recursion gives, "
+               "for k &lt;= 40: 2^k in A iff k in {1, 3, 9, 15, 17, 21, 23, 25, 27, 29, 33, 35, 39}. "
+               "No even k &gt; 0 occurs; odd k cascade through (2^k+1)/3 with unbounded "
+               "certificate depth - e.g. 512 in A via 513 = 3*171, 172 = 2*86, 87 = 3*29, "
+               "30 = 2*15, 16 = 2*8, 9 = 3*3 (depth &gt;= 5). No bounded-depth local rule captures A."))
+story.append(P("<b>The GAP.</b> Nothing lower-bounds the count of n &lt;= X for which n+1 has "
+               "a divisor pair in A x A beyond the O((log X)^2) families of Lemma B; positive "
+               "density requires at least cX such n. Status after this iteration: STILL OPEN, "
+               "with sharpened obstruction theory.", S_NOTE))
+
 story.append(P("<b>Reproducibility.</b> Everything regenerates by "
                "python3 verify_solution.py [X] (default X = 10^7, about 20 s; "
                "production X = 10^8, 6.5 min, nine of nine checks passed). "
                "Artifacts: data/census_summary.json, data/census.csv.gz (first "
-               "10^6 elements), data/run_output.txt reproduced verbatim in the "
-               "Appendix. Standard library only; deterministic.", S_NOTE))
+                "10^6 elements), data/run_output.txt reproduced verbatim in the "
+                "Appendix; targeted structural checks regenerate by "
+                "attack_verify.py (output also in the Appendix). Standard "
+                "library only; deterministic.", S_NOTE))
 story.append(P("The complete dossier is version-controlled at "
                '<link href="https://github.com/GamebP/MathProblems/tree/main/GREEN-036">'
                "https://github.com/GamebP/MathProblems/tree/main/GREEN-036</link>, "
@@ -394,6 +437,19 @@ story.append(P("Appendix. Verbatim verifier output (production run, X = 10^8)",
                S_H1))
 wrapped = []
 for line in RUNLOG.splitlines():
+    line = line.rstrip()
+    if len(line) <= 118:
+        wrapped.append(line)
+    else:
+        wrapped.extend(textwrap.wrap(line, 118, subsequent_indent="      ",
+                                     drop_whitespace=False))
+story.append(Preformatted("\n".join(wrapped), S_MONO))
+
+ATTACKLOG = (HERE / "data" / "attack_output.txt").read_text()
+story.append(P("Appendix B. Verbatim attack-check output (attack_verify.py, X = 2e6)",
+               S_H1))
+wrapped = []
+for line in ATTACKLOG.splitlines():
     line = line.rstrip()
     if len(line) <= 118:
         wrapped.append(line)
