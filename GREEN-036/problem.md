@@ -35,6 +35,9 @@ d(A) = lim_{N→∞} |A ∩ [1, N]| / N  > 0 ?
 |---|---|
 | `README.md` | entry point: results at a glance + reproduction |
 | `notes.md` | derivation log: proofs, heuristic, numerics |
+| `next.md` | research brief for the density-resolution attack |
+| `attack.md` | attack iteration 1: obstructions L1-L2, rigidity L3-L4, powers-of-2 census, GAP statement |
+| `attack_verify.py` | targeted checks behind attack.md (finite evidence) |
 | `verify_solution.py` | exact census + all checks (CLI bound X, default 10^7) |
 | `data/run_output.txt` | verbatim captured output of the production run at X = 10^8 |
 | `data/census_summary.json` | machine-readable results of the production run |

@@ -1,0 +1,17 @@
+GREEN-036 attack checks — every output below is FINITE EVIDENCE
+======================================================================
+[0] census rebuilt to X=2000000: F(X)=1080418
+(i) 2^k in A for k<=40: k in [1, 3, 9, 15, 17, 21, 23, 25, 27, 29, 33, 35, 39]   (FINITE EVIDENCE, k range 1..40)
+(ii) 11 in A: False
+(ii) holes 11q-1 (q prime <= 1e5): 9592 tested, 0 members of A (expect 0)   (FINITE EVIDENCE)
+(iii) b=(2,3) lcm=6: |intersection|=324421 <= floor((X+1)/lcm)=333333  [OK]   (FINITE EVIDENCE)
+(iii) b=(2,5) lcm=10: |intersection|=132779 <= floor((X+1)/lcm)=200000  [OK]   (FINITE EVIDENCE)
+(iii) b=(3,5) lcm=15: |intersection|=132814 <= floor((X+1)/lcm)=133333  [OK]   (FINITE EVIDENCE)
+(iii) b=(8,9) lcm=72: |intersection|=27675 <= floor((X+1)/lcm)=27777  [OK]   (FINITE EVIDENCE)
+(iv) 19 in A: False (expect False)   (FINITE EVIDENCE)
+(iv) 25 in A: False (expect False)   (FINITE EVIDENCE)
+(iv) 205 in A: False (expect False)   (FINITE EVIDENCE)
+(iv) 1024 in A: False (expect False)   (FINITE EVIDENCE)
+(iv) support facts: 41 in A: True ; 14 in A: True ; 13 mod 3 = 1; 103 mod 3 = 1
+======================================================================
+done
