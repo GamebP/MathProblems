@@ -44,6 +44,7 @@ Standard library only, deterministic, no network. Artifacts land in `data/`.
 | `next.md` | research brief: resolve the density question itself |
 | `attack.md` | attack iteration 1: obstruction theory (L1–L5) + gap analysis |
 | `attack_verify.py` | targeted structural checks (powers of 2, hole families, lcm bounds) |
+| `attack2.md` | attack iteration 2: AP-hole theorem T1, doubling recurrence T3, rescue phenomenon |
 | `verify_solution.py` | exact DP census + all checks (CLI bound X) |
 | `generate_pdf.py` / `report.pdf` | pure-Python (reportlab) PDF build |
 | `report.tex` | standalone LaTeX mirror (inline appendix verbatim) |

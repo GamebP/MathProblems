@@ -1,0 +1,12 @@
+GREEN-036 attack-2 checks — FINITE EVIDENCE unless stated PROVEN
+======================================================================
+[T2] 4q-1, q==5 mod 6, q<20000: 1136 tested, 0 in A (PROVEN expect 0); all n==1 mod 3: True
+[T1] M=5,r=2: p=31 (prime ==1 mod 15 => PROVEN notin A), q prime ==3 mod 5 (<6e4): 1516 values pq-1, 1516 confirmed holes, 0 members (PROVEN expect 0).
+[T1] first holes: [92, 402, 712, 1332, 1642, 2262, 2572, 3192]
+[R] 116 in A: True (rescued via pair (3,39)); 39 in A: True; 13 in A: False
+[R] refuted-conjecture witness 364=7*13*4=14*26: sides 14,26 in A: True,True; 363 in A: True
+[T3] doubling recurrence valid at N=1e3..1e6: True, margins [(1000, 262), (10000, 2618), (100000, 26083), (1000000, 261658)]
+[T3] relative form delta(2N)>=13delta/12-1/8-O(1/N) at 1e5,1e6: True
+[A] Lemma A violations in census to 2000000: 0
+======================================================================
+done
