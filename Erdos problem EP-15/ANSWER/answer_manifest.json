@@ -78,7 +78,9 @@
     "Erdos problem EP-15/ANSWER/answer_manifest.json",
     "Erdos problem EP-15/verify_solution.py",
     "Erdos problem EP-15/ep15_partial_sums.py (pre-existing probe)",
-    "Erdos problem EP-15/results.json (pre-existing fixed-point records)"
+    "Erdos problem EP-15/results.json (pre-existing fixed-point records)",
+    "ANSWER/report.tex",
+    "ANSWER/report.pdf"
   ],
   "review": {
     "reviewer": "internal adversarial self-audit (mandated @reviewer delegation unavailable: environment subagent depth limit reached; limitation recorded here)",
