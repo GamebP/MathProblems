@@ -1,0 +1,44 @@
+{
+  "claim_id": "GREEN-028",
+  "problem": "Let p be an odd prime, G=F_p^n, f:G x G -> C with |f|<=1. Suppose E_h ||Delta_(h,h) f||_square^4 >= delta. Does f correlate with a function of the form a(x)b(y)c(x+y)(-1)^{q(x,y)}, where a,b,c:G->C unimodular and q polynomial?",
+  "verdict": "UNRESOLVED",
+  "direct_answer": "The requested correlation statement remains open; no proof and no counterexample are known.",
+  "proof_status": "not obtained",
+  "counterexample_status": "not found (numerical search for $p=5,7$ found no counterexample but is not exhaustive)",
+  "unconditional_results": [
+    {
+      "id": "R1",
+      "name": "Spectral reformulation (Proposition A)",
+      "statement": "With $B_f(x_1,x_2,y_1,y_2)=f(x_1,y_1)\\overline{f(x_2,y_1)}\\,\\overline{f(x_1,y_2)}f(x_2,y_2)$ on $G^4$ and $\\Xi_0=\\{(\\xi_1,\\xi_2,\\xi_3,\\xi_4)\\in\\widehat{G}^{\\,4}:\\ \\xi_1+\\xi_2+\\xi_3+\\xi_4=0\\}$, one has $$\\mathbb{E}_h\\,\\|\\Delta_{(h,h)}f\\|_\\square^4\\;=\\;\\sum_{\\xi\\in\\Xi_0}\\bigl|\\widehat{B_f}(\\xi)\\bigr|^2.$$ The hypothesis says exactly that the four-point box product $B_f$ carries Fourier $L^2$-mass at least $\\delta$ on the zero-sum-frequency subsystem $\\Xi_0$, of codimension $n$ in $\\widehat{G^4}$. Machine-checked at $(p,n)=(3,1),(3,2),(5,1)$ with residuals between $1.11\\times10^{-16}$ and $6.11\\times10^{-16}$ and Parseval diagnostic total Fourier mass equal to $1$ at every size."
+    },
+    {
+      "id": "R2",
+      "name": "Multiplicative calculus of the target class",
+      "statement": "(i) For $n=1$ every quadratic phase absorbs into the three one-variable factors: $Q(x,y)=\\alpha(x)+\\beta(y)+\\gamma(x+y)+\\kappa$ via $xy=\\bigl((x+y)^2-x^2-y^2\\bigr)/2$, valid for odd $p$. (ii) For $n\\ge2$ the monomial $x_1y_2$ admits no such representation (mixed finite differences force $w_1s_2=s_1w_2$ for all $s,w$, false at $s=e_2$, $w=e_1$), so the phase genuinely enlarges the class. (iii) Factorization: $\\|a(x)b(y)w(x+y)\\|_\\square^4=\\|w\\|_{U^2(G)}^4$ for unimodular $a,b$. (iv) Reduction: for $f=a(x)b(y)c(x+y)$, $$\\mathbb{E}_h\\|\\Delta_{(h,h)}f\\|_\\square^4=\\mathbb{E}_h\\|\\Delta_{2h}c\\|_{U^2(G)}^4=\\|c\\|_{U^3(G)}^8,$$ so inside the class the hypothesis is precisely a Gowers $U^3$ condition, and the inverse theorem for $U^3$ over $\\mathbb{F}_p^n$ explains every class member obeying it by a quadratic phase. The reduction identity was measured to residual $2.220\\times10^{-16}$ at $(p,n)=(3,1)$."
+    },
+    {
+      "id": "R3",
+      "name": "Diagonal family and twisted trilinear inequality (Observation C)",
+      "statement": "For every unimodular $d\\colon G\\to\\mathbb{C}$, $f(x,y)=d(x-y)$ satisfies $\\Delta_{(h,h)}f\\equiv 1$, hence meets the hypothesis with $\\delta=1$. Under the bijection $x=(m+s)/2$, $y=(m-s)/2$ (valid since $p$ is odd), correlation against the target class becomes $$\\Bigl|\\;\\mathbb{E}_{s,m}\\;d(s)\\,\\overline{a\\bigl(\\tfrac{m+s}{2}\\bigr)}\\,\\overline{b\\bigl(\\tfrac{m-s}{2}\\bigr)}\\,\\overline{c(m)}\\;e_p\\!\\bigl(-Q\\bigl(\\tfrac{m+s}{2},\\tfrac{m-s}{2}\\bigr)\\bigr)\\;\\Bigr|;$$ at $n=1$ the twist absorbs by (ii), so the maximal-hypothesis case of the problem is exactly a uniform positive lower bound for this trilinear correlation over all unimodular $d$, which is open."
+    },
+    {
+      "id": "R4",
+      "name": "Rigidity: sufficiency half of rank-one diagonal increments (Theorem D)",
+      "statement": "If $f=a(x)b(y)d(x-y)e_p(Q)$ with $Q(z)=\\tfrac12 z^{T}Mz+l^{T}z+\\kappa$ quadratic on $G\\times G$, then $$\\Delta_{(h,h)}f(x,y)=\\alpha_h(x)\\,\\beta_h(y)\\,e_p(\\omega_h),$$ with $\\alpha_h(x)=a(x+h)\\overline{a(x)}\\,e_p\\bigl(((M_{xx}{+}M_{xy})h)^{T}x\\bigr)$, $\\beta_h(y)=b(y+h)\\overline{b(y)}\\,e_p\\bigl(((M_{yx}{+}M_{yy})h)^{T}y\\bigr)$, $\\omega_h=\\tfrac12(h,h)^{T}M(h,h)+l^{T}(h,h)$; verified to maximal deviation $5.118\\times10^{-16}$ over all $(h,x,y)$ at $(p,n)=(5,1)$. Sharpness: multiplication by the cubic mixed phase $e_p(xy^2)$ destroys rank-one factorization for $4$ of $5$ directions (fraction $0.8$). The converse classification reduces to the multiplicative parallelogram equation $\\Theta(u+w,v+t)\\Theta(u-w,v-t)=\\Theta(u+t,v-w)\\Theta(u-t,v+w)$ and remains open. Structurally, the natural rigidity family $\\{a\\,b\\,d(x-y)e_p(Q)\\}$ differs from the transmitted class $\\{a\\,b\\,c(x+y)(-1)^q\\}$ once $n\\ge2$, since $e_p(\\lambda x_1y_2)$ belongs to the former but not to the absorbable span of the latter."
+    },
+    {
+      "id": "R5",
+      "name": "Small-field numerics: degrees-of-freedom-dominated regime",
+      "statement": "Maximizing $M(d)=\\sup\\bigl|\\mathbb{E}_{x,y}\\,d(x-y)\\overline{a(x)}\\,\\overline{b(y)}\\,\\overline{c(x+y)}\\bigr|$ over unimodular factors (which dominates the full stated class when $n=1$) by alternating phase maximization from $1000$ random restarts: for $d=e_p(s^3)$ the best correlation is $0.7236067977499792$ at $p=5$ (mean $0.7225012249409789$, sd $0.01745$) and $0.6772769730217724$ at $p=7$ (mean $0.6758013999033685$, sd $0.01399$); random-exponent controls give $0.7236067977499792$ ($p=5$) and $0.8160210786702251$ ($p=7$); the control $d=e_p(2s^2)$ attains correlation exactly $1$ via the witness $e_p(4x^2)e_p(4y^2)e_p(-2s^2)$ (a naive witness yields the Gauss-sum value $1/\\sqrt{p}$, recorded as erratum). At $n=1$, $p\\in\\{5,7\\}$, optima cluster in $0.68$--$0.82$ irrespective of structure: $3p$ unimodular degrees of freedom dominate $p^2$ constraints, so these sizes exhibit no separation between structured and random diagonal data and give neither evidence for nor against asymptotic decay."
+    }
+  ],
+  "missing_bridge": "The Fourier-mass hypothesis on $B_f$ is not known to imply algebraic correlation with the infinite-dimensional target class; no known implication from the spectral condition to correlation exists.",
+  "scope": "General theorem for all odd primes $p$ and dimensions $n$; partial results hold where stated.",
+  "evidence_refs": [
+    "report.tex",
+    "verify_solution.py",
+    "data/experiment_p5_n1.txt",
+    "data/experiment_p7_n1.txt",
+    "UnsolvedMath GREEN-028"
+  ]
+}

@@ -1,0 +1,62 @@
+% LaTeX-ready body text for the Evidence section.
+% Contract: this file contains pure mathematical LaTeX (no code, no logs, no
+% paths); it is embedded verbatim.
+
+All quantitative claims below were obtained by deterministic computation in
+exact rational, modular, and high-precision floating-point arithmetic; every
+identity was recomputed from its definition on both sides rather than asserted.
+
+\subsection{Identity checks}
+\begin{itemize}
+\item \textbf{Spectral reformulation.} With $\{\pm1\}$-valued random data the
+two sides of \eqref{eq:spectral} were computed independently: at $(p,n)=(3,1)$
+the values $0.6049382716049383$ and $0.6049382716049382$ agree to
+$1.11\times10^{-16}$; at $(3,2)$, $0.307422648986435$ and
+$0.3074226489864356$ agree to $6.11\times10^{-16}$; at $(5,1)$, $0.45728$ and
+$0.4572800000000002$ agree to $1.67\times10^{-16}$. The Parseval diagnostic
+$\sum_{\xi\in\widehat{G^4}}|\widehat{B_f}(\xi)|^2=1$ held at all three sizes.
+\item \textbf{Class reduction.} At $(p,n)=(3,1)$ with random unimodular
+factors, both sides of
+$\mathbb{E}_h\|\Delta_{(h,h)}[abc]\|_\square^4=\|c\|_{U^3(G)}^8$ evaluated to
+$0.9999999999999997$ and $0.9999999999999999$, agreeing to
+$2.220\times10^{-16}$.
+\item \textbf{Absorption.} Gaussian elimination over $\mathbb{F}_p$ produced
+consistent coefficient systems with zero pointwise mismatches on random tests
+at $(p,n)=(3,1),(5,1),(5,2)$ for symmetric cross-blocks; a forced asymmetric
+cross-block at $(5,2)$ produced an inconsistent system whose rank falls one
+equation short, confirming the obstruction of Step 2 quantitatively.
+\item \textbf{Rigidity splitting.} At $(p,n)=(5,1)$ the explicit rank-one
+splitting held over all triples $(h,x,y)$ with maximal deviation
+$5.118\times10^{-16}$ from the product of its two factors; after multiplication
+by $e_p(xy^{2})$, four of the five shifts admitted no rank-one factorization
+(fraction $0.8$, measured by the $2\times2$ minor test).
+\end{itemize}
+
+\subsection{Correlation experiment}
+The maximal-hypothesis correlation
+$M(d)=\sup\bigl|\mathbb{E}_{x,y}\,d(x-y)\overline{a(x)}\,\overline{b(y)}\,
+\overline{c(x+y)}\bigr|$ over unimodular factors was optimized by alternating
+phase maximization from one thousand random restarts per configuration:
+\begin{center}
+\begin{tabular}{llr}
+\toprule
+target $d$ & statistic & value \\
+\midrule
+$e_5(s^{3})$ & best / mean / sd & $0.7236067977499792$ / $0.7225012249409789$ / $0.01745$ \\
+$e_7(s^{3})$ & best / mean / sd & $0.6772769730217724$ / $0.6758013999033685$ / $0.01399$ \\
+random exponents, $p=5$ & best & $0.7236067977499792$ \\
+random exponents, $p=7$ & best & $0.8160210786702251$ \\
+$e_p(2s^{2})$ (control) & exact correlation & $1$ exactly \\
+\bottomrule
+\end{tabular}
+\end{center}
+The quadratic control attains correlation exactly $1$ through the witness
+$a=e_p(4x^{2})$, $b=e_p(4y^{2})$, $c=e_p(-2s^{2})$, using
+$4x^{2}+4y^{2}-2(x+y)^{2}=2(x-y)^{2}$; a commonly guessed naive witness yields
+instead the Gauss-sum value $1/\sqrt{p}$, an instructive erratum recorded here.
+
+Interpretation: structured cubic targets behave indistinguishably from random
+targets at these sizes; the regime is dominated by the count of free
+parameters rather than by arithmetic structure, so the experiment provides no
+counterexample and no separation — consistent with, but not evidential for,
+either direction of the open problem.

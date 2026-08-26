@@ -1,0 +1,60 @@
+{
+  "claim_id": "GREEN-028",
+  "verdict": "UNRESOLVED",
+  "generated_at": "2026-08-26T07:20:52Z",
+  "manifest_sha256": "50fca6c9acc6b32241ef1641a162feba52142f6aeb39c96c5e5dc48477dac151",
+  "manifest_problems": [],
+  "evidence": [
+    {
+      "ref": "report.tex",
+      "kind": "file",
+      "sha256": "54570c3ab40cb03f8862747f321935acf314057b6a4e889f5ae42cc7a786e7e6",
+      "bytes": 33465
+    },
+    {
+      "ref": "verify_solution.py",
+      "kind": "file",
+      "sha256": "dd691bf517f807e89ee2e2f2290942ac298e3e3bd4ab7a7f5068603dc8afaece",
+      "bytes": 24651
+    },
+    {
+      "ref": "data/experiment_p5_n1.txt",
+      "kind": "file",
+      "sha256": "2586884d62bae2a9158f44436bd57d441b81ceaf448bcf5c34b965f46886c6e3",
+      "bytes": 40569
+    },
+    {
+      "ref": "data/experiment_p7_n1.txt",
+      "kind": "file",
+      "sha256": "50336e1d03d371e2345b5a60b576d700ea2daedb72e650b8bc67d0b862b61755",
+      "bytes": 41152
+    },
+    {
+      "ref": "UnsolvedMath GREEN-028",
+      "kind": "external"
+    }
+  ],
+  "verification_suite": {
+    "command": "/usr/bin/python3 verify_solution.py",
+    "exit_code": 0,
+    "seconds": 2.938,
+    "tail": [
+      "  wrote raw results -> /mnt/c/Users/SkyD/Desktop/skydash_xyz/math-problem-1/Gowers Box Norms over Finite Fields/data/experiment_p5_n1.txt",
+      "  p=7: cubic d(s)=e_p(s^3): best|corr|=0.677276973  mean=0.675801400  pstdev=1.399e-02",
+      "  p=7: random d (exp=[3, 5, 3, 0, 3, 3, 6]): best|corr|=0.816021079  mean=0.791705893  pstdev=6.470e-02",
+      "  p=7: control d(s)=e_p(2s^2), solved witness a=e_p(4x^2) b=e_p(4y^2) c=e_p(-2s^2): corr=1.0000000000000002  |corr-1|=2.220e-16",
+      "  p=7: [erratum note] brief's literal witness (2x^2,2y^2,-s^2) gives corr=0.3779644730092275 (=1/sqrt(7)), not 1; see data file note",
+      "  wrote raw results -> /mnt/c/Users/SkyD/Desktop/skydash_xyz/math-problem-1/Gowers Box Norms over Finite Fields/data/experiment_p7_n1.txt",
+      "============================================================================",
+      "SUMMARY",
+      "  CHECK 1 Proposition A spectral identity : PASS (all residuals <= 1e-9)",
+      "  CHECK 2 Proposition B factorization     : PASS",
+      "  CHECK 3 absorption, same-index          : PASS (0 mismatches all cases) | cross-coordinate obstruction reported verbatim above",
+      "  CHECK 4 Theorem D sufficiency           : PASS (< 1e-12)",
+      "  CHECK 5 negative perturbation           : MEASURED fraction failing h = 0.8",
+      "  CHECK 6 counterexample experiment       : COMPLETED (raw data written to data/)",
+      "EXIT 0"
+    ]
+  },
+  "consistent": true
+}

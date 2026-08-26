@@ -1,0 +1,111 @@
+% LaTeX-ready body text for the Derivation section.
+% Contract: this file contains pure mathematical LaTeX (no code, no logs, no
+% paths); it is embedded verbatim.
+
+\subsection{Setup and conventions}
+Throughout, $p$ is an odd prime, $G=\mathbb{F}_p^n$, $e_p(t)=\exp(2\pi i t/p)$,
+and $\mathbb{E}$ denotes the uniform average. The diagonal derivative and box
+norm are
+\[
+\Delta_{(h,h)}f(x,y)=f(x+h,y+h)\overline{f(x,y)},\qquad
+\|g\|_\square^4=\mathbb{E}_{x_1,x_2,y_1,y_2}\,
+g(x_1,y_1)\overline{g(x_2,y_1)}\,\overline{g(x_1,y_2)}\,g(x_2,y_2).
+\]
+The target class under study is
+$\{\,a(x)b(y)c(x+y)e_p(Q(x,y)) : a,b,c \text{ unimodular},\ Q \text{ quadratic}\,\}$,
+which contains both readings of $(-1)^{q(x,y)}$ as subclasses; every result
+below addresses this larger class.
+
+\subsection{Step 1: the hypothesis is a spectral mass condition}
+Let $B_f(x_1,x_2,y_1,y_2)=f(x_1,y_1)\overline{f(x_2,y_1)}\,
+\overline{f(x_1,y_2)}f(x_2,y_2)$. Expanding the box expression of
+$\Delta_{(h,h)}f$ term by term, the four shifted factors assemble to
+$B_f(z+(h,h,h,h))$ and the four conjugated unshifted factors to
+$\overline{B_f(z)}$, so with $u=(h,h,h,h)$,
+\[
+\|\Delta_{(h,h)}f\|_\square^4=\mathbb{E}_{z\in G^4}B_f(z+u)\overline{B_f(z)}
+=\sum_{\xi\in\widehat{G^4}}\bigl|\widehat{B_f}(\xi)\bigr|^2 e_p(\xi\cdot u).
+\]
+Averaging over $h$ retains exactly the characters with
+$\xi_1+\xi_2+\xi_3+\xi_4=0$:
+\begin{equation}\label{eq:spectral}
+\mathbb{E}_h\,\|\Delta_{(h,h)}f\|_\square^4
+=\sum_{\xi\in\Xi_0}\bigl|\widehat{B_f}(\xi)\bigr|^2 .
+\end{equation}
+The left side is nonnegative, and \eqref{eq:spectral} exhibits it as Fourier
+$L^2$-mass of $B_f$ on the zero-sum subsystem $\Xi_0$, of codimension $n$ in
+$\widehat{G^4}$.
+
+\subsection{Step 2: multiplicative calculus of the class}
+For odd $p$, $xy=\bigl((x+y)^2-x^2-y^2\bigr)/2$, whence for $n=1$ every
+quadratic $Q(x,y)=Ax^2+Bxy+Cy^2+Dx+Ey+F$ splits as
+$\alpha(x)+\beta(y)+\gamma(x+y)+\kappa$ with
+$\alpha=(A-\tfrac{B}{2})x^2+Dx$, $\beta=(C-\tfrac{B}{2})y^2+Ey$,
+$\gamma=\tfrac{B}{2}s^2$, $\kappa=F$: at $n=1$ the phase is redundant. For
+$n\ge2$ the monomial $x_1y_2$ obstructs: a mixed finite difference applied to
+a purported identity $x_1y_2=\alpha+\beta+\gamma+\kappa$ yields
+$\gamma(s+w)-\gamma(s)=w_1s_2$ up to constants, and symmetrizing in $(s,w)$
+forces $w_1s_2=s_1w_2$ for all $s,w$ — false at $s=e_2,w=e_1$. Next, against
+the box pattern the factors $a(x)b(y)$ cancel pairwise:
+\[
+\|a(x)b(y)w(x+y)\|_\square^4=\|w\|_{U^2(G)}^4 ,
+\]
+because $s_{ij}=x_i+y_j$ sweep every additive quadruple exactly once.
+Consequently, for $f=a(x)b(y)c(x+y)$,
+\[
+\mathbb{E}_h\|\Delta_{(h,h)}f\|_\square^4
+=\mathbb{E}_h\|\Delta_{2h}c\|_{U^2(G)}^4=\|c\|_{U^3(G)}^8 :
+\]
+inside the target class the hypothesis is precisely a Gowers $U^3$ condition,
+and the inverse theorem for $U^3$ over $\mathbb{F}_p^n$ explains every class
+member obeying it by a quadratic phase — confirming degree $2$ as the right
+target complexity within the class.
+
+\subsection{Step 3: the diagonal family and an equivalent inequality}
+Every $f=d(x-y)$ satisfies $\Delta_{(h,h)}f=d(x-y)\overline{d(x-y)}=1$, so the
+hypothesis holds with $\delta=1$. Under the bijection
+$x=(m+s)/2$, $y=(m-s)/2$, correlation of such $f$ with the class becomes
+\[
+\Bigl|\;\mathbb{E}_{s,m}\;
+d(s)\,\overline{a\bigl(\tfrac{m+s}{2}\bigr)}\,
+\overline{b\bigl(\tfrac{m-s}{2}\bigr)}\,\overline{c(m)}\,
+e_p\!\bigl(-Q\bigl(\tfrac{m+s}{2},\tfrac{m-s}{2}\bigr)\bigr)\;\Bigr| ;
+\]
+at $n=1$ the twist absorbs by Step 2, so the maximal-hypothesis case of the
+problem is exactly the open problem of a uniform positive lower bound for this
+trilinear correlation over all unimodular $d$.
+
+\subsection{Step 4: rigidity of rank-one diagonal increments}
+If $f=a(x)b(y)d(x-y)e_p(Q)$ with $Q(z)=\tfrac12 z^{T}Mz+l^{T}z+\kappa$ on
+$G\times G$, then $Q(z+\delta)-Q(z)=(M\delta)^{T}z+\tfrac12\delta^{T}M\delta
++l^{T}\delta$ has vanishing mixed $xy$ coefficient, while
+$d(x+h-(y+h))\overline{d(x-y)}=1$; hence
+\[
+\Delta_{(h,h)}f(x,y)
+=a(x+h)\overline{a(x)}\,e_p\bigl((Ph)^{T}x\bigr)\cdot
+ b(y+h)\overline{b(y)}\,e_p\bigl((Rh)^{T}y\bigr)\cdot e_p(\omega_h),
+\]
+with $P=M_{xx}+M_{xy}$, $R=M_{yx}+M_{yy}$,
+$\omega_h=\tfrac12(h,h)^TM(h,h)+l^T(h,h)$: pointwise rank-one increments.
+Multiplication by $e_p(xy^2)$ contributes the mixed term $2hxy$ and destroys
+the splitting for every $h\ne0$. The converse reduces to the parallelogram
+equation
+$\Theta(u+w,v+t)\Theta(u-w,v-t)=\Theta(u+t,v-w)\Theta(u-t,v+w)$ and remains
+open; the natural rigidity class $\{a\,b\,d(x-y)e_p(Q)\}$ differs from the
+transmitted class $\{a\,b\,c(x+y)(-1)^q\}$ once $n\ge2$, since
+$e_p(\lambda x_1y_2)$ belongs to the former but not to the absorbable span of
+the latter.
+
+\subsection{Step 5: what is missing}
+The spectral condition of Step 1 controls only aggregate Fourier mass of
+$B_f$ on $\Xi_0$, whereas the conclusion demands correlation with members of
+an infinite-dimensional threefold-factor class. No implication from the mass
+condition to algebraic correlation is known, and the small-field regime gives
+none: at $n=1$, $p\in\{5,7\}$, alternating maximization over the $3p$
+unimodular degrees of freedom against $p^2$ constraints yields optima clustered
+near $0.68$--$0.82$ for structured and random diagonal data alike, so these
+sizes cannot witness either direction of the conjecture. Closing the gap
+requires either a structure theorem extracting class membership from
+$\Xi_0$-mass (one route: settle the parallelogram-equation converse), or a
+counterexample family with decaying optimal correlation (related to slice and
+partition rank of the kernel $(s,m)\mapsto d(s)e_p(Q(s,m))$).
