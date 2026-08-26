@@ -1,0 +1,83 @@
+{
+  "problem": {
+    "id": "GREEN-081",
+    "title": "Covering by Random Translates",
+    "source_url": "https://www.unsolvedmath.com/problems/GREEN-081",
+    "primary_source": "Ben Green, 100 Open Problems, Problem 39, https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf",
+    "statement": "If A subset Z/pZ is random with |A| = sqrt(p), can we almost surely cover Z/pZ with 100*sqrt(p) translates of A?",
+    "site_status_checked": "2026-08-17 triage; Green: open even with constant 1.01"
+  },
+  "model": {
+    "group": "Z_p, p prime",
+    "A": "uniform random k-subset, k = floor(sqrt(p)) (fixed-cardinality model)",
+    "reading_RA": "the 100*sqrt(p) translates t_1..t_m are i.i.d. uniform random",
+    "reading_RB": "translates chosen optimally after seeing A; cov(A) = min{|B| : A+B = Z_p}; 'almost surely' over A only (Green's intended reading)"
+  },
+  "verdicts": {
+    "reading_RA_random_translates": {
+      "verdict": "DISPROVEN (asymptotically false)",
+      "theorem": "Theorem 1.6(i): for m = C*floor(sqrt(p)), any fixed C>0, the number X of uncovered points satisfies E X = p(1-1/sqrt(p))^(C sqrt p) = p e^{-C}(1+o(1)) -> infinity and Var(X)/mu^2 -> 0, hence X >= (1-o(1)) p e^{-C} w.h.p. and Pr[full cover] -> 0.",
+      "crossover": "random 100*sqrt(p) translates cover w.h.p. iff p <~ e^{100} ~ 2.69e43 (Corollary 1.7); mu(997)=7.246e-42, mu(10007)=2.262e-40",
+      "threshold": "Pr[cover] -> 1 iff m/sqrt(p) - ln(p) -> +infinity; threshold m* = sqrt(p) ln p (1+o(1))"
+    },
+    "reading_RB_chosen_translates_green_original": {
+      "verdict": "UNRESOLVED",
+      "best_partial_results": [
+        "Lower bound: cov(A) >= ceil(p/k) for every A; no exact factorization of Z_p exists (Hajos-de Bruijn)",
+        "Deterministic upper: cov(A) <= (p/k)(1+ln k) = (1/2+o(1)) sqrt(p) ln p for EVERY A (Lovasz 1975 / Stein 1974 / Chvatal 1979)",
+        "a.s. upper: cov(A) <= (1+eps) sqrt(p) ln p with probability -> 1 (Prop 2.2)",
+        "Conditional/reduction theorem (Prop 2.5): cov(A) <= |B_0| + L_{B_0} for any partial cover; cov(A) <= |B_0| + sqrt(p) ln(L_{B_0}+1) + O(1) via averaging completion; hence GREEN-081(RB) TRUE follows if w.h.p. O(sqrt(p)) translates cover all but O(sqrt(p)) points",
+        "Empirical greedy benchmark: g ~ 0.288 sqrt(p) ln p at p=20011 (below the 1/2 ceiling, above O(sqrt p))"
+      ],
+      "exact_missing_bridge": "Prove Pr_A[exists B, |B| = O(sqrt(p)), leftover L_B = O(sqrt(p))] -> 1, equivalently beat the coupon-collector tail Pr[exists x : r_{A+B}(x) = 0] for adaptive B. Every current tool loses ln(p): union bound/second moment certify at most c/(1+c) < 1 fraction of coverage (Prop 2.4); matching/nibble design theory is structurally void because typical translates intersect in Theta(1) points (E c_d = k(k-1)/(p-1) -> 1); Chen-Stein dependency graph is complete so window-level Poisson precision (Conjecture 1.8) is already out of reach of standard bounds.",
+      "no_known_equivalent_conjecture": true
+    }
+  },
+  "key_theorems": [
+    {"id": "Lemma 1.1", "content": "E X = p q^m exactly, q = 1-k/p"},
+    {"id": "Lemma 1.2", "content": "E X^2 = p q^m + p(p-1) g_m exactly, g_m = E_A[(1-(2k-c_d(A))/p)^m]"},
+    {"id": "Remark 1.3", "content": "Naive surrogate f^m with f = C(p-2,k)/C(p,k) is wrong by Jensen gap; caught by exhaustive enumeration"},
+    {"id": "Lemma 1.4", "content": "g_m = q^{2m}(1 + O_C(1/p)) for m <= C sqrt(p)"},
+    {"id": "Theorem 1.5", "content": "Var(X) <= mu + K'(C) mu^2/p; Var/mu^2 -> 0 when mu -> infinity"},
+    {"id": "Theorem 1.6", "content": "RA threshold theorem; RA reading of GREEN-081 asymptotically FALSE"},
+    {"id": "Corollary 1.7", "content": "e^{100} crossover scale; explains simulation invisibility"},
+    {"id": "Conjecture 1.8", "content": "Gumbel window: m/sqrt(p)-ln p -> c implies X => Poisson(e^{-c}), Pr[cover] -> exp(-e^{-c})"},
+    {"id": "Prop 2.1", "content": "cov(A) >= ceil(p/k)"},
+    {"id": "Prop 2.2", "content": "cov(A) <= (1+eps) sqrt(p) ln p a.s."},
+    {"id": "Prop 2.3", "content": "cov(A) <= (p/k)(1+ln k) = (1/2+o(1)) sqrt(p) ln p deterministically"},
+    {"id": "Prop 2.4", "content": "Energy/CS certificate caps below full coverage: c/(1+c)*p < p; E(E(A)) = 2p+o(p) near-minimal but tail-blind"},
+    {"id": "Prop 2.5", "content": "Completion lemma cov(A) <= M + ceil(sqrt(p) ln(L+1)) + 1; reduction cov(A) <= |B_0| + L_{B_0}"}
+  ],
+  "evidence": {
+    "machine_verified": {
+      "tool": "code/verify_theory.py, exit 0, wall 18.6s, 14 PASS lines",
+      "highlights": [
+        "symbolic identity diff = 0 (sympy)",
+        "exhaustive enumeration matches corrected closed forms exactly as Fractions at (p,k,m)=(7,2,3),(13,3,4)",
+        "MC p=101,k=10,m=100: mean within 4SE, sd relerr 0.027",
+        "g_m/q^{2m} ratio 1.0248 at (101,10,32), consistent with 1+O(C^2/p)"
+      ]
+    },
+    "simulation": {
+      "tool": "code/sim_random_translates.py, code/sim_greedy_cover.py, exact bitset/rounded-integer checks (code/verify_exactness.py exit 0)",
+      "primes": [101, 199, 401, 599, 797, 997, 1999, 4003, 5003, 10007, 20011],
+      "threshold_ratios_mean_over_sqrtp_lnp": [1.0717, 1.0799, 1.069, 1.092, 1.0814, 1.0901, 1.1034, 1.0745, 1.0486, 1.0469, 1.0247],
+      "gumbel_c0_success_at_p997_vs_pred": [0.36, 0.3679],
+      "greedy_ratio_over_sqrtp_lnp_at_p20011": 0.2876,
+      "regime_100sqrtp_max_uncovered_observed": 0
+    }
+  },
+  "artifacts": {
+    "derivation": "derivation.md",
+    "report": "report.md",
+    "code": ["code/sim_random_translates.py", "code/sim_greedy_cover.py", "code/verify_exactness.py", "code/verify_theory.py"],
+    "data": ["data/random_translates_threshold.csv", "data/gumbel_window.csv", "data/uncovered_counts.csv", "data/regime_100sqrtp.csv", "data/greedy_cover.csv", "data/greedy_curve_p20011.csv"]
+  },
+  "status_words": {
+    "mathematical_verdict_RA": "DISPROVEN",
+    "mathematical_verdict_RB": "PARTIALLY RESOLVED / UNRESOLVED",
+    "computation": "COMPUTATIONALLY VERIFIED"
+  },
+  "date": "2026-08-26",
+  "ai": "ox-alpha"
+}
