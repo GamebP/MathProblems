@@ -11,10 +11,16 @@ norm are
 \|g\|_\square^4=\mathbb{E}_{x_1,x_2,y_1,y_2}\,
 g(x_1,y_1)\overline{g(x_2,y_1)}\,\overline{g(x_1,y_2)}\,g(x_2,y_2).
 \]
-The target class under study is
-$\{\,a(x)b(y)c(x+y)e_p(Q(x,y)) : a,b,c \text{ unimodular},\ Q \text{ quadratic}\,\}$,
-which contains both readings of $(-1)^{q(x,y)}$ as subclasses; every result
-below addresses this larger class.
+The target class under study is the reading-(i) class of $(-1)^{q(x,y)}$,
+$\{\,a(x)b(y)c(x+y)e_p(Q(x,y)) : a,b,c \text{ unimodular},\ Q \text{ quadratic}\,\}$.
+It is incomparable with the genuinely $\{\pm1\}$-valued reading-(ii) class
+$\{a(x)b(y)c(x+y)\sigma : \sigma:G\times G\to\{\pm1\}\}$ for $n\ge2$:
+$e_p(t)\in\{\pm1\}$ forces $t\equiv0$ or $t\equiv(p-1)/2$, so generically a
+$(\pm1)$-phase lies outside the class, while conversely $e_p(\lambda x_1y_2)$
+is excluded from the reading-(ii) class by the swap-asymmetry of its mixed
+multiplicative difference; at $n=1$ the reading-(i) class equals
+$\{a(x)b(y)c(x+y)\}$, strictly contained in the reading-(ii) class. Every
+result below addresses reading (i) only.
 
 \subsection{Step 1: the hypothesis is a spectral mass condition}
 Let $B_f(x_1,x_2,y_1,y_2)=f(x_1,y_1)\overline{f(x_2,y_1)}\,
@@ -88,10 +94,14 @@ $d(x+h-(y+h))\overline{d(x-y)}=1$; hence
 with $P=M_{xx}+M_{xy}$, $R=M_{yx}+M_{yy}$,
 $\omega_h=\tfrac12(h,h)^TM(h,h)+l^T(h,h)$: pointwise rank-one increments.
 Multiplication by $e_p(xy^2)$ contributes the mixed term $2hxy$ and destroys
-the splitting for every $h\ne0$. The converse reduces to the parallelogram
-equation
-$\Theta(u+w,v+t)\Theta(u-w,v-t)=\Theta(u+t,v-w)\Theta(u-t,v+w)$ and remains
-open; the natural rigidity class $\{a\,b\,d(x-y)e_p(Q)\}$ differs from the
+the splitting for every $h\ne0$. The exact converse classification is open,
+the defining rank-one increment law being the only currently verified
+invariant; the parallelogram equation
+$\Theta(u+w,v+t)\Theta(u-w,v-t)=\Theta(u+t,v-w)\Theta(u-t,v+w)$ is NOT
+necessary — $f=e_p(x^2)$ and $f=e_p(xy)$ have pointwise rank-one diagonal
+increments yet their pulled-back $\Theta$ violates it, as does the plain
+constituent $\Theta=d(v)$ — so it cannot serve as the necessity mechanism.
+The natural rigidity class $\{a\,b\,d(x-y)e_p(Q)\}$ differs from the
 transmitted class $\{a\,b\,c(x+y)(-1)^q\}$ once $n\ge2$, since
 $e_p(\lambda x_1y_2)$ belongs to the former but not to the absorbable span of
 the latter.
@@ -106,7 +116,8 @@ unimodular degrees of freedom against $p^2$ constraints yields optima clustered
 near $0.68$--$0.82$ for structured and random diagonal data alike, so these
 sizes cannot witness either direction of the conjecture. Closing the gap
 requires either a structure theorem extracting class membership from
-$\Xi_0$-mass (one route: settle the parallelogram-equation converse), or a
+$\Xi_0$-mass (one route: settle the converse classification of Conjecture
+D'), or a
 counterexample family with decaying optimal correlation (related to slice and
 partition rank of the kernel $(s,m)\mapsto d(s)e_p(Q(s,m))$).
 
@@ -266,17 +277,22 @@ belongs to the natural rigidity family $\{a\,b\,d(x-y)e_p(Q)\}$, taking
 $a=b=d=1$ and $Q=\lambda x_1y_2$. By the Lemma, $w\notin T_0$. Therefore
 $T_0$ is a proper subclass of the rigidity family for $n\ge2$.
 
-\textbf{Scope of the strictness statement.} Under the reading in which
+\textbf{Scope of the strictness statement (reading (i)).} Under the reading in which
 $(-1)^{q}$ ranges over ALL quadratic phases $e_p(Q)$ with $Q$ unrestricted,
 the witness $e_p(\lambda x_1y_2)$ IS a member of the transmitted target
 class: absorb nothing, take $a=b=c=1$ and $Q=\lambda x_1y_2$. The strict
 separation just proved applies to the phase-restricted class $T_0$,
-equivalently to the absorbable span of the transmitted class. Whether the
-FULL transmitted class covers the rigidity family up to uniform correlation
-is precisely the twisted trilinear inequality (Open Problem O1). The isolated
-open subproblem is therefore: does
+equivalently to the absorbable span of the transmitted class; it is a
+reading-(i) statement and makes no claim about the genuinely $\{\pm1\}$-valued
+reading (ii). Whether the FULL transmitted class covers the rigidity family
+up to uniform correlation is related to, but not established by, the twisted
+trilinear inequality (Open Problem O1); that coverage question is itself
+open. The isolated open subproblem suggested by the reductions above is
+therefore: does
 $\inf_{d}\sup\,\bigl|\langle d(x-y),\Phi\rangle\bigr|$, the supremum taken
 over the transmitted class, admit a positive lower bound uniform in the
-unimodular $d$ — together with the parallelogram-equation converse
-(Conjecture D'). These two questions constitute the exact open residue; no
-other gap remains between the rigidity family and the transmitted readings.
+unimodular $d$ — together with the converse classification (Conjecture D').
+These two questions are the candidate open residue (literature assessment):
+the reductions of this document leave precisely these two named questions,
+but that no further gap remains between them and the transmitted readings is
+an assessment of the published landscape, not a deduction proved here.

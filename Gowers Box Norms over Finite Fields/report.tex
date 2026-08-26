@@ -91,22 +91,29 @@ $a(x)b(y)c(x+y)(-1)^{q(x,y)}$?
 \noindent
 Here $a$, $b$, $c$ are one-variable functions on $G$ and $q$ is a polynomial;
 the archived statement is \cite{unsolvedmath}. The phase $(-1)^{q(x,y)}$
-admits two readings. Under the first, $(-1)^{q(x,y)}$ is interpreted as a
-quadratic phase $e_p(Q(x,y))$ with
-$Q:\mathbb{F}_p^{2n}\to\mathbb{F}_p$ a polynomial of degree at most $2$. Under
-the second, $(-1)^{q(x,y)}$ is treated as a genuinely
-$\{\pm1\}$-valued factor of unspecified structure. Every result below is
-addressed to the larger class
+admits two readings. Under the first, reading~(i), $(-1)^{q(x,y)}$ is
+interpreted as a quadratic phase $e_p(Q(x,y))$ with
+$Q:\mathbb{F}_p^{2n}\to\mathbb{F}_p$ a polynomial of degree at most $2$;
+under the second, reading~(ii), $(-1)^{q(x,y)}$ is treated as a genuinely
+$\{\pm1\}$-valued factor $\sigma$ of unspecified structure, with candidate
+class
+\begin{multline*}
+C_{(ii)}=\bigl\{(x,y)\mapsto a(x)b(y)c(x+y)\sigma(x,y) \\
+:\; |a|=|b|=|c|=1,\ \sigma:G\times G\to\{\pm1\}\bigr\}.
+\end{multline*}
+Every result below addresses reading~(i) only, through the class
 \begin{multline}\label{eq:class}
 \bigl\{\, (x,y)\mapsto a(x)\,b(y)\,c(x+y)\,e_p(Q(x,y)) \\
 :\; a,b,c:G\to\mathbb{C},\ |a|=|b|=|c|=1,\ Q\ \text{quadratic} \,\bigr\},
 \end{multline}
-which contains the candidate classes of both readings as subclasses: the
-first literally, and the second because a $\{\pm1\}$-valued phase is a
-unimodular factor, so that every statement proved for the class
-\eqref{eq:class} under hypotheses imposed on $f$ alone applies unchanged to
-both readings. Working with the larger class therefore strengthens each
-positive structural result and weakens no negative one.
+and nothing proved here extends to reading~(ii). The two candidate classes
+are in fact incomparable once $n\ge2$: since $e_p(t)\in\{\pm1\}$ forces
+$t\equiv0$ or $t\equiv(p-1)/2$ modulo $p$, a generic $\{\pm1\}$-valued phase
+does not belong to \eqref{eq:class}; conversely $e_p(\lambda x_1y_2)$ with
+$\lambda\neq0$ does not belong to $C_{(ii)}$, as the swap-asymmetry of its
+mixed multiplicative difference shows. At $n=1$ every quadratic phase
+absorbs into the three one-variable factors, so there $C=T_0$, where
+$T_0:=\{a(x)b(y)c(x+y)\}$, and $T_0\subsetneq C_{(ii)}$.
 
 The contributions are as follows.
 \begin{enumerate}
@@ -136,8 +143,9 @@ twisted trilinear inequality for arbitrary unimodular data.
 \item \emph{Rigidity} (Theorem~\ref{thm:D}, Conjecture~\ref{conj:Dp}). Every
 member of the extended class has pointwise rank-one diagonal increments,
 with an explicit splitting; a cubic mixed perturbation destroys this
-structure for most directions. The converse classification is reduced to a
-multiplicative parallelogram equation and stated as a conjecture.
+structure for most directions. The exact converse classification is stated
+as an open conjecture, the defining rank-one increment law being the only
+currently verified invariant.
 \item \emph{Numerics} (Section~\ref{sec:numerics}). Exact and high-precision
 computations confirm every identity above to floating-point tolerance and
 explore the maximal-hypothesis correlation problem for small fields,
@@ -154,6 +162,10 @@ precise gap can be stated in one sentence: the Fourier-mass condition
 \eqref{eq:spectral} on $B_f$ is \emph{not known to imply} algebraic
 correlation with members of the infinite-dimensional target class, and no
 implication from the spectral condition to correlation is currently known.
+These sentences — like every statement below of the form ``remains open,''
+``no known implication,'' ``no counterexample is known,'' and similar — are
+literature-status assessments rather than deductions from the preceding
+results.
 All numerical residuals quoted in this paper were independently confirmed to
 floating-point tolerance at most $10^{-15}$ by an external deterministic
 verification suite, \texttt{verify\_solution.py}.
@@ -574,8 +586,8 @@ The twist of Corollary~\ref{cor:sharp} does more than destroy rank-one
 factorization: it destroys the \emph{hypothesis} itself.
 
 \begin{proposition}[Collapse under a cubic mixed twist]\label{prop:collapse}
-Let $g(x,y)=a(x)b(y)d(x-y)e_p(Q)$ belong to the family of
-Theorem~\ref{thm:D} and set $f=g\,e_p(x_0y_0^{2})$, where $x_0,y_0$ denote
+Let $g(x,y)=a(x)b(y)d(x-y)e_p(Q)$ lie in the family of
+Theorem~\ref{thm:D}, and let $f=g\,e_p(x_0y_0^{2})$, where $x_0,y_0$ are
 the zeroth coordinates. Then
 \begin{equation}\label{eq:collapse}
 \bigl\|\Delta_{(h,h)}f\bigr\|_\square^4\;=\;
@@ -635,28 +647,40 @@ $\Theta(u,v)=f\bigl(\tfrac{u+v}{2},\tfrac{u-v}{2}\bigr)$, so that $f$ and
 $\Theta$ determine each other. Under this pullback the pointwise rank-one
 condition on diagonal increments becomes a multiplicative constraint on
 $\Theta$ involving four evaluations arranged antipodally about their common
-midpoint; carrying out the elimination of the auxiliary splitting factors
-leads to the canonical four-point equation below. For every member of the
-displayed family whose one-variable constituents are multiplicative phases,
-the equation holds immediately, because each constituent sees arguments that
-cancel pairwise across the two sides. For completely arbitrary bounded
-one-variable constituents the equation imposes genuine additional two-point
-identities, and settling exactly which solutions it admits is the content of
-the open converse.
+midpoint. An earlier version of this manuscript proposed the four-point
+parallelogram equation \eqref{eq:parallelogram} below as a necessary
+condition; that proposal is \emph{false}, and the failure is recorded
+explicitly before stating the conjecture in its corrected, purely open form.
 
-\begin{conjecture}[Converse classification]\label{conj:Dp}
-Suppose $f:G\times G\to\mathbb{C}$ is unimodular with pointwise rank-one
-diagonal increments. Then $\Theta$ satisfies the parallelogram functional
-equation
+\begin{remark}[The parallelogram equation is not necessary]
+Consider, for arbitrary $u,v,w,t\in G$, the equation
 \begin{equation}\label{eq:parallelogram}
 \Theta(u+w,\,v+t)\,\Theta(u-w,\,v-t)
 \;=\;\Theta(u+t,\,v-w)\,\Theta(u-t,\,v+w).
 \end{equation}
-Here $u,v,w,t\in G$ are arbitrary. Every solution of \eqref{eq:parallelogram}
-is conjectured to belong to the closure of the
-family $a(x)b(y)d(x-y)e_p(Q(x,y))$ with $Q$ quadratic. Sufficiency of the
-family for pointwise rank-one increments is Theorem~\ref{thm:D}; full
-necessity remains open.
+It is violated by members of the sufficiency family itself
+(Theorem~\ref{thm:D}), so it is \emph{not} a necessary condition for
+pointwise rank-one diagonal increments and cannot serve as the necessity
+mechanism for the converse. Two-line counterexamples at $p=5$: for
+$f(x,y)=e_p(x^2)$, i.e.\ $\Theta(u,v)=e_p\bigl((u+v)^2/4\bigr)$, at
+$(u,v,w,t)=(1,-1,1,1)$ the left side of \eqref{eq:parallelogram} equals
+$e_p(2)$ while the right side equals $1$; likewise for $f(x,y)=e_p(xy)$,
+i.e.\ $\Theta(u,v)=e_p\bigl((u^2-v^2)/4\bigr)$, the two sides differ by the
+nontrivial factor $e_p\bigl((w^2-t^2)/2\bigr)$ whenever $w^2\not\equiv t^2$.
+Even the plain constituent $\Theta(u,v)=d(v)$ present in every family member
+violates it, e.g.\ for $d(v)=e_p(v^2)$ whenever $t^2\not\equiv w^2$.
+\end{remark}
+
+\begin{conjecture}[Converse classification]\label{conj:Dp}
+Suppose $f:G\times G\to\mathbb{C}$ is unimodular with pointwise rank-one
+diagonal increments. Must $f$ belong to the closure of the family
+$a(x)b(y)d(x-y)e_p(Q(x,y))$ with $Q$ quadratic? Sufficiency of the family
+for pointwise rank-one increments is Theorem~\ref{thm:D}; the exact converse
+classification is open, the defining rank-one increment law being the only
+currently verified invariant, and no functional equation characterizing the
+family — in particular not the parallelogram equation
+\eqref{eq:parallelogram} displayed above, which its own members violate —
+is presently known.
 \end{conjecture}
 
 \begin{corollary}[Misalignment between hypothesis and stated target]\label{cor:misalign}
@@ -692,7 +716,11 @@ $M=\sup| \mathbb{E}_{x,y}\,d(x-y)\overline{a(x)}\,\overline{b(y)}\,
 \overline{c(x+y)} |$ over unimodular $a,b,c$, for the target
 $d(s)=e_p(s^{3})$ on $G=\mathbb{F}_p$ with $p\in\{5,7\}$, by alternating
 phase maximization with one thousand random restarts and at most three
-hundred sweeps per restart. Results are collected in Table~\ref{tab:exp},
+hundred sweeps per restart. The figures reported below are the largest
+correlations found by local alternating maximization from these many random
+restarts; a certified global optimum is neither claimed nor obtainable by
+this method, so each value is a lower bound for the corresponding supremum
+$M$. Results are collected in Table~\ref{tab:exp},
 together with a control run in which $d$ was taken with uniformly random
 exponents.
 
@@ -703,18 +731,20 @@ exponents.
 \toprule
 prime & target $d$ & statistic & value \\
 \midrule
-$p=5$ & $e_5(s^{3})$ & best correlation  & $0.7236067977499792$ \\
+$p=5$ & $e_5(s^{3})$ & largest found correlation  & $0.7236067977499792$ \\
 $p=5$ & $e_5(s^{3})$ & mean over restarts & $0.7225012249409789$ \\
 $p=5$ & $e_5(s^{3})$ & standard deviation & $0.01745$ \\
-$p=7$ & $e_7(s^{3})$ & best correlation  & $0.677276973$ \\
+$p=7$ & $e_7(s^{3})$ & largest found correlation  & $0.677276973$ \\
 $p=7$ & $e_7(s^{3})$ & mean over restarts & $0.675801400$ \\
 $p=7$ & $e_7(s^{3})$ & standard deviation & $0.01399$ \\
 \midrule
-$p=5$ & random exponents & best correlation & $0.7236067977499792$ \\
-$p=7$ & random exponents & best correlation & $0.816021079$ \\
+$p=5$ & random exponents & largest found correlation & $0.7236067977499792$ \\
+$p=7$ & random exponents & largest found correlation & $0.816021079$ \\
 \bottomrule
 \end{tabular}
-\caption{Maximal correlations against unimodular factors at $n=1$.}
+\caption{Largest correlations found by local alternating maximization against
+unimodular factors at $n=1$: lower bounds for the suprema; a certified global
+optimum is neither claimed nor obtainable by this method.}
 \label{tab:exp}
 \end{table}
 
@@ -753,9 +783,8 @@ for the display \eqref{eq:twistedcorr} over all unimodular $d$, with the
 qualifications recorded there concerning the range of the twist for $n\ge2$
 versus $n=1$.
 \item[\textnormal{(O2)}] \emph{The converse classification.} Establish
-Conjecture~\ref{conj:Dp}: whether pointwise rank-one diagonal increments,
-through the parallelogram equation \eqref{eq:parallelogram}, force membership
-in the family $a(x)b(y)d(x-y)e_p(Q)$.
+Conjecture~\ref{conj:Dp}: whether pointwise rank-one diagonal increments
+force membership in the family $a(x)b(y)d(x-y)e_p(Q)$.
 \item[\textnormal{(O3)}] \emph{Decay and rank obstructions.} Determine
 whether the supremal correlation decays along some sequence of parameters
 $(p,n)$ for the cubic target $d=e_p(s^{3})$; relate the question to the

@@ -35,17 +35,21 @@ by $e_p(xy^{2})$, four of the five shifts admitted no rank-one factorization
 \subsection{Correlation experiment}
 The maximal-hypothesis correlation
 $M(d)=\sup\bigl|\mathbb{E}_{x,y}\,d(x-y)\overline{a(x)}\,\overline{b(y)}\,
-\overline{c(x+y)}\bigr|$ over unimodular factors was optimized by alternating
-phase maximization from one thousand random restarts per configuration:
+\overline{c(x+y)}\bigr|$ over unimodular factors — the supremum being the
+unattained benchmark, of which the computation yields only a lower bound —
+was searched by local alternating phase maximization from one thousand random
+restarts per configuration; the tabulated values are the largest values found
+by local search, and a certified global optimum is neither claimed nor
+obtainable by this method:
 \begin{center}
 \begin{tabular}{llr}
 \toprule
 target $d$ & statistic & value \\
 \midrule
-$e_5(s^{3})$ & best / mean / sd & $0.7236067977499792$ / $0.7225012249409789$ / $0.01745$ \\
-$e_7(s^{3})$ & best / mean / sd & $0.6772769730217724$ / $0.6758013999033685$ / $0.01399$ \\
-random exponents, $p=5$ & best & $0.7236067977499792$ \\
-random exponents, $p=7$ & best & $0.8160210786702251$ \\
+$e_5(s^{3})$ & largest found / mean / sd & $0.7236067977499792$ / $0.7225012249409789$ / $0.01745$ \\
+$e_7(s^{3})$ & largest found / mean / sd & $0.6772769730217724$ / $0.6758013999033685$ / $0.01399$ \\
+random exponents, $p=5$ & largest found & $0.7236067977499792$ \\
+random exponents, $p=7$ & largest found & $0.8160210786702251$ \\
 $e_p(2s^{2})$ (control) & exact correlation & $1$ exactly \\
 \bottomrule
 \end{tabular}
