@@ -43,7 +43,7 @@ converges, where $p_n$ denotes the $n$-th prime?
 \end{quote}
 
 \begin{center}
-\fbox{\parbox{0.94\linewidth}{
+\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{
 \textbf{VERDICT.}
 \begin{itemize}\itemsep1pt
 \item \textbf{UNCONDITIONALLY OPEN.} No unconditional proof or disproof of convergence is known. This investigation does \emph{not} solve the problem and does not claim to.
@@ -56,9 +56,10 @@ converges, where $p_n$ denotes the $n$-th prime?
 \section{Notation and the three exact identities}\label{sec:not}
 
 Throughout,
-\[
-a_n:=\frac{n}{p_n},\qquad g_n:=p_{n+1}-p_n,\qquad S_N:=\sum_{n\le N}(-1)^n a_n,\qquad L_k:=\ln(2k),\qquad \ell_k:=\ln\ln(2k),\qquad \Lambda_k:=L_k+\ell_k .
-\]
+\begin{gather*}
+a_n:=\frac{n}{p_n},\qquad g_n:=p_{n+1}-p_n,\qquad S_N:=\sum_{n\le N}(-1)^n a_n,\\[6pt]
+L_k:=\ln(2k),\qquad \ell_k:=\ln\ln(2k),\qquad \Lambda_k:=L_k+\ell_k .
+\end{gather*}
 The series starts with $(-1)^1a_1=-1/2$, so pairing consecutive terms $(1,2),(3,4),\dots$ gives $S_{2K}=\sum_{k\le K}(a_{2k}-a_{2k-1})$ exactly.
 
 The three exact identities on which everything rests are:
@@ -78,11 +79,12 @@ a_{n+1}-a_n=\frac{(n{+}1)p_n-np_{n+1}}{p_np_{n+1}}
 with sign convention positive step $\iff p_n>ng_n$, consistent with \eqref{eq:mono}.
 
 \begin{equation}\label{eq:pair}
+\begin{gathered}
 b_k:=a_{2k}-a_{2k-1}
 =\frac{2k\,p_{2k-1}-(2k-1)p_{2k}}{p_{2k-1}p_{2k}}
-=\frac{p_{2k-1}-(2k-1)g_{2k-1}}{p_{2k-1}p_{2k}},
-\qquad
+=\frac{p_{2k-1}-(2k-1)g_{2k-1}}{p_{2k-1}p_{2k}},\\[4pt]
 b_k>0\iff g_{2k-1}<\frac{p_{2k-1}}{2k-1},
+\end{gathered}
 \end{equation}
 where the numerator rewrite uses $p_{2k}=p_{2k-1}+g_{2k-1}$ and $2kp_{2k-1}-(2k-1)(p_{2k-1}+g_{2k-1})=p_{2k-1}-(2k-1)g_{2k-1}$.
 Sanity checks (exact rational arithmetic against an independent sieve, all $k\le 50{,}000$): both closed forms in \eqref{eq:pair} equal $a_{2k}-a_{2k-1}$ everywhere tested; $b_1=a_2-a_1=\tfrac23-\tfrac12=\tfrac16=(2-1)/6$, matching $\max_K|B_K|=1/6$ attained at $K=1$ in the data of Section~\ref{sec:num}.
@@ -203,8 +205,10 @@ Define the pair terms $b_k=a_{2k}-a_{2k-1}$. Then $S_{2K}=\sum_{k\le K}b_k$ exac
 \end{equation}
 
 \begin{equation}\label{eq:pairbox}
-\boxed{\ b_k=\frac{p_{2k-1}-(2k-1)g_{2k-1}}{p_{2k-1}p_{2k}},\qquad
-b_k>0\iff g_{2k-1}<\frac{p_{2k-1}}{2k-1}\ }
+\boxed{\begin{gathered}
+b_k=\frac{p_{2k-1}-(2k-1)g_{2k-1}}{p_{2k-1}p_{2k}},\\[4pt]
+b_k>0\iff g_{2k-1}<\frac{p_{2k-1}}{2k-1}
+\end{gathered}}
 \end{equation}
 with the sign convention of Section~\ref{sec:not}: positivity means the even-indexed term is larger, i.e.\ the odd-indexed gap is \emph{below} the threshold $p_{2k-1}/(2k-1)\approx\ln(2k)$.
 
@@ -244,9 +248,11 @@ With $\tilde g_{2k-1}=\theta\Lambda_k$ and the uniform baseline of Proposition~\
 \]
 which decomposes into three series:
 \[
+\begin{gathered}
 \underbrace{\frac{(1-\theta)\Lambda_k}{2k\Lambda_k^2}\sim\frac{1-\theta}{2kL_k}}_{\text{parity drift}},\qquad
-\underbrace{-\frac{1}{2k\Lambda_k^2}}_{\text{systematic }-1\text{ term}},\qquad
+\underbrace{-\frac{1}{2k\Lambda_k^2}}_{\text{systematic }-1\text{ term}},\\[4pt]
 \underbrace{O\Bigl(\frac{1}{k\Lambda_k^2\ln k}\Bigr)}_{\text{baseline error}} .
+\end{gathered}
 \]
 The first sums like $\frac{1-\theta}{2}\sum_{k\le K}\frac1{k\ln k}\sim\frac{1-\theta}{2}\ln\ln K$ --- divergent for every $\theta<1$ (opposite sign for $\theta>1$); the second and third are $O(\sum1/(k\ln^2k))=O(1)$: convergent.
 \end{proof}
@@ -273,8 +279,10 @@ Bulk pair totals are $2\Lambda_k$; redistribution moves mass only within odd pos
 \]
 Euler--Maclaurin bookkeeping: $\sum_{k\le K}\ln(2k)=K\ln(2K)-K+O(\ln K)$ (Stirling), and, using the antiderivative $\frac{\mathrm d}{\mathrm dx}\bigl[x\ln\ln x-\operatorname{li}(x)\bigr]=\ln\ln x$ together with $\operatorname{li}(x)=\frac{x}{\ln x}(1+O(\frac1{\ln x}))$,
 \[
-\sum_{k\le K}\ell_k=\sum_{k\le K}\ln\ln(2k)=K\ln\ln(2K)-\tfrac12\operatorname{li}(2K)+O(\ln\ln K)
+\begin{gathered}
+\sum_{k\le K}\ell_k=\sum_{k\le K}\ln\ln(2k)=K\ln\ln(2K)-\tfrac12\operatorname{li}(2K)+O(\ln\ln K)\\[4pt]
 =K\ln\ln(2K)-\frac{K}{\ln(2K)}+O\Bigl(\frac{K}{\ln^2K}\Bigr).
+\end{gathered}
 \]
 Therefore
 $\tilde p_{2K}=2K\bigl(\ln(2K)+\ln\ln(2K)-1\bigr)+O\bigl(K/\ln K\bigr)$;
@@ -302,10 +310,10 @@ There is a self-consistent world $W(\theta,\rho)$ --- proved to match the primes
 Methodology \textnormal{[NUMERICAL]}: exact fixed-point arithmetic at scale $M=10^{60}$, round-half-up per term, rigorous accumulated rounding bound $\le N/(2M)$; validated against \texttt{fractions.Fraction} at $N=5000$ (absolute difference $1.581\times10^{-59}$); independent pass at $M'=10^{50}$ agrees to 40 significant digits; sieve self-checks $p_{10^6}=15485863$, $p_{10^7}=179424673$.
 
 \begin{table}[h]
-\centering\small
+\centering\footnotesize
 \begin{tabular}{@{}rlrr@{}}
 \toprule
-$N$ & $S_N=\sum_{n\le N}(-1)^n n/p_n$ (verbatim fixed-point value) & increment $\Delta_N=S_N-S_{N/2}$ & err.\ bound\\
+$N$ & $S_N$ (verbatim fixed-point value) & increment $\Delta_N=S_N-S_{N/2}$ & err.\ bound\\
 \midrule
 $10^3$ & \texttt{0.0118688917373843595188635122441718349053} & $-8.081\times10^{-3}$ & $5\times10^{-58}$\\
 $10^4$ & \texttt{-0.0032901791643098451810940216336951591445} & $-3.068\times10^{-3}$ & $5\times10^{-57}$\\
@@ -379,7 +387,8 @@ The series $\sum_{n\ge1}(-1)^n n/p_n$ sits exactly in the dead zone of alternati
 \text{uniform-in-}\lambda\text{ parity-resolved asymptotics}\\
 \#\{k\le K:\ g_{2k-1}\le\lambda\, p_{2k-1}/(2k-1)\}=\mu(\lambda)K+o(K)\ \ (\lambda\ \text{in a range}),\\
 \Downarrow\ \text{(one-way; a converse equivalence is not proved)}\\
-\text{equidistribution of the parity of }\pi(m)\text{ in intervals }(x,x+\lambda\log x],\ \text{i.e.}\ \sum_{n\le x}(-1)^{\pi(n)}\ll x/(\log\log x)^{1.1},\\
+\text{equidistribution of the parity of }\pi(m)\text{ in intervals }(x,x+\lambda\log x],\\
+\text{i.e.}\ \sum_{n\le x}(-1)^{\pi(n)}\ll x/(\log\log x)^{1.1},\\
 \Downarrow\\
 \text{the signed pair series }\sum_kb_k\text{ converges}\\
 \Downarrow\\
