@@ -1,21 +1,21 @@
 {
   "claim_id": "GREEN-028",
   "verdict": "UNRESOLVED",
-  "generated_at": "2026-08-26T07:20:52Z",
-  "manifest_sha256": "50fca6c9acc6b32241ef1641a162feba52142f6aeb39c96c5e5dc48477dac151",
+  "generated_at": "2026-08-26T09:27:47Z",
+  "manifest_sha256": "a0c820208b79f48ae6905acb3906717f05366bdcde6f1eef6fe67f119330bec5",
   "manifest_problems": [],
   "evidence": [
     {
       "ref": "report.tex",
       "kind": "file",
-      "sha256": "54570c3ab40cb03f8862747f321935acf314057b6a4e889f5ae42cc7a786e7e6",
-      "bytes": 33465
+      "sha256": "42e97f7186e39966ad613e57e3e99aa499ce2d1e3001816d0ec05a18b7f85fe9",
+      "bytes": 36830
     },
     {
       "ref": "verify_solution.py",
       "kind": "file",
-      "sha256": "dd691bf517f807e89ee2e2f2290942ac298e3e3bd4ab7a7f5068603dc8afaece",
-      "bytes": 24651
+      "sha256": "5e1321690f060e917721505a0215d21700a5b4e30eb5671facb240072fc2843c",
+      "bytes": 28569
     },
     {
       "ref": "data/experiment_p5_n1.txt",
@@ -37,14 +37,13 @@
   "verification_suite": {
     "command": "/usr/bin/python3 verify_solution.py",
     "exit_code": 0,
-    "seconds": 2.938,
+    "seconds": 5.356,
     "tail": [
-      "  wrote raw results -> /mnt/c/Users/SkyD/Desktop/skydash_xyz/math-problem-1/Gowers Box Norms over Finite Fields/data/experiment_p5_n1.txt",
-      "  p=7: cubic d(s)=e_p(s^3): best|corr|=0.677276973  mean=0.675801400  pstdev=1.399e-02",
-      "  p=7: random d (exp=[3, 5, 3, 0, 3, 3, 6]): best|corr|=0.816021079  mean=0.791705893  pstdev=6.470e-02",
-      "  p=7: control d(s)=e_p(2s^2), solved witness a=e_p(4x^2) b=e_p(4y^2) c=e_p(-2s^2): corr=1.0000000000000002  |corr-1|=2.220e-16",
-      "  p=7: [erratum note] brief's literal witness (2x^2,2y^2,-s^2) gives corr=0.3779644730092275 (=1/sqrt(7)), not 1; see data file note",
-      "  wrote raw results -> /mnt/c/Users/SkyD/Desktop/skydash_xyz/math-problem-1/Gowers Box Norms over Finite Fields/data/experiment_p7_n1.txt",
+      "     control unperturbed g: 1.0000000000000002 (expect 1)",
+      "  (p=3,n=2): E_h||Delta f||_sq^4 = 0.5555555555555555  prediction (2p-1)/p^2 = 0.5555555555555556  |diff|=1.110e-16 -> PASS",
+      "     control unperturbed g: 0.9999999999999999 (expect 1)",
+      "  (p=5,n=2): E_h||Delta f||_sq^4 = 0.35999999999999993  prediction (2p-1)/p^2 = 0.36  |diff|=5.551e-17 -> PASS",
+      "     control unperturbed g: 0.9999999999999998 (expect 1)",
       "============================================================================",
       "SUMMARY",
       "  CHECK 1 Proposition A spectral identity : PASS (all residuals <= 1e-9)",
@@ -53,6 +52,7 @@
       "  CHECK 4 Theorem D sufficiency           : PASS (< 1e-12)",
       "  CHECK 5 negative perturbation           : MEASURED fraction failing h = 0.8",
       "  CHECK 6 counterexample experiment       : COMPLETED (raw data written to data/)",
+      "  CHECK 7 collapse law (cubic twist)      : PASS ((2p-1)/p^2 confirmed)",
       "EXIT 0"
     ]
   },

@@ -599,6 +599,93 @@ def check6():
     return completed
 
 
+# ----------------------------------------------------------------------
+# CHECK 7 -- collapse law for the cubic-mixed twist (Check 5 family)
+#   f = g * e_p(x0*y0^2),  g = a(x)b(y)d(x-y)e_p(Q)   (rigidity class)
+#   Prediction: E_h ||Delta_(h,h) f||_square^4 = (2p-1)/p^2   (indep. of n)
+#   h=0 and h0=0 directions keep rank-one increments -> box value 1;
+#   h0 != 0 directions acquire e_p(2*h0*x0*y0) -> box value |E_{u,v} e_p(2 h0 u0 v0)| = 1/p.
+#   Control: unperturbed g gives exactly 1 for every h.
+# ----------------------------------------------------------------------
+def check7():
+    print("=" * 76)
+    print("CHECK 7 - collapse law: f = g*e_p(x0*y0^2), prediction (2p-1)/p^2")
+    all_ok = True
+    lam = 1
+    for ci, (p, n) in enumerate([(5, 1), (7, 1), (3, 2), (5, 2)]):
+        rng = random.Random(SEED + 900 + 17 * ci)
+        elems, add, dot, m = make_group(p, n)
+        om = cmath.exp(2j * math.pi / p)
+        a = [om ** rng.randrange(p) for _ in range(m)]
+        b = [om ** rng.randrange(p) for _ in range(m)]
+        dv = [om ** rng.randrange(p) for _ in range(m)]
+        dmap = {}
+        for xi in range(m):
+            for yi in range(m):
+                diff = tuple((elems[xi][c] - elems[yi][c]) % p for c in range(n))
+                dmap[(xi, yi)] = dv[elems.index(diff)]
+        pairs = [(i, j) for i in range(n) for j in range(i, n)]
+        QA = {(i, j): rng.randrange(p) for (i, j) in pairs}
+        QC = {(i, j): rng.randrange(p) for (i, j) in pairs}
+        QB = [[rng.randrange(p) for _ in range(n)] for _ in range(n)]
+        for i in range(n):
+            for j in range(i, n):
+                QB[j][i] = QB[i][j]
+        lx = [rng.randrange(p) for _ in range(n)]
+        ly = [rng.randrange(p) for _ in range(n)]
+        k0 = rng.randrange(p)
+
+        def Qval(xi, yi):
+            x, y = elems[xi], elems[yi]
+            t = k0
+            for (i, j) in pairs:
+                t += QA[(i, j)] * x[i] * x[j] + QC[(i, j)] * y[i] * y[j]
+            for i in range(n):
+                for j in range(n):
+                    t += QB[i][j] * x[i] * y[j]
+                t += lx[i] * x[i] + ly[i] * y[i]
+            return t % p
+
+        def gval(xi, yi):
+            return a[xi] * b[yi] * dmap[(xi, yi)] * om ** Qval(xi, yi)
+
+        def fval(xi, yi):
+            x, y = elems[xi], elems[yi]
+            return gval(xi, yi) * om ** ((lam * x[0] * y[0] * y[0]) % p)
+
+        def avg_box(f):
+            total = 0.0
+            for ih in range(m):
+                D = [[f[(add[x][ih], add[y][ih])] * f[(x, y)].conjugate()
+                      for y in range(m)] for x in range(m)]
+                s = 0j
+                for x1 in range(m):
+                    r1 = D[x1]
+                    for x2 in range(m):
+                        r2 = D[x2]
+                        for y1 in range(m):
+                            a11 = r1[y1]
+                            a21 = r2[y1].conjugate()
+                            for y2 in range(m):
+                                s += a11 * a21 * r1[y2].conjugate() * r2[y2]
+                total += s.real
+            return total / (m ** 4 * m)
+
+        ftab = {(xi, yi): fval(xi, yi) for xi in range(m) for yi in range(m)}
+        gtab = {(xi, yi): gval(xi, yi) for xi in range(m) for yi in range(m)}
+        lhs_twist = avg_box(ftab)
+        lhs_plain = avg_box(gtab)
+        pred = (2 * p - 1) / p ** 2
+        resid = abs(lhs_twist - pred)
+        ok = resid <= TOL and abs(lhs_plain - 1.0) <= TOL
+        all_ok &= ok
+        print(f"  (p={p},n={n}): E_h||Delta f||_sq^4 = {lhs_twist!r}  "
+              f"prediction (2p-1)/p^2 = {pred!r}  |diff|={resid:.3e}"
+              f" -> {'PASS' if ok else 'FAIL'}")
+        print(f"     control unperturbed g: {lhs_plain!r} (expect 1)")
+    return all_ok
+
+
 def main():
     print(f"GREEN-028 verify_solution.py | seed={SEED} tol={TOL:g} | stdlib only")
     ok1 = check1()
@@ -607,6 +694,7 @@ def main():
     ok4 = check4()
     frac5 = check5()
     ok6 = check6()
+    ok7 = check7()
 
     print("=" * 76)
     print("SUMMARY")
@@ -619,7 +707,8 @@ def main():
     print(f"  CHECK 4 Theorem D sufficiency           : {'PASS (< 1e-12)' if ok4 else 'FAIL'}")
     print(f"  CHECK 5 negative perturbation           : MEASURED fraction failing h = {frac5}")
     print(f"  CHECK 6 counterexample experiment       : {'COMPLETED (raw data written to data/)' if ok6 else 'INCOMPLETE'}")
-    exit_ok = ok1 and ok2 and ok3 and ok4 and ok6
+    print(f"  CHECK 7 collapse law (cubic twist)      : {'PASS ((2p-1)/p^2 confirmed)' if ok7 else 'FAIL'}")
+    exit_ok = ok1 and ok2 and ok3 and ok4 and ok6 and ok7
     print(f"EXIT {'0' if exit_ok else '1'}")
     sys.exit(0 if exit_ok else 1)
 

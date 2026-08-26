@@ -570,6 +570,65 @@ factorization exists for those directions; measured over the five shifts,
 four admit none, a fraction $0.8$ of all directions.
 \end{corollary}
 
+The twist of Corollary~\ref{cor:sharp} does more than destroy rank-one
+factorization: it destroys the \emph{hypothesis} itself.
+
+\begin{proposition}[Collapse under a cubic mixed twist]\label{prop:collapse}
+Let $g(x,y)=a(x)b(y)d(x-y)e_p(Q)$ belong to the family of
+Theorem~\ref{thm:D} and set $f=g\,e_p(x_0y_0^{2})$, where $x_0,y_0$ denote
+the zeroth coordinates. Then
+\begin{equation}\label{eq:collapse}
+\bigl\|\Delta_{(h,h)}f\bigr\|_\square^4\;=\;
+\begin{cases}
+1, & h_0=0,\\[2pt]
+p^{-1}, & h_0\neq0,
+\end{cases}
+\qquad\text{whence}\qquad
+\mathbb{E}_h\,\bigl\|\Delta_{(h,h)}f\bigr\|_\square^4\;=\;\frac{2p-1}{p^{2}},
+\end{equation}
+independently of $n$ and of the choice of $a,b,d,Q$; and $f$ violates the
+hypothesis of the problem for every $\delta>(2p-1)/p^{2}$.
+\end{proposition}
+
+\begin{proof}
+The increment of the twist is
+$(x_0+h_0)(y_0+h_0)^2-x_0y_0^2
+=2h_0x_0y_0+h_0y_0^{2}+2h_0^{2}y_0+h_0^{2}x_0+h_0^{3}$.
+Insert $\Delta_{(h,h)}f=\Delta_{(h,h)}g\cdot e_p(\text{increment})$ into the
+box expression. The rank-one splitting of $\Delta_{(h,h)}g$
+(Theorem~\ref{thm:D}) cancels pairwise against the box pattern:
+$\alpha_h(x_1)\overline{\alpha_h(x_2)}\,\overline{\alpha_h(x_1)}\,
+\alpha_h(x_2)=1$, likewise in $y$; the constant contributes
+$e_p(\omega_h)\overline{e_p(\omega_h)}^{\,2}e_p(\omega_h)=1$; and every
+single-variable phase dies, since $\phi(x_1)-\phi(x_2)-\phi(x_1)+\phi(x_2)=0$.
+Only the mixed monomial survives, giving a bracket
+$e_p\bigl(2h_0(u_0)(v_0)\bigr)$ with $u=x_1-x_2$, $v=y_1-y_2$ uniform, whose
+average equals $\mathbb{P}(v_0=0)=p^{-1}$ whenever $2h_0\not\equiv0$. Of the
+$p^{n}$ directions, $p^{n-1}$ have $h_0=0$ (value $1$) and $(p-1)p^{n-1}$
+have $h_0\neq0$ (value $p^{-1}$); averaging yields $(2p-1)/p^{2}$. Since this
+tends to $0$, the hypothesis fails at every fixed $\delta>0$ once $p$ is
+large.
+\end{proof}
+
+Proposition~\ref{prop:collapse} refutes the cubic-twist route to a
+counterexample: a family that violated the hypothesis could not contradict
+the conjecture, and the averaged hypothesis is revealed as an instrument that
+actively suppresses nondegenerate mixed-bilinear components of diagonal
+increments. The companion strictness result, proved by the same four-point
+difference technique, states that for $n\ge2$ the monomial phase
+$e_p(\lambda x_1y_2)$, which enjoys pointwise rank-one diagonal increments
+and hence lies in the rigidity family, cannot be written as
+$a(x)b(y)c(x+y)$ with arbitrary unimodular one-variable factors: the assumed
+identity forces, on the one hand,
+$c(m+u+v)c(m)=e_p(\lambda u_1v_2)\,c(m+u)c(m+v)$ for all $m,u,v$, whose left
+side is symmetric in $u\leftrightarrow v$ while its right side is not —
+taking $\{u,v\}=\{e_1,e_2\}$ yields $e_p(\lambda)=1$, a contradiction. Thus
+the phase-restricted target class is properly contained in the rigidity
+family; under the unrestricted-quadratic reading of $(-1)^{q}$, by contrast,
+the witness belongs to the transmitted class through $Q=\lambda x_1y_2$, and
+the separation question re-enters through correlation, that is, through
+Open Problem~(O1) below.
+
 We now turn to the converse classification. Write points of $G\times G$ in
 the coordinates $u=x+y$, $v=x-y$ and set
 $\Theta(u,v)=f\bigl(\tfrac{u+v}{2},\tfrac{u-v}{2}\bigr)$, so that $f$ and

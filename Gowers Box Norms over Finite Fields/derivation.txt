@@ -109,3 +109,174 @@ requires either a structure theorem extracting class membership from
 $\Xi_0$-mass (one route: settle the parallelogram-equation converse), or a
 counterexample family with decaying optimal correlation (related to slice and
 partition rank of the kernel $(s,m)\mapsto d(s)e_p(Q(s,m))$).
+
+\subsection{Step 6: the collapse law}
+\textbf{Proposition (collapse law).} Let $g(x,y)=a(x)b(y)d(x-y)e_p(Q)$ belong
+to the rigidity family ($a,b,d$ unimodular, $Q$ quadratic on $G\times G$), let
+$\psi(x,y)=x_0y_0^{2}$ (coordinate $0$), and set $f=g\,e_p(\psi)$. Then
+\[
+\bigl\|\Delta_{(h,h)}f\bigr\|_\square^4=1\ \text{if }h_0=0,
+\qquad
+\bigl\|\Delta_{(h,h)}f\bigr\|_\square^4=p^{-1}\ \text{if }h_0\neq0,
+\]
+hence $\mathbb{E}_h\,\bigl\|\Delta_{(h,h)}f\bigr\|_\square^4=(2p-1)/p^{2}$,
+independently of $n$ and of the choice of $a,b,d,Q$.
+
+\emph{Proof.} (1)~The increment of $\psi$ along $(h,h)$ is
+\[
+\psi(x+h,y+h)-\psi(x,y)=(x_0+h_0)(y_0+h_0)^{2}-x_0y_0^{2}
+=2h_0x_0y_0+h_0y_0^{2}+2h_0^{2}y_0+h_0^{2}x_0+h_0^{3}.
+\]
+(2)~Pairwise cancellation. By Theorem D the untwisted increment splits,
+$\Delta_{(h,h)}g=\alpha_h(x)\,\beta_h(y)\,e_p(\omega_h)$, and against the box
+pattern every factor of the form $u(x)v(y)c$ dies:
+\[
+u(x_1)\overline{u(x_2)}\,\overline{u(x_1)}\,u(x_2)\;
+v(y_1)\overline{v(y_1)}\,\overline{v(y_2)}\,v(y_2)\;|c|^{2}=1 .
+\]
+This disposes of $\alpha_h$, $\beta_h$, of the pure-$x$ term $h_0^{2}x_0$
+(phases $\varphi(x_{1,0})-\varphi(x_{2,0})-\varphi(x_{1,0})+\varphi(x_{2,0})
+=0$), of the pure-$y$ terms $h_0y_0^{2}+2h_0^{2}y_0$ likewise in $y$, and of
+the constants, whose four corner signatures combine as
+$e_p(\omega_h)e_p(-\omega_h)e_p(-\omega_h)e_p(\omega_h)=1$ and
+$e_p(h_0^{3})^{\,1-1-1+1}=1$; the factor $d(x-y)$ cancels since
+$d(x+h-(y+h))\overline{d(x-y)}=1$. (3)~Only the mixed term survives. With
+$u=x_1-x_2$, $v=y_1-y_2$, which are uniform on $G$ after translating one
+corner to the origin,
+\[
+\bigl\|\Delta_{(h,h)}f\bigr\|_\square^4
+=\Bigl|\;\mathbb{E}_{u,v\in G}\,
+e_p\bigl(2h_0[(x_{1})_0(y_{1})_0-(x_{2})_0(y_{1})_0
+-(x_{1})_0(y_{2})_0+(x_{2})_0(y_{2})_0]\bigr)\Bigr|
+=\mathbb{E}_{u,v}\,e_p\bigl(2h_0u_0v_0\bigr),
+\]
+the last quantity being real and nonnegative. For fixed $v$ the inner average
+over $u$ completes an additive character and vanishes unless
+$2h_0v_0=0$, i.e.\ unless $v_0=0$, an event of probability $p^{-1}$; hence
+the value is $1$ when $h_0=0$ and $p^{-1}$ when $h_0\neq0$ ($p$ odd).
+(4)~Direction count. The $p^{n-1}$ directions with $h_0=0$ contribute $1$ and
+the $(p-1)p^{n-1}$ directions with $h_0\neq0$ contribute $p^{-1}$:
+\[
+\mathbb{E}_h\,\bigl\|\Delta_{(h,h)}f\bigr\|_\square^4
+=\frac{p^{n-1}+(p-1)p^{n-2}}{p^{n}}
+=\frac{2p-1}{p^{2}} . \qquad\square
+\]
+
+\textbf{Corollary (robustness of the hypothesis).} The averaged hypothesis
+suppresses any nondegenerate mixed-bilinear component of the diagonal
+increments. Indeed, if for a direction $h$ the only non-pairwise-cancelling
+factor of $\Delta_{(h,h)}f$ is $e_p(B_h)$, where $B_h$ is bilinear with block
+matrix coupling $x$-differences to $y$-differences through a cross-block $C$
+of rank $r$, then the corner combination of $B_h$ reduces exactly to
+$2u^{T}Cv$ and
+\[
+\bigl\|\Delta_{(h,h)}f\bigr\|_\square^4
+=\mathbb{E}_{u,v}\,e_p\bigl(2u^{T}Cv\bigr)=p^{-r},
+\]
+since the inner average over $u$ vanishes unless $Cv=0$, an event of
+probability $p^{-r}$; a fortiori $\le p^{-r}$ whenever such a mixed factor is
+present alongside pairwise-cancelling factors. In particular the Check-$5$
+cubic mixed twist family does NOT satisfy the hypothesis beyond vanishing
+order $p^{-2}$-scale: its averaged value $(2p-1)/p^{2}\to0$, so it cannot
+serve as a counterexample. (Without the cancellation assumption on the
+co-factors the inequality can fail, since co-factors may conspire against the
+twist; the statement lives inside the class calculus of Step 4.)
+
+\subsection{Step 7: strengthened non-absorption and strictness for $n\ge2$}
+Let $T_0=\{a(x)b(y)c(x+y):\ a,b,c \text{ unimodular one-variable factors}\}$
+denote the phase-restricted class.
+
+\textbf{Lemma (strengthened Lemma 2: arbitrary factors).} For $n\ge2$ and
+$\lambda\neq0$ in $\mathbb{F}_p$, the phase $e_p(\lambda x_1y_2)$ does not
+belong to $T_0$.
+
+\emph{Proof.} Suppose $e_p(\lambda x_1y_2)=a(x)b(y)c(m)$ pointwise, with
+$m=x+y$. For steps $u,v\in G$ apply the multiplicative four-point mixed
+difference
+\[
+D_{u,v}F(x,y):=\frac{F(x+u,y+v)\,F(x,y)}{F(x+u,y)\,F(x,y+v)} .
+\]
+\emph{Round 1.} For the left side the exponents combine to
+\[
+(x_1{+}u_1)(y_2{+}v_2)+x_1y_2-(x_1{+}u_1)y_2-x_1(y_2{+}v_2)=u_1v_2 ,
+\]
+so $D_{u,v}\,e_p(\lambda x_1y_2)=e_p(\lambda u_1v_2)$, constant in the base
+$(x,y)$; the coordinate instance $u=e_1$, $v=e_2$ gives the constant
+$e_p(\lambda)$. For the right side the $a$- and $b$-factors cancel pairwise
+identically and
+\[
+D_{u,v}\,[abc]=\frac{c(m+u+v)\,c(m)}{c(m+u)\,c(m+v)},
+\]
+so the representation forces
+\begin{equation}\label{eq:round1}
+c(m+u+v)\,c(m)=e_p(\lambda u_1v_2)\,c(m+u)\,c(m+v)
+\qquad\forall m,u,v\in G .
+\end{equation}
+In particular $c$ has \emph{constant second multiplicative difference}
+$e_p(\lambda)$ along $(e_1,e_2)$; normalizing $c(0)=1$ and telescoping
+\eqref{eq:round1} on the plane spanned by $e_1,e_2$ gives
+$c(te_1+se_2)=A(t)B(s)\,e_p(\lambda ts)$ there.
+
+\emph{Round 2.} The left side of \eqref{eq:round1} is defined through the two
+increments symmetrically: for \emph{every} function $c$,
+\[
+\frac{c(m+u+v)\,c(m)}{c(m+u)\,c(m+v)}
+=\frac{c(m+v+u)\,c(m)}{c(m+v)\,c(m+u)} ,
+\]
+i.e.\ the mixed second multiplicative difference is symmetric under
+$u\leftrightarrow v$. Applying \eqref{eq:round1} both ways yields
+$e_p(\lambda u_1v_2)=e_p(\lambda v_1u_2)$ for all $u,v$; at $u=e_1$, $v=e_2$
+this reads $e_p(\lambda)=1$, hence $p\mid\lambda$, contradicting
+$\lambda\neq0$. No representation exists. \quad$\square$
+
+\emph{Structural remark.} Write
+$\lambda x_1y_2=\tfrac{\lambda}{2}(x_1y_2+x_2y_1)+\tfrac{\lambda}{2}
+(x_1y_2-x_2y_1)$. The symmetric half absorbs into one-variable factors and
+$m$: since $(x_1+y_1)(x_2+y_2)=x_1x_2+y_1y_2+x_1y_2+x_2y_1$,
+\[
+\tfrac{\lambda}{2}(x_1y_2+x_2y_1)
+=\underbrace{\tfrac{\lambda}{2}m_1m_2}_{\gamma(m)}
+-\underbrace{\tfrac{\lambda}{2}x_1x_2}_{\alpha(x)}
+-\underbrace{\tfrac{\lambda}{2}y_1y_2}_{\beta(y)} .
+\]
+The antisymmetric residual is the precise obstruction: in the coordinates
+$s=x-y$, $m=x+y$ (so $x=\tfrac{m+s}{2}$, $y=\tfrac{m-s}{2}$),
+\[
+x_1y_2-x_2y_1
+=\tfrac14\bigl[(m_1+s_1)(m_2-s_2)-(m_2+s_2)(m_1-s_1)\bigr]
+=\tfrac12\,(s_1m_2-s_2m_1),
+\qquad\text{whence}\qquad
+\tfrac{\lambda}{2}(x_1y_2-x_2y_1)=\tfrac{\lambda}{4}(s_1m_2-s_2m_1);
+\]
+its four-point difference retains base dependence through the $s$-coordinates
+(coefficients $\tfrac{\lambda}{4}(v_2-u_2)$ on $s_1$ and
+$\tfrac{\lambda}{4}(v_1-u_1)$ on $s_2$), so no product of one-variable factors
+and one $m$-factor reproduces it — the swap obstruction of Round 2 in
+disguise.
+
+\textbf{Theorem (strictness, $n\ge2$).} Let $\lambda\neq0$ and
+$w(x,y)=e_p(\lambda x_1y_2)$. Its diagonal increments are pointwise rank one:
+\[
+\Delta_{(h,h)}w(x,y)
+=e_p\bigl(\lambda[(x_1+h_1)(y_2+h_2)-x_1y_2]\bigr)
+=e_p(\lambda h_2x_1)\;e_p(\lambda h_1y_2)\;e_p(\lambda h_1h_2),
+\]
+a product of an $x$-function, a $y$-function and a constant; accordingly $w$
+belongs to the natural rigidity family $\{a\,b\,d(x-y)e_p(Q)\}$, taking
+$a=b=d=1$ and $Q=\lambda x_1y_2$. By the Lemma, $w\notin T_0$. Therefore
+$T_0$ is a proper subclass of the rigidity family for $n\ge2$.
+
+\textbf{Scope of the strictness statement.} Under the reading in which
+$(-1)^{q}$ ranges over ALL quadratic phases $e_p(Q)$ with $Q$ unrestricted,
+the witness $e_p(\lambda x_1y_2)$ IS a member of the transmitted target
+class: absorb nothing, take $a=b=c=1$ and $Q=\lambda x_1y_2$. The strict
+separation just proved applies to the phase-restricted class $T_0$,
+equivalently to the absorbable span of the transmitted class. Whether the
+FULL transmitted class covers the rigidity family up to uniform correlation
+is precisely the twisted trilinear inequality (Open Problem O1). The isolated
+open subproblem is therefore: does
+$\inf_{d}\sup\,\bigl|\langle d(x-y),\Phi\rangle\bigr|$, the supremum taken
+over the transmitted class, admit a positive lower bound uniform in the
+unimodular $d$ — together with the parallelogram-equation converse
+(Conjecture D'). These two questions constitute the exact open residue; no
+other gap remains between the rigidity family and the transmitted readings.

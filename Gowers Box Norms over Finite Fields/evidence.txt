@@ -60,3 +60,33 @@ targets at these sizes; the regime is dominated by the count of free
 parameters rather than by arithmetic structure, so the experiment provides no
 counterexample and no separation — consistent with, but not evidential for,
 either direction of the open problem.
+
+\subsection{Collapse experiment}
+For every twisted rigidity member
+$f=a(x)b(y)d(x-y)e_p(Q)\,e_p(x_0y_0^{2})$ the collapse law predicts
+$\bigl\|\Delta_{(h,h)}f\bigr\|_\square^4=1$ on the $p^{n-1}$ directions with
+$h_0=0$ and $p^{-1}$ on the $(p-1)p^{n-1}$ remaining directions, hence an
+averaged value independent of $n$ and of $a,b,d,Q$:
+\begin{center}
+\begin{tabular}{llr}
+\toprule
+$p$ & predicted $\mathbb{E}_h\|\Delta_{(h,h)}f\|_\square^4=(2p-1)/p^{2}$ & decimal \\
+\midrule
+$5$ & $9/25$ & $0.360000000000000$ \\
+$7$ & $13/49$ & $0.265306122448980$ \\
+$3$ & $5/9$ & $0.555555555555556$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Control value: exactly $1$ for unperturbed rigidity members ($e_p(\psi)$
+absent), for which $\Delta_{(h,h)}f\equiv1$; agreement tolerance $10^{-9}$.
+The per-direction values $1$ (for $h_0=0$) and $p^{-1}$ (for $h_0\neq0$) are
+established analytically in Step 6; the suite confirms the resulting
+direction-averaged values, namely $0.5555555555555556$ at $(p,n)=(3,2)$ and
+$0.360000000000000$ at $(5,1)$ and $(5,2)$, exact to $10^{-16}$ against the
+rational predictions $5/9$ and $9/25$. Interpretation: the averaged hypothesis collapses at rate
+$(2p-1)/p^{2}\to0$ on this family while remaining provably equal to $1$ on
+the untwisted family, so the averaged spectral hypothesis genuinely
+distinguishes rigidity members from their cubic mixed twists; this refutes
+the cubic-twist counterexample route, since a family violating the hypothesis
+cannot contradict the conjecture.
