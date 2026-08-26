@@ -686,6 +686,197 @@ def check7():
     return all_ok
 
 
+# CHECK 8 -- naive Theorem E converse classification, exhaustive at (p,n)=(3,1)
+#   G=F_3, nine points (x,y). Enumerate ALL 3^9 exponent vectors e -> f=e_p(e).
+#   f survives iff every diagonal increment D_h(x,y)=f(x+h,y+h)*conj(f(x,y)),
+#   h in F_3, is rank one. h=0 gives D_0 = 1 identically (f unimodular), so the
+#   determinant test runs on h=1,2. Increments are exact cube roots of unity,
+#   so rank-one |D11*D22 - D12*D21| < 1e-9 is checked exactly as det == 0 mod 3.
+#   RESULT (refutes the naive converse of Theorem E exhaustively):
+#   survivors = 3^7 = 2187 but only 3^6 = 729 admit the constructive
+#   extraction f = a(x)b(y)d(x-y)e_p(Q), Q quadratic without linear part;
+#   the 2187-729 unrepresentable survivors are cycle-twist obstructions.
+#   Controls: seeded family members (must survive AND be represented) and
+#   seeded cubic-mixed twists (must break rank-one).
+# ----------------------------------------------------------------------
+def check8():
+    print("=" * 76)
+    print("CHECK 8 - naive converse classification REFUTED exhaustively (survivors=3^7 > family=3^6)")
+    import itertools
+    om = cmath.exp(2j * math.pi / 3)
+    pts = [(x, y) for x in range(3) for y in range(3)]
+    shift = {h: [((i // 3 + h) % 3) * 3 + (i % 3 + h) % 3 for i in range(9)]
+             for h in (1, 2)}
+
+    def rank_one_exponent(ev):
+        for h in (1, 2):
+            sh = shift[h]
+            rows = [[(ev[sh[3 * x + y]] - ev[3 * x + y]) % 3 for y in range(3)]
+                    for x in range(3)]
+            for xi in range(3):
+                r1 = rows[xi]
+                for xj in range(xi + 1, 3):
+                    r2 = rows[xj]
+                    for y1 in range(3):
+                        v1 = r1[y1]
+                        for y2 in range(y1 + 1, 3):
+                            if (v1 + r2[y2] - r1[y2] - r2[y1]) % 3:
+                                return False
+        return True
+
+    def log3(z):
+        k = round(cmath.phase(z) / (2 * math.pi / 3)) % 3
+        return k if abs(z - om ** k) < TOL else None
+
+    def rank_one_complex(f):
+        for h in (0, 1, 2):
+            D = [[f[((x + h) % 3, (y + h) % 3)] * f[(x, y)].conjugate()
+                  for y in range(3)] for x in range(3)]
+            for x1 in range(3):
+                r1 = D[x1]
+                for x2 in range(3):
+                    r2 = D[x2]
+                    for y1 in range(3):
+                        for y2 in range(3):
+                            if abs(r1[y1] * r2[y2] - r1[y2] * r2[y1]) >= TOL:
+                                return False
+        return True
+
+    def extract_rep(f):
+        # diagonal increment D_1 separable: D_1(x,y) = alpha(x) beta(y)
+        D = [[f[((x + 1) % 3, (y + 1) % 3)] * f[(x, y)].conjugate()
+              for y in range(3)] for x in range(3)]
+        al = [D[x][0] for x in range(3)]
+        be = [D[0][y] / D[0][0] for y in range(3)]
+        for x in range(3):
+            for y in range(3):
+                if abs(D[x][y] - al[x] * be[y]) >= TOL:
+                    return None
+        # telescope along (h,h): g := f/(a*b) is constant on x-y classes,
+        # so g(x,y) = gamma(x-y) with gamma a cube root at each class
+        at = [1, al[0], al[0] * al[1]]
+        bt = [1, be[0], be[0] * be[1]]
+        g = [[f[(x, y)] * (at[x] * bt[y]).conjugate() for y in range(3)]
+             for x in range(3)]
+        ke = []
+        for s in range(3):
+            vals = [g[(s + t) % 3][t] for t in range(3)]
+            if any(abs(v - vals[0]) >= TOL for v in vals):
+                return None
+            k = log3(vals[0])
+            if k is None:
+                return None
+            ke.append(k)
+        c0 = ke[0]
+        c1 = (ke[2] - ke[1]) % 3
+        c2 = (ke[1] - c0 - c1) % 3
+        if any((c0 + c1 * s + c2 * s * s) % 3 != ke[s] for s in range(3)):
+            return None
+        atf = [at[x] * om ** ((c2 * x * x + c1 * x) % 3) for x in range(3)]
+        btf = [bt[y] * om ** ((c2 * y * y - c1 * y) % 3) for y in range(3)]
+        dt = [om ** c0] * 3
+        # Theta bridge: Theta[u,v]=f[2(u+v),2(u-v)]; Theta[0,v] splits as
+        # atilde(2v)*btilde(v)*d(v)*e_p(Q(2v,v))  (necessity direction)
+        for v in range(3):
+            lhs = f[(2 * v % 3, (-2 * v) % 3)]
+            rhs = (atf[2 * v % 3] * btf[v] * dt[v]
+                   * om ** ((2 * c2 * v * v) % 3))
+            if abs(lhs - rhs) >= TOL:
+                return None
+        # R, S per spec using extracted d; S must be cube roots of unity
+        R = {(x, y): f[(x, y)] * dt[(x - y) % 3].conjugate()
+             for x in range(3) for y in range(3)}
+        S = {}
+        for x in range(3):
+            for y in range(3):
+                S[(x, y)] = R[(x, y)] * R[(0, 0)] / (R[(x, 0)] * R[(0, y)])
+                if abs(abs(S[(x, y)]) - 1) >= TOL:
+                    return None
+        A = log3(S[(1, 0)])
+        C = log3(S[(0, 1)])
+        s11 = log3(S[(1, 1)])
+        if A is None or C is None or s11 is None:
+            return None
+        B = (s11 - A - C) % 3
+        for x in range(3):
+            for y in range(3):
+                if abs(S[(x, y)] - om ** ((A*x*x + B*x*y + C*y*y) % 3)) >= TOL:
+                    return None
+        af = [R[(x, 0)] * om ** ((-(A * x * x)) % 3) for x in range(3)]
+        bf = [R[(0, y)] * om ** ((-(C * y * y)) % 3) / R[(0, 0)]
+              for y in range(3)]
+        for x in range(3):
+            for y in range(3):
+                rhs = (af[x] * bf[y] * dt[(x - y) % 3]
+                       * om ** ((A*x*x + B*x*y + C*y*y) % 3))
+                if abs(f[(x, y)] - rhs) >= TOL:
+                    return None
+        return True
+
+    total = 3 ** 9
+    survivors = []
+    for ev in itertools.product(range(3), repeat=9):
+        if rank_one_exponent(ev):
+            survivors.append(ev)
+    surv_set = set(survivors)
+    represented = 0
+    bad_vectors = []
+    for ev in survivors:
+        f = {(x, y): om ** ev[3 * x + y] for (x, y) in pts}
+        if extract_rep(f):
+            represented += 1
+        else:
+            bad_vectors.append(ev)
+
+    rng = random.Random(SEED + 800 + 8)
+
+    def rand_family_member():
+        av = [om ** rng.randrange(3) for _ in range(3)]
+        bv = [om ** rng.randrange(3) for _ in range(3)]
+        dv = [om ** rng.randrange(3) for _ in range(3)]
+        A, B, C = (rng.randrange(3) for _ in range(3))
+        return {(x, y): av[x] * bv[y] * dv[(x - y) % 3]
+                * om ** ((A*x*x + B*x*y + C*y*y) % 3)
+                for x in range(3) for y in range(3)}
+
+    fam_ok = 0
+    for _ in range(50):
+        f = rand_family_member()
+        ev = tuple(log3(f[p]) for p in pts)
+        if (rank_one_complex(f) and ev in surv_set and extract_rep(f)):
+            fam_ok += 1
+    twist_fail = 0
+    for _ in range(200):
+        f = rand_family_member()
+        lam = rng.choice([1, 2])
+        mon = rng.choice(["x2y", "xy2"])
+        g = {p: f[p] * om ** ((lam * (p[0]**2 * p[1] if mon == "x2y"
+                                  else p[0] * p[1]**2)) % 3)
+             for p in pts}
+        if not rank_one_complex(g):
+            twist_fail += 1
+
+    print(f"  enumerated all {total} exponent vectors e : F_3^(F_3^2) -> {{0,1,2}}")
+    print(f"  survivors (rank-one increments, all h)      : {len(survivors)}")
+    print(f"  represented  f = a(x)b(y)d(x-y)e_p(Q)       : {represented}")
+    counts_ok = (total == 19683 and len(survivors) == 2187
+                 and represented == 729)
+    print(f"  ASSERT enumerated==19683, survivors==3^7==2187, "
+          f"represented==3^6==729 : {'PASS' if counts_ok else 'FAIL'}")
+    print(f"  ASSERT survivors > represented (naive converse FALSE)     : "
+          f"{'PASS' if len(survivors) > represented else 'FAIL'}")
+    if bad_vectors:
+        for ev in bad_vectors[:5]:
+            print(f"    UNREPRESENTED survivor vector {ev}")
+    print(f"  controls: family members rank-one+represented : {fam_ok}/50 "
+          f"(seed {SEED + 800 + 8})")
+    print(f"  controls: cubic-mixed twists breaking rank-one: "
+          f"{twist_fail}/200 (expected: >=190)")
+    ok = (counts_ok and len(survivors) > represented
+          and fam_ok == 50 and twist_fail >= 190)
+    return ok, len(survivors), represented
+
+
 def main():
     print(f"GREEN-028 verify_solution.py | seed={SEED} tol={TOL:g} | stdlib only")
     ok1 = check1()
@@ -695,6 +886,7 @@ def main():
     frac5 = check5()
     ok6 = check6()
     ok7 = check7()
+    ok8, surv8, rep8 = check8()
 
     print("=" * 76)
     print("SUMMARY")
@@ -708,7 +900,9 @@ def main():
     print(f"  CHECK 5 negative perturbation           : MEASURED fraction failing h = {frac5}")
     print(f"  CHECK 6 counterexample experiment       : {'COMPLETED (raw data written to data/)' if ok6 else 'INCOMPLETE'}")
     print(f"  CHECK 7 collapse law (cubic twist)      : {'PASS ((2p-1)/p^2 confirmed)' if ok7 else 'FAIL'}")
-    exit_ok = ok1 and ok2 and ok3 and ok4 and ok6 and ok7
+    print(f"  CHECK 8 naive converse refutation       : "
+          f"{'DOCUMENTED (' + str(surv8) + ' vs ' + str(rep8) + ')' if ok8 else 'FAIL'}")
+    exit_ok = ok1 and ok2 and ok3 and ok4 and ok6 and ok7 and ok8
     print(f"EXIT {'0' if exit_ok else '1'}")
     sys.exit(0 if exit_ok else 1)
 

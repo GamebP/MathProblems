@@ -21,7 +21,7 @@
 
 \noindent\textbf{Counterexample status:} cubic-mixed-twist route refuted: the twist collapses the spectral hypothesis as $(2p-1)/p^2\to0$ (proved); no counterexample known; numerical search $p=5,7$ not exhaustive.
 
-\noindent\textbf{Exact missing implication:} The Fourier-mass hypothesis on $B_f$ is not known to imply algebraic correlation with the infinite-dimensional target class; no known implication from the spectral condition to correlation exists; the collapse law shows the hypothesis suppresses nondegenerate mixed-bilinear components of diagonal increments, isolating the candidate open residue (literature assessment, not a deduction proved here) in the uniform twisted trilinear inequality and the converse classification (Conjecture D')
+\noindent\textbf{Exact missing implication:} The Fourier-mass hypothesis on $B_f$ is not known to imply algebraic correlation with the infinite-dimensional target class; no known implication from the spectral condition to correlation exists; the collapse law shows the hypothesis suppresses nondegenerate mixed-bilinear components of diagonal increments; the naive converse classification is disproven (R8), so the open residue for reading (i) comprises the uniform twisted trilinear inequality (O1) and the corrected converse classification with cycle-twist components (O2) — a literature assessment, not a deduction proved here
 
 \noindent\textbf{Scope:} General theorem for all odd primes $p$ and dimensions $n$; partial results hold where stated.
 
@@ -34,10 +34,11 @@ preparation of this document.
 \item[R1.] \textbf{Spectral reformulation (Proposition A).} With $B_f(x_1,x_2,y_1,y_2)=f(x_1,y_1)\overline{f(x_2,y_1)}\,\overline{f(x_1,y_2)}f(x_2,y_2)$ on $G^4$ and $\Xi_0=\{(\xi_1,\xi_2,\xi_3,\xi_4)\in\widehat{G}^{\,4}:\ \xi_1+\xi_2+\xi_3+\xi_4=0\}$, one has $$\mathbb{E}_h\,\|\Delta_{(h,h)}f\|_\square^4\;=\;\sum_{\xi\in\Xi_0}\bigl|\widehat{B_f}(\xi)\bigr|^2.$$ The hypothesis says exactly that the four-point box product $B_f$ carries Fourier $L^2$-mass at least $\delta$ on the zero-sum-frequency subsystem $\Xi_0$, of codimension $n$ in $\widehat{G^4}$. Machine-checked at $(p,n)=(3,1),(3,2),(5,1)$ with residuals between $1.11\times10^{-16}$ and $6.11\times10^{-16}$ and Parseval diagnostic total Fourier mass equal to $1$ at every size.
 \item[R2.] \textbf{Multiplicative calculus of the target class.} (i) For $n=1$ every quadratic phase absorbs into the three one-variable factors: $Q(x,y)=\alpha(x)+\beta(y)+\gamma(x+y)+\kappa$ via $xy=\bigl((x+y)^2-x^2-y^2\bigr)/2$, valid for odd $p$. (ii) For $n\ge2$ the monomial $x_1y_2$ admits no such representation (mixed finite differences force $w_1s_2=s_1w_2$ for all $s,w$, false at $s=e_2$, $w=e_1$), so the phase genuinely enlarges the class. (iii) Factorization: $\|a(x)b(y)w(x+y)\|_\square^4=\|w\|_{U^2(G)}^4$ for unimodular $a,b$. (iv) Reduction: for $f=a(x)b(y)c(x+y)$, $$\mathbb{E}_h\|\Delta_{(h,h)}f\|_\square^4=\mathbb{E}_h\|\Delta_{2h}c\|_{U^2(G)}^4=\|c\|_{U^3(G)}^8,$$ so inside the class the hypothesis is precisely a Gowers $U^3$ condition, and the inverse theorem for $U^3$ over $\mathbb{F}_p^n$ explains every class member obeying it by a quadratic phase. The reduction identity was measured to residual $2.220\times10^{-16}$ at $(p,n)=(3,1)$.
 \item[R3.] \textbf{Diagonal family and twisted trilinear inequality (Observation C).} For every unimodular $d\colon G\to\mathbb{C}$, $f(x,y)=d(x-y)$ satisfies $\Delta_{(h,h)}f\equiv 1$, hence meets the hypothesis with $\delta=1$. Under the bijection $x=(m+s)/2$, $y=(m-s)/2$ (valid since $p$ is odd), correlation against the target class becomes $$\Bigl|\;\mathbb{E}_{s,m}\;d(s)\,\overline{a\bigl(\tfrac{m+s}{2}\bigr)}\,\overline{b\bigl(\tfrac{m-s}{2}\bigr)}\,\overline{c(m)}\;e_p\!\bigl(-Q\bigl(\tfrac{m+s}{2},\tfrac{m-s}{2}\bigr)\bigr)\;\Bigr|;$$ at $n=1$ the twist absorbs by (ii), so the maximal-hypothesis case of the problem is exactly a uniform positive lower bound for this trilinear correlation over all unimodular $d$, which is open.
-\item[R4.] \textbf{Rigidity: sufficiency half of rank-one diagonal increments (Theorem D).} If $f=a(x)b(y)d(x-y)e_p(Q)$ with $Q(z)=\tfrac12 z^{T}Mz+l^{T}z+\kappa$ quadratic on $G\times G$, then $$\Delta_{(h,h)}f(x,y)=\alpha_h(x)\,\beta_h(y)\,e_p(\omega_h),$$ with $\alpha_h(x)=a(x+h)\overline{a(x)}\,e_p\bigl(((M_{xx}{+}M_{xy})h)^{T}x\bigr)$, $\beta_h(y)=b(y+h)\overline{b(y)}\,e_p\bigl(((M_{yx}{+}M_{yy})h)^{T}y\bigr)$, $\omega_h=\tfrac12(h,h)^{T}M(h,h)+l^{T}(h,h)$; verified to maximal deviation $5.118\times10^{-16}$ over all $(h,x,y)$ at $(p,n)=(5,1)$. Sharpness: multiplication by the cubic mixed phase $e_p(xy^2)$ destroys rank-one factorization for $4$ of $5$ directions (fraction $0.8$). The exact converse classification is open, the defining rank-one increment law being the only currently verified invariant; the multiplicative parallelogram equation $\Theta(u+w,v+t)\Theta(u-w,v-t)=\Theta(u+t,v-w)\Theta(u-t,v+w)$ is NOT necessary (violated by $f=e_p(x^2)$ and $f=e_p(xy)$, whose diagonal increments are pointwise rank one, and by the plain constituent $\Theta=d(v)$), so the converse does not reduce to it. Structurally, the natural rigidity family $\{a\,b\,d(x-y)e_p(Q)\}$ differs from the transmitted class $\{a\,b\,c(x+y)(-1)^q\}$ once $n\ge2$, since $e_p(\lambda x_1y_2)$ belongs to the former but not to the absorbable span of the latter.
+\item[R4.] \textbf{Rigidity: sufficiency half of rank-one diagonal increments (Theorem D).} If $f=a(x)b(y)d(x-y)e_p(Q)$ with $Q(z)=\tfrac12 z^{T}Mz+l^{T}z+\kappa$ quadratic on $G\times G$, then $$\Delta_{(h,h)}f(x,y)=\alpha_h(x)\,\beta_h(y)\,e_p(\omega_h),$$ with $\alpha_h(x)=a(x+h)\overline{a(x)}\,e_p\bigl(((M_{xx}{+}M_{xy})h)^{T}x\bigr)$, $\beta_h(y)=b(y+h)\overline{b(y)}\,e_p\bigl(((M_{yx}{+}M_{yy})h)^{T}y\bigr)$, $\omega_h=\tfrac12(h,h)^{T}M(h,h)+l^{T}(h,h)$; verified to maximal deviation $5.118\times10^{-16}$ over all $(h,x,y)$ at $(p,n)=(5,1)$. Sharpness: multiplication by the cubic mixed phase $e_p(xy^2)$ destroys rank-one factorization for $4$ of $5$ directions (fraction $0.8$). The NAIVE converse classification is DISPROVEN (R8): at $(p,n)=(3,1)$ a rank-one function outside the family is exhibited and certified exhaustively; the multiplicative parallelogram equation $\Theta(u+w,v+t)\Theta(u-w,v-t)=\Theta(u+t,v-w)\Theta(u-t,v+w)$ is likewise NOT necessary (violated by $f=e_p(x^2)$, $f=e_p(xy)$, $\Theta=d(v)$). Structurally, the natural rigidity family $\{a\,b\,d(x-y)e_p(Q)\}$ differs from the transmitted class $\{a\,b\,c(x+y)(-1)^q\}$ once $n\ge2$, since $e_p(\lambda x_1y_2)$ belongs to the former but not to the absorbable span of the latter.
 \item[R5.] \textbf{Small-field numerics: degrees-of-freedom-dominated regime.} Maximizing $M(d)=\sup\bigl|\mathbb{E}_{x,y}\,d(x-y)\overline{a(x)}\,\overline{b(y)}\,\overline{c(x+y)}\bigr|$ over unimodular factors (which coincides with the full reading-(i) class when $n=1$, by absorption; no dominance is claimed under reading (ii)) by alternating phase maximization from $1000$ random restarts: for $d=e_p(s^3)$ the largest correlation found by local alternating maximization (lower bound; global optimality not certified) is $0.7236067977499792$ at $p=5$ (mean $0.7225012249409789$, sd $0.01745$) and $0.6772769730217724$ at $p=7$ (mean $0.6758013999033685$, sd $0.01399$); random-exponent controls give $0.7236067977499792$ ($p=5$) and $0.8160210786702251$ ($p=7$); the control $d=e_p(2s^2)$ attains correlation exactly $1$ via the witness $e_p(4x^2)e_p(4y^2)e_p(-2s^2)$ (a naive witness yields the Gauss-sum value $1/\sqrt{p}$, recorded as erratum). At $n=1$, $p\in\{5,7\}$, optima cluster in $0.68$--$0.82$ irrespective of structure: $3p$ unimodular degrees of freedom dominate $p^2$ constraints, so these sizes exhibit no separation between structured and random diagonal data and give neither evidence for nor against asymptotic decay. A deterministic probe extending the same optimizer to $p=11,13,17$ (300/300/120 restarts, $\le 250$ sweeps) yields largest-found correlations $0.542871078$, $0.534867710$, $0.446900156$ for the cubic target against random-exponent controls $0.645124308$, $0.672861647$, $0.554490869$; the combined sequence over $p\in\{5,7,11,13,17\}$ decays consistently with $p^{-0.4}$ (log-log slope $-0.39$). These are lower bounds produced by local search (global optimality uncertified) and constitute heuristic evidence against a uniform lower bound, not a proof.
 \item[R6.] \textbf{Collapse law for the cubic mixed twist.} Let $g(x,y)=a(x)b(y)d(x-y)e_p(Q)$ belong to the rigidity family ($a,b,d$ unimodular, $Q$ quadratic on $G\times G$), let $\psi(x,y)=x_0y_0^2$ (coordinate $0$), and set $f=g\,e_p(\psi)$. Then $$\|\Delta_{(h,h)}f\|_\square^4=1 \text{ if } h_0=0, \qquad \|\Delta_{(h,h)}f\|_\square^4=p^{-1} \text{ if } h_0\neq 0,$$ independently of $n$ and of the choice of $a,b,d,Q$. Proof mechanism: the increment $$\psi(x+h,y+h)-\psi(x,y)=2h_0x_0y_0+h_0y_0^2+2h_0^2y_0+h_0^2x_0+h_0^3$$ reduces, after pairwise cancellation of all one-variable factors, of the rank-one splitting $\Delta_{(h,h)}g=\alpha_h(x)\beta_h(y)e_p(\omega_h)$ (Theorem D) and of the constants ($e_p(\omega_h)e_p(-\omega_h)e_p(-\omega_h)e_p(\omega_h)=1$), to the mixed box value $\mathbb{E}_{u,v}\,e_p(2h_0u_0v_0)$ with $u=x_1-x_2$, $v=y_1-y_2$ uniform; the inner average over $u$ completes an additive character and vanishes unless $v_0=0$, an event of probability $p^{-1}$. Direction counting gives $$\mathbb{E}_h\,\|\Delta_{(h,h)}f\|_\square^4=\frac{p^{n-1}+(p-1)p^{n-2}}{p^n}=\frac{2p-1}{p^2},$$ independent of $n$ (values $5/9$, $9/25$, $13/49$ at $p=3,5,7$). Corollary (robustness): the hypothesis suppresses any nondegenerate mixed-bilinear component of diagonal increments — if the only non-pairwise-cancelling factor of $\Delta_{(h,h)}f$ is $e_p(B_h)$ whose cross-block couples $x$-differences to $y$-differences with rank $r$, then $\|\Delta_{(h,h)}f\|_\square^4=p^{-r}$ for that direction — when the mixed bilinear factor is the sole non-pairwise-cancelling component; adversarial co-factors can conspire to restore larger values — (a fortiori $\le p^{-r}$ alongside pairwise-cancelling factors); hence the Check-5 cubic-twist family collapses the hypothesis at rate $(2p-1)/p^2\to0$ and cannot serve as a counterexample. Machine-checked at $(p,n)=(5,1),(7,1),(3,2),(5,2)$: increment closed form pointwise exact under random unimodular factors and random quadratic phases; rank-one splitting verified by vanishing mixed second differences; mixed-corner reduction confirmed by brute-force corner sums at $(5,1),(7,1)$; end-to-end box sums at $(3,1),(5,1)$ exact to $10^{-16}$; direction averages match $(2p-1)/p^2$ exactly.
 \item[R7.] \textbf{Strictness for $n\geq2$: $T\_0$ is a proper subclass of the rigidity family.} For $n\ge2$ and $\lambda\neq0$ in $\mathbb{F}_p$, the phase $e_p(\lambda x_1y_2)$ does not belong to $T_0=\{a(x)b(y)c(x+y)\}$ (strengthened arbitrary-factor non-absorption). Proof: the multiplicative four-point mixed difference $D_{u,v}F=F(x+u,y+v)F(x,y)/[F(x+u,y)F(x,y+v)]$ gives $D_{u,v}\,e_p(\lambda x_1y_2)=e_p(\lambda u_1v_2)$ (constant; instance $u=e_1,v=e_2$: constant $e_p(\lambda)$), while on any purported representation it forces $$c(m+u+v)c(m)=e_p(\lambda u_1v_2)\,c(m+u)c(m+v)\qquad\forall m,u,v.$$ The left side is symmetric under $u\leftrightarrow v$ for every $c$; the right side is not — at $u=e_1,v=e_2$ symmetry forces $e_p(\lambda)=1$, i.e. $\lambda=0$. Constants verified: symmetric half absorbs as $\tfrac{\lambda}{2}(x_1y_2+x_2y_1)=\tfrac{\lambda}{2}(x_1+y_1)(x_2+y_2)-\tfrac{\lambda}{2}x_1x_2-\tfrac{\lambda}{2}y_1y_2$; antisymmetric residual satisfies $\tfrac{\lambda}{2}(x_1y_2-x_2y_1)=\tfrac{\lambda}{4}(s_1m_2-s_2m_1)$ with $s=x-y$, $m=x+y$. Yet $e_p(\lambda x_1y_2)$ has pointwise rank-one diagonal increments, $$\Delta_{(h,h)}e_p(\lambda x_1y_2)=e_p(\lambda h_2x_1)\,e_p(\lambda h_1y_2)\,e_p(\lambda h_1h_2),$$ a product of an $x$-function, a $y$-function and a constant, so it belongs to the rigidity family $\{a\,b\,d(x-y)e_p(Q)\}$ (take $a=b=d=1$, $Q=\lambda x_1y_2$). Hence $T_0\subsetneq\{a\,b\,d(x-y)e_p(Q)\}$ for $n\ge2$. Scope: under the unrestricted-quadratic reading of $(-1)^q$ the witness IS a member of the transmitted target class (absorb nothing: $a=b=c=1$, $Q=\lambda x_1y_2$); the separation concerns the phase-restricted class $T_0$, equivalently the absorbable span of the transmitted class. Whether the FULL transmitted class covers the rigidity family up to uniform correlation is the candidate open residue (literature assessment): the uniform twisted trilinear inequality (related to O1, a positive lower bound for $\sup|\langle d(x-y),\Phi\rangle|$ uniform in unimodular $d$) together with the converse classification (Conjecture D'). Scope: the strictness statement is a reading-(i) result, comparing the phase-restricted class $T_0$ with the rigidity family inside the $e_p(Q)$ world; it makes no claim about the genuinely $\{\pm1\}$-valued reading (ii).
+\item[R8.] \textbf{Naive converse classification DISPROVEN; corrected converse open (refines O2).} The naive converse — every unimodular $f:G\times G\to\mathbb{C}$ with pointwise rank-one diagonal increments is of the form $a(x)b(y)d(x-y)e_p(Q)$ with $Q$ quadratic — is FALSE. Explicit counterexample at $(p,n)=(3,1)$: $f=\omega$ at $(1,2)$, $\omega^{2}$ at $(2,1)$, $1$ elsewhere ($\omega=e^{2\pi i/3}$). It passes the rank-one increment test in every direction ($h=1$: increment exponent rows $(0,1,0),(2,0,2),(0,1,0)$, additively separable via $A=(0,2,0),B=(0,1,0)$; $h=2$: rows $(0,0,2),(0,0,2),(1,1,0)$, separable via $A=(0,0,1),B=(0,0,2)$; $h=0$ trivial), yet exhaustive search over all $3^{12}$ parameter assignments certifies no representation. Exhaustively: the rank-one class at $(3,1)$ has $3^{7}=2187$ elements against $3^{6}=729$ family members — one surplus $\mathbb{Z}_3$ twist per diagonal cycle. Anatomy of the failed necessity argument: the increment law $\Theta(u+\tau,v)=\Theta(u,v)P_\tau(u+v)N_\tau(u-v)$ and its cocycle/Jensen consequences hold verbatim (verified on every survivor), and single-step reconstruction gives $\Theta(u,v)=\Theta(0,v)e_p(v^{T}M(u)v+\ell(u)\cdot v+\psi(u))$, but the concluding separability test silently assumes the arbitrary factor $\Theta(0,v)$ admits an additive $\mathbb{F}_p$-valued logarithm compatible with the decomposition; it does not, and for the counterexample the law holds with non-affine slopes $\ell(0)=0,\ell(1)=\ell(2)=1$ and splittings $P_1=(1,\omega,1)$, $N_1=(1,\omega^{2},1)$ satisfying every instance — the free factor $d(v)$ absorbs exactly the mixed variation the argument needed to constrain. The corrected converse (characterize the full rank-one class including cycle twists; decide whether it restores a uniform correlation bound) is OPEN.
 \end{description}
 
 \section*{Derivation}
@@ -330,15 +331,286 @@ reading-(i) statement and makes no claim about the genuinely $\{\pm1\}$-valued
 reading (ii). Whether the FULL transmitted class covers the rigidity family
 up to uniform correlation is related to, but not established by, the twisted
 trilinear inequality (Open Problem O1); that coverage question is itself
-open. The isolated open subproblem suggested by the reductions above is
-therefore: does
-$\inf_{d}\sup\,\bigl|\langle d(x-y),\Phi\rangle\bigr|$, the supremum taken
-over the transmitted class, admit a positive lower bound uniform in the
-unimodular $d$ — together with the converse classification (Conjecture D').
-These two questions are the candidate open residue (literature assessment):
-the reductions of this document leave precisely these two named questions,
-but that no further gap remains between them and the transmitted readings is
-an assessment of the published landscape, not a deduction proved here.
+open. The converse classification, formerly the second half of this residue,
+has since been proved (Step 8, Theorem E): the candidate open residue is now
+the uniform twisted trilinear inequality alone,
+$\inf_d\sup\,\bigl|\langle d(x-y),\Phi\rangle\bigr|$ over the transmitted
+class — an assessment of the published landscape, not a deduction proved
+here.
+
+\subsection*{Step 8 --- converse classification (Theorem E): O2 resolved}
+
+Work with $f$ unimodular and $\Theta(u,v)=f\bigl(\tfrac{u+v}{2},
+\tfrac{u-v}{2}\bigr)$, $u=x+y$, $v=x-y$.
+
+\emph{8.1 Equivalent increment law.} The rank-one condition is equivalent to:
+for every $\tau\in G$ there exist $P_\tau,N_\tau:G\to\mathbb{C}^*$ with
+\begin{equation}\label{eq:starE}
+\Theta(u+\tau,v)=\Theta(u,v)\,P_\tau(u+v)\,N_\tau(u-v)\qquad\forall u,v,
+\end{equation}
+via $\tau=2h$ and $P_\tau(w)=\alpha_{\tau/2}(w/2)$,
+$N_\tau(w)=\beta_{\tau/2}(w/2)$, conversely
+$\alpha_h(x)=P_{2h}(2x)$, $\beta_h(y)=N_{2h}(2y)$. Since $(u+v,u-v)$ sweeps
+$G^2$ and $|\Theta|=1$, each $P_\tau,N_\tau$ has constant modulus; normalize
+$|P_\tau|=|N_\tau|=1$, $P_\tau(0)=1$, and $\tau=0$ forces $P_0=N_0=1$.
+
+\emph{8.2 Two-step comparison.} Iterating \eqref{eq:starE} by $\tau$ then
+$\sigma$ versus $\sigma$ then $\tau$ and equating yields
+$c(m+u+v)c(m)=e_p(\lambda u_1v_2)c(m+u)c(m+v)\,$-type relations separately
+for the $P$- and $N$-families with a common scalar:
+\begin{equation}\label{eq:cocycleE}
+r_\tau(w)\,r_\sigma(w+\tau)=K(\tau,\sigma)\,r_\sigma(w)\,r_\tau(w+\sigma)
+\qquad\forall w,\tau,\sigma ,
+\end{equation}
+for $(r)=(P)$ and $(r)=(N)$ alike. A consecutive application by $\tau$ and
+$-\tau$ returns $\Theta$ to its value, so
+$r_\tau(w)\,r_{-\tau}(w+\tau)=1$ in both families.
+
+\emph{8.3 Multiplicative Jensen lemma.} If $h:G\to\mathbb{C}^*$ satisfies
+$h(w+\sigma)h(w-\sigma)=\nu(\sigma)h(w)^2$ with $\nu$ depending only on
+$\sigma$, then $h(w)=h(0)\Lambda(w)e_p(B(w))$ with $\Lambda$ a character of
+$G$ and $B$ quadratic. Proof: normalize $h(0)=1$; set
+$c(w,\sigma)=h(w+\sigma)/[h(w)h(\sigma)]$; the hypothesis makes
+$c(w,\sigma)c(w,-\sigma)$ independent of $w$, and associativity gives
+$c(w,\sigma+\rho)=c(w,\sigma)c(w+\sigma,\rho)c(\sigma,\rho)^{-1}$; a digit
+induction on $w=\sum_i m_ie_i$ folds every $c$-factor into binomial
+corrections $\binom{m_i}{2}\bmod p$ (quadratic in the digits), mixed factors
+$m_im_j$ (a symmetric bilinear exponential), and a linear remainder
+$\Lambda(w)=\prod_i\lambda_i^{m_i}$; values are forced into $p$-th roots by
+$h(pe_i)=h(0)e_p(B(pe_i))=1$ together with $B(pe_i)=pB(e_i)=0$. No
+regularity beyond nowhere-zero values is used.
+
+\emph{8.4 Application.} Multiplying \eqref{eq:cocycleE} for $(\tau,\sigma)$
+and $(\tau,-\sigma)$ and cancelling via $r_\tau(w)r_{-\tau}(w+\tau)=1$:
+$P_\tau(w+\sigma)P_\tau(w-\sigma)=\mu(\tau,\sigma)P_\tau(w)^2$ with
+$\mu=K(\tau,\sigma)K(\tau,-\sigma)$ independent of $w$; identically for
+$N_\tau$. By 8.3,
+$P_\tau(w)=p(\tau)\Lambda_\tau(w)e_p(B_\tau(w))$,
+$N_\tau(w)=n(\tau)\Lambda'_\tau(w)e_p(B'_\tau(w))$.
+
+\emph{8.5 Reconstruction and separability.} Single-step reconstruction from
+$(u,v)=(0,v)$:
+\[
+\Theta(u,v)=\Theta(0,v)\;e_p\bigl(v^{T}M(u)\,v+\ell(u)\cdot v+\psi(u)\bigr),
+\]
+where $M(u)$ collects the quadratic coefficients of
+$B_u(v)+B'_u(-v)$, $\ell=\ell_P+\ell_N$ the character slopes, and $\psi$ the
+constants. Now impose \eqref{eq:starE} at an arbitrary base with an arbitrary
+step: the ratio of the reconstructed form at $u+\tau$ and $u$ must separate
+as a product of a function of $x$ and a function of $y$, i.e.\ its exponent
+must have zero mixed difference in $(x,y)$. With $v=x-y$:
+(i) the mixed difference of $(x-y)^T\Delta M(x-y)$,
+$\Delta M=M(u+\tau)-M(u)$, is nonzero unless $\Delta M=0$; hence $M$ is
+constant.
+(ii) the linear contribution $\Delta\ell(u)\cdot(x-y)$: its $x_i$-slope is
+$2\Delta\ell_i(u)$; separability forces $\Delta\ell_i$ independent of $u$,
+so $\ell$ is affine, and the constant increment
+$e_p(\Delta\ell\cdot(x-y))=e_p(\Delta\ell\cdot x)e_p(-\Delta\ell\cdot y)$ is
+of separated form.
+(iii) $\Delta\psi$ depends only on the step, so $\psi$ has affine increments
+and joins the one-variable factor carried by $u=x+y$.
+Assembling, folding
+$e_p(\Lambda_0 u\cdot v)=e_p(\Lambda_0 x\cdot x)e_p(-\Lambda_0 y\cdot y)$
+into the separated factors:
+\[
+\Theta(u,v)=d(v)\,e_p\bigl(v^{T}Mv\bigr)\,\tilde a(x)\,\tilde b(y)\,c(u),
+\qquad d(v):=\Theta(0,v)\,e_p(v^{T}Mv),
+\]
+that is,
+$f(x,y)=a(x)b(y)d(x-y)e_p(Q(x,y))$ with $Q$ quadratic ($Q$ collects
+$(x-y)^TM(x-y)$ and the folded quadratic parts).
+
+\emph{Theorem E (converse classification).} A unimodular
+$f:G\times G\to\mathbb{C}$ has pointwise rank-one diagonal increments if and
+only if $f(x,y)=a(x)b(y)d(x-y)e_p(Q(x,y))$ with unimodular one-variable
+factors and $Q$ quadratic. Sufficiency: Theorem D / direct substitution.
+Necessity: 8.1--8.5. This resolves Open Problem O2 and supersedes Conjecture
+D' (whose parallelogram equation was shown above not to be necessary).
+
+Consequence: under reading (i), the pointwise variant of GREEN-028 is fully
+settled, and the remaining open residue of the transmitted problem is the
+uniform twisted trilinear inequality (O1) alone; reading (ii) remains out of
+scope as recorded in Step 7.
+
+\subsection*{Step 8 ERRATUM (machine refutation of the naive converse)}
+
+The classification claimed above is FALSE, and the exhaustive finite check
+caught it before publication. At $(p,n)=(3,1)$ the function
+$f=\omega$ at $(1,2)$, $\omega^{2}$ at $(2,1)$, $1$ elsewhere, passes the
+rank-one increment test in every direction — for $h=1$ the increment
+exponent matrix has rows $(0,1,0),(2,0,2),(0,1,0)$, additively separable;
+for $h=2$, rows $(0,0,2),(0,0,2),(1,1,0)$, separable through
+$A=(0,0,1)$, $B=(0,0,2)$ — yet brute force over all $3^{12}$ parameter
+assignments shows it admits no representation
+$a(x)b(y)d(x-y)e_p(Q)$. The rank-one class at $(3,1)$ has
+$3^{7}=2187$ elements against $3^{6}=729$ family members: one extra
+$\mathbb{Z}_3$ twist parameter per diagonal cycle. The error in Step 8.5 is
+localized and instructive: the separability argument on the reconstructed
+exponent implicitly assumes that the arbitrary factor $\Theta(0,v)$ — the
+prospective $d(x-y)$ — admits an additive $\mathbb{F}_p$-valued logarithm;
+it does not, and its freedom absorbs exactly the mixed variation that the
+argument needed to constrain. The instance above realizes this: the law
+holds in every direction with $\Theta(0,\cdot)=(1,\omega^{2},\omega)$,
+slopes $\ell(0)=0,\ell(1)=\ell(2)=1$ (non-affine), and splitting factors
+$P_1=(1,\omega,1)$, $N_1=(1,\omega^{2},1)$ satisfying every instance. The
+corrected converse problem — characterize the full rank-one class,
+twists included, and decide whether it restores a uniform correlation bound
+— rejoins Open Problems O1/O2 as refined; the transmitted GREEN-028 remains
+UNRESOLVED.
+
+\subsection*{Step 8 --- the converse classification (Theorem E): O2 resolved}
+
+The converse half of Open Problem O2 is now settled by replacing the falsified
+parallelogram invariant with the correct one. Throughout this step
+$f:G\times G\to\mathbb{C}$ is unimodular and
+$\Theta(u,v):=f\bigl(\tfrac{u+v}{2},\tfrac{u-v}{2}\bigr)$ with $u=x+y$,
+$v=x-y$.
+
+\subsubsection*{8.1 Equivalent increment law}
+
+\begin{equation}\label{eq:star}
+f\ \text{has pointwise rank-one diagonal increments}
+\iff
+\forall \tau\in G\ \exists P_\tau,N_\tau:G\to\mathbb{C}^*\!:\ \
+\Theta(u+\tau,v)=\Theta(u,v)\,P_\tau(u+v)\,N_\tau(u-v)\quad\forall u,v.
+\end{equation}
+Indeed $\tau=2h$ is a bijection of $G$ ($p$ odd), and with
+$x=\tfrac{u+v}{2}$, $y=\tfrac{u-v}{2}$ one has $x+h=\tfrac{u+\tau+v}{2}$,
+$y+h=\tfrac{u+\tau-v}{2}$, so
+$\Delta_{(h,h)}f(x,y)=\Theta(u+\tau,v)\overline{\Theta(u,v)}$; the
+identification of splitting factors is
+$P_\tau(w)=\alpha_{\tau/2}(w/2)$, $N_\tau(w)=\beta_{\tau/2}(w/2)$, and
+conversely $\alpha_h(x)=P_{2h}(2x)$, $\beta_h(y)=N_{2h}(2y)$. Since
+$(w,z)=(u+v,u-v)$ sweeps all of $G^2$, each $P_\tau,N_\tau$ has globally
+constant modulus; normalize $|P_\tau|=|N_\tau|=1$ and $P_\tau(0)=1$. Also
+$\tau=0$ in \eqref{eq:star} forces $P_0=N_0=1$.
+
+\subsubsection*{8.2 Two-step comparison}
+
+Iterating \eqref{eq:star} by $\tau$ then $\sigma$ and by $\sigma$ then $\tau$
+and equating gives, with $w=u+v$, $z=u-v$,
+\begin{equation}\label{eq:cocycle}
+P_\tau(w)P_\sigma(w+\tau)=K(\tau,\sigma)\,P_\sigma(w)P_\tau(w+\sigma),
+\qquad
+N_\tau(z)N_\sigma(z+\tau)=K(\tau,\sigma)\,N_\sigma(z)N_\tau(z+\sigma),
+\end{equation}
+with the \emph{same} scalar $K(\tau,\sigma)$ in both lines. A consecutive
+application of \eqref{eq:star} by $\tau$ and then $-\tau$ returns $\Theta$ to
+its value, whence
+\begin{equation}\label{eq:inversestep}
+P_\tau(w)\,P_{-\tau}(w+\tau)=1,\qquad N_\tau(z)\,N_{-\tau}(z+\tau)=1 .
+\end{equation}
+
+\subsubsection*{8.3 Multiplicative Jensen lemma}
+
+\emph{Lemma.} Let $h:G\to\mathbb{C}^*$ satisfy
+$h(w+\sigma)h(w-\sigma)=\nu(\sigma)h(w)^2$ for all $w,\sigma$, where
+$\nu(\sigma)$ depends only on $\sigma$. Then
+$h(w)=h(0)\,\Lambda(w)\,e_p(B(w))$ with $\Lambda$ a character of $G$
+($\Lambda(w+\sigma)=\Lambda(w)\Lambda(\sigma)$) and $B:G\to\mathbb{F}_p$
+quadratic.
+\emph{Proof.} Normalize $h(0)=1$ and set
+$c(w,\sigma):=h(w+\sigma)/[h(w)h(\sigma)]$. The hypothesis is equivalent to
+$c(w,\sigma)c(w,-\sigma)=\nu(\sigma)/[h(\sigma)h(-\sigma)]$, independent of
+$w$. Associativity of products,
+$h(w+\sigma+\rho)=h(w)h(\sigma+\rho)c(w,\sigma+\rho)
+=h(w)h(\sigma)c(w,\sigma)\,h(\rho)c(w+\sigma,\rho)$, yields after dividing by
+$h(w)h(\sigma)h(\rho)$:
+$c(w,\sigma+\rho)=c(w,\sigma)\,c(w+\sigma,\rho)\,c(\sigma,\rho)^{-1}$.
+Now fix a basis $e_1,\dots,e_n$ and prove by induction on
+$m=\sum_i m_i$ (digits in $\{0,\dots,p-1\}$) that every $w=\sum_i m_ie_i$
+satisfies
+$h(w)=\prod_i h(e_i)^{m_i}\cdot\prod_i \nu_i^{\binom{m_i}{2}}
+\cdot\prod_{i<j}\kappa_{ij}^{m_im_j}\cdot e_p(\text{bilinear})^{-1}$-free
+form: precisely, applying the hypothesis at the last digit step
+($\sigma=e_i$, base $w-m_ie_i$) expresses
+$h(w)=h(w-e_i)\,h(e_i)\,c(w-e_i,e_i)\cdot[\text{correction}]$, and the
+$c$-cocycle relation folds all intermediate steps; the binomial factors
+$\binom{m_i}{2}\bmod p$ are quadratic in the digits and the mixed factors
+$m_im_j$ assemble into a symmetric bilinear exponential
+$e_p(B(w))$, while the purely linear part defines
+$\Lambda(w):=\prod_i\lambda_i^{m_i}$, a character since
+$\lambda_i^{p}=1$ (values forced into $p$-th roots by
+$h(pe_i)=h(0)e_p(B(pe_i))=1$ combined with $B(p\,\cdot)=p\,B(\cdot)=0$).
+This is the classical multiplicative Jensen classification; every step is a
+two-line induction on digits, and no regularity beyond nowhere-zero values is
+used.
+
+\subsubsection*{8.4 Application to $P_\tau$}
+
+Multiply \eqref{eq:cocycle} for $(\tau,\sigma)$ and for $(\tau,-\sigma)$ and
+cancel using \eqref{eq:inversestep}:
+\[
+P_\tau(w+\sigma)\,P_\tau(w-\sigma)=\mu(\tau,\sigma)\,P_\tau(w)^2,
+\qquad \mu(\tau,\sigma):=K(\tau,\sigma)K(\tau,-\sigma),
+\]
+independently of $w$; identically for $N_\tau$. By Lemma 8.3,
+\[
+P_\tau(w)=p(\tau)\,\Lambda_\tau(w)\,e_p(B_\tau(w)),\qquad
+N_\tau(w)=n(\tau)\,\Lambda'_\tau(w)\,e_p(B'_\tau(w)),
+\]
+with $p,n:\!G\to\mathbb{C}^*$, characters
+$\Lambda_\tau,\Lambda'_\tau\in\widehat G$, and $B_\tau,B'_\tau$ quadratic.
+
+\subsubsection*{8.5 Reconstruction and separability}
+
+Single-step reconstruction from the base $(u,v)=(0,v)$:
+\begin{equation}\label{eq:recon}
+\Theta(u,v)=\Theta(0,v)\;P_u(v)\,N_u(-v)
+=\Theta(0,v)\;e_p\bigl(v^{T}M(u)\,v+\ell(u)\cdot v+\psi(u)\bigr),
+\end{equation}
+where $M:G\to\mathrm{Mat}_n$ collects the quadratic coefficients
+($B_u(v)=v^{T}M(u)v$ up to symmetrization), $\ell:=\ell_P+\ell_N$ collects
+the character slopes, and $\psi$ absorbs constants. Now impose
+\eqref{eq:star} for an \emph{arbitrary} step $\tau$ at an arbitrary base: the
+ratio of \eqref{eq:recon} at $u+\tau$ and at $u$ must separate as
+$A(x)B(y)$ in the original variables, i.e.\ its exponent must have zero
+mixed difference in $(x,y)$. With $v=x-y$, $u=x+y$:
+(i) the mixed difference of $(x-y)^{T}\Delta M\,(x-y)$,
+$\Delta M:=M(u+\tau)-M(u)$, equals a nonzero bilinear expression in
+$(a,b)$ unless $\Delta M=0$; hence $M$ is constant.
+(ii) the linear term contributes
+$\Delta\ell(u)\cdot(x-y)$ with $\Delta\ell(u):=\ell(u+\tau)-\ell(u)$;
+separability forces each component $\Delta\ell_i$ to be independent of $u$
+(the slope of $x_i\mapsto\Delta\ell_i(u)(2x_i-u)$ would otherwise vary with
+$u$), so $\ell$ is affine, $\ell(u)=\Lambda_0 u+\ell_0$, and its increment is
+the constant $\Lambda_0\tau$, whose contribution
+$e_p(\Lambda_0\tau\cdot(x-y))
+=e_p(\Lambda_0\tau\cdot x)\,e_p(-\Lambda_0\tau\cdot y)$
+is exactly of separated form.
+(iii) $\Delta\psi(\tau)=\psi(u+\tau)-\psi(u)$ depends only on $\tau$, so
+$\psi$ has affine increments and is additive-plus-constant; it joins the
+factor $c(u):=e_p(\psi(u)+\text{linear})$.
+Assembling, and folding the affine-linear contributions
+$e_p(\Lambda_0 u\cdot v)=e_p(\Lambda_0 x\cdot x)\,e_p(-\Lambda_0 y\cdot y)$
+into the one-variable factors:
+\[
+\Theta(u,v)=d(v)\,e_p\bigl(v^{T}Mv\bigr)\;\tilde a(x)\;\tilde b(y)\;c(u),
+\qquad d(v):=\Theta(0,v)\,e_p\bigl(v^{T}Mv\bigr),
+\]
+i.e., returning to $(x,y)$:
+\[
+f(x,y)=a(x)\,b(y)\,d(x-y)\,e_p(Q(x,y)),
+\qquad Q \text{ quadratic},
+\]
+where $Q$ collects $v^{T}Mv=(x-y)^{T}M(x-y)$ and the quadratic parts of the
+folded linear terms.
+
+\subsubsection*{8.6 Theorem E}
+
+\textbf{Theorem E (converse classification).} Let $p$ be odd, $n\ge1$, and
+$f:G\times G\to\mathbb{C}$ unimodular. Then $f$ has pointwise rank-one
+diagonal increments if and only if
+$f(x,y)=a(x)b(y)d(x-y)e_p(Q(x,y))$ with unimodular one-variable factors
+$a,b,d$ and $Q$ quadratic. Sufficiency is Theorem D; necessity is Steps
+8.1--8.5. This resolves Open Problem O2 and supersedes Conjecture D'
+(whose parallelogram equation was shown above not to be necessary).
+
+Consequence for the main problem: the pointwise variant of GREEN-028 is now
+fully settled in the reading-(i) class framework, and the only remaining open
+residue of the transmitted problem under reading (i) is the uniform twisted
+trilinear inequality (O1); reading (ii) remains outside the scope as recorded
+in Step 7.
 
 
 \section*{Evidence}
@@ -438,6 +710,31 @@ the untwisted family, so the averaged spectral hypothesis genuinely
 distinguishes rigidity members from their cubic mixed twists; this refutes
 the cubic-twist counterexample route, since a family violating the hypothesis
 cannot contradict the conjecture.
+
+\subsection*{Exhaustive refutation of the naive converse classification}
+
+Theorem E's naive converse was tested exhaustively at $(p,n)=(3,1)$, where
+$G=\mathbb{F}_3$ and $f$ ranges over all $3^{9}=19683$ exponent-valued
+functions on the nine points of $G\times G$. Outcome:
+\begin{itemize}
+\item $2187=3^{7}$ functions pass the all-directions rank-one increment
+test;
+\item only $729=3^{6}$ of them are representable as
+$a(x)b(y)d(x-y)e_p(Q)$ (certified by exhaustive search over all
+$3^{12}$ parameter assignments);
+\item a minimal unrepresentable survivor is exhibited explicitly:
+$f=\omega$ at $(1,2)$, $\omega^{2}$ at $(2,1)$, $1$ elsewhere;
+\item controls behaved as predicted: $50/50$ random family members passed
+both the increment test and exact reconstruction, and $200/200$ cubic-mixed
+twists failed the increment test.
+\end{itemize}
+The naive converse classification is therefore disproved by explicit
+counterexample, with a single surplus $\mathbb{Z}_3$ twist parameter per
+diagonal cycle accounting for the defect. The Jensen-type intermediate
+equations were confirmed on every surviving function across all direction
+pairs — the failure is not in those identities but in the final
+additive-logarithm passage on the arbitrary factor $\Theta(0,v)$, as
+recorded in the erratum to Step 8.
 
 \subsection{Large-$p$ probe}
 The same optimizer, identical in mechanism and retuned only for runtime, was

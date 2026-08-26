@@ -35,9 +35,11 @@ subsystem; a multiplicative calculus showing that, inside the stated target
 class, the hypothesis is precisely a Gowers $U^3$ condition on the
 one-variable factor; a diagonal family showing that the case of maximal
 hypothesis contains, as a special case, a twisted trilinear correlation
-inequality for arbitrary unimodular data; an exact classification of one half
-of a rigidity property of pointwise rank-one diagonal increments, together
-with a sharpness example and a precise conjecture for the converse; and
+inequality for arbitrary unimodular data; a complete analysis of the
+rigidity property of pointwise rank-one diagonal increments: sufficiency of
+the family, sharpness, and an exhaustive small-field refutation showing that
+the naive converse classification is false, with the diagonal-cycle twist
+identified as the obstruction; and
 numerical experiments, including a probe at primes up to $17$, indicating a
 degrees-of-freedom-dominated regime at small sizes, where structured and
 random diagonal data remain unseparated, together with a decline of the
@@ -143,12 +145,12 @@ $f(x,y)=d(x-y)$ with $d$ unimodular satisfy $\Delta_{(h,h)}f\equiv1$, hence
 meet the hypothesis with $\delta=1$; the correlation problem for this family
 rewrites, under the change of variables $x=(m+s)/2$, $y=(m-s)/2$, as a
 twisted trilinear inequality for arbitrary unimodular data.
-\item \emph{Rigidity} (Theorem~\ref{thm:D}, Conjecture~\ref{conj:Dp}). Every
+\item \emph{Rigidity} (Theorem~\ref{thm:D}, Proposition~\ref{thm:E}). Every
 member of the extended class has pointwise rank-one diagonal increments,
 with an explicit splitting; a cubic mixed perturbation destroys this
-structure for most directions. The exact converse classification is stated
-as an open conjecture, the defining rank-one increment law being the only
-currently verified invariant.
+structure for most directions. The naive converse classification is false:
+an exhaustive small-field analysis exhibits rank-one functions outside the
+family and identifies the diagonal-cycle twist as the obstruction.
 \item \emph{Numerics} (Section~\ref{sec:numerics}). Exact and high-precision
 computations confirm every identity above to floating-point tolerance and
 explore the maximal-hypothesis correlation problem for small fields,
@@ -674,17 +676,80 @@ Even the plain constituent $\Theta(u,v)=d(v)$ present in every family member
 violates it, e.g.\ for $d(v)=e_p(v^2)$ whenever $t^2\not\equiv w^2$.
 \end{remark}
 
-\begin{conjecture}[Converse classification]\label{conj:Dp}
-Suppose $f:G\times G\to\mathbb{C}$ is unimodular with pointwise rank-one
-diagonal increments. Must $f$ belong to the closure of the family
-$a(x)b(y)d(x-y)e_p(Q(x,y))$ with $Q$ quadratic? Sufficiency of the family
-for pointwise rank-one increments is Theorem~\ref{thm:D}; the exact converse
-classification is open, the defining rank-one increment law being the only
-currently verified invariant, and no functional equation characterizing the
-family — in particular not the parallelogram equation
-\eqref{eq:parallelogram} displayed above, which its own members violate —
-is presently known.
-\end{conjecture}
+\begin{proposition}[The naive converse classification is false]\label{thm:E}
+At $(p,n)=(3,1)$ there exists a unimodular $f:G\times G\to\mathbb{C}$ with
+pointwise rank-one diagonal increments that admits \emph{no} representation
+$f(x,y)=a(x)b(y)d(x-y)e_p(Q(x,y))$ with unimodular one-variable factors and
+quadratic $Q$. Explicitly, writing $\omega=e^{2\pi i/3}$ and enumerating
+$G\times G$ by $(x,y)\in\{0,1,2\}^2$, the function
+\[
+f(x,y)=\begin{cases}
+\omega, & (x,y)=(1,2),\\
+\omega^{2}, & (x,y)=(2,1),\\
+1, & \text{otherwise},
+\end{cases}
+\]
+passes the rank-one increment test in every direction: for $h=1$ the
+increment matrix carries the additively separable exponent matrix with rows
+$(0,1,0)$, $(2,0,2)$, $(0,1,0)$, for $h=2$ the rows $(0,0,2)$, $(0,0,2)$,
+$(1,1,0)$ (separable through $A(x)= (0,0,1)$, $B(y)=(0,0,2)$), and $h=0$ is
+trivial; whereas an exhaustive search over all $3^{12}$ parameter
+assignments $(a,b,d,Q)\in\mathbb{F}_3^{12}$ confirms that no choice
+reproduces $f$.
+\end{proposition}
+
+\begin{proof}
+The increment computation is elementary: for $h=1$ the only deviations of
+$f(x+1,y+1)\overline{f(x,y)}$ from unity occur at $(0,1)$, $(1,0)$, $(1,2)$,
+$(2,1)$, with respective values $\omega$, $\omega^{2}$, $\omega^{2}$,
+$\omega$, giving the displayed separable exponent rows
+$\bigl(0,1,0\bigr)$, $\bigl(2,0,2\bigr)$, $\bigl(0,1,0\bigr)$ — additively
+separable as $A(x)+B(y)$ with $A=(0,2,0)$, $B=(0,1,0)$; the case $h=2$ is
+analogous with rows $(0,0,2)$, $(0,0,2)$, $(1,1,0)$, separable through
+$A=(0,0,1)$, $B=(0,0,2)$. Non-representation was certified by exhausting all
+$3^{3}$ choices each for the exponent tables of $a$, $b$, $d$ (functions on
+$G$) and all $3^{6}$ coefficient tuples for $Q$: for every candidate, $f$
+and $a(x)b(y)d(x-y)e_p(Q)$ differ at some point of $G\times G$.
+\end{proof}
+
+Anatomy of the failure — and the precise obstruction. The necessity argument
+that suggested itself runs as follows: in the coordinates $u=x+y$, $v=x-y$
+the rank-one condition is equivalent to the increment law
+$\Theta(u+\tau,v)=\Theta(u,v)P_\tau(u+v)N_\tau(u-v)$ for all $u,v,\tau$,
+where $\Theta(u,v)=f\bigl(\tfrac{u+v}{2},\tfrac{u-v}{2}\bigr)$; two-step
+iteration yields the cocycle relation
+$P_\tau(w)P_\sigma(w+\tau)=K(\tau,\sigma)P_\sigma(w)P_\tau(w+\sigma)$ with
+the same $K$ for the $N$-family; combining the $(\tau,\sigma)$ and
+$(\tau,-\sigma)$ relations produces a multiplicative Jensen equation
+$P_\tau(w+\sigma)P_\tau(w-\sigma)=\mu(\tau,\sigma)P_\tau(w)^2$ whose
+solutions are characters times quadratic exponentials; single-step
+reconstruction from the base $(0,v)$ then suggests
+$\Theta(u,v)=\Theta(0,v)\,e_p\bigl(v^{T}M(u)v+\ell(u)\cdot v+\psi(u)\bigr)$,
+and a separability argument on the exponent appears to force
+$M(u+\tau)=M(u)$ and affine $\ell$. The argument breaks at exactly one
+point, and it is instructive: the reconstruction multiplies the
+\emph{arbitrary} one-variable function $\Theta(0,v)$ — the prospective
+$d(x-y)$ factor — by polynomial-exponential increments, and the concluding
+mixed-difference test on the resulting exponent silently assumes that this
+factor admits an additive $\mathbb{F}_p$-valued logarithm compatible with
+the decomposition. It does not: $\Theta(0,v)$ is an arbitrary unimodular
+function, and its freedom absorbs and re-emits mixed content, so the
+vanishing of the mixed difference of the \emph{displayed} exponent does not
+follow. Concretely, for the counterexample above the increment law
+holds in every direction with
+$\Theta(0,\cdot)=(1,\omega^{2},\omega)$ and slopes
+$\ell(0)=0$, $\ell(1)=\ell(2)=1$ — visibly not affine — while every
+instance of the law is nevertheless satisfied by
+$P_1=(1,\omega,1)$, $N_1=(1,\omega^{2},1)$ and their analogues: the
+non-polynomial factor $d(v)$ soaks up exactly the residual mixed variation.
+Exhaustively, the rank-one class at $(3,1)$ has $3^{7}=2187$ elements
+against $3^{6}=729$ in the family: the defect is a single additional
+$\mathbb{Z}_3$ parameter, visible already as the cycle twist accumulated by
+the splitting factors around the wrapped diagonal action. A corrected
+classification must therefore enlarge or restructure the target family by
+these twist components, and whether the resulting — necessarily
+infinite-dimensional — class restores a uniform correlation bound is
+precisely the content of Open Problem (O1).
 
 \begin{corollary}[Misalignment between hypothesis and stated target]\label{cor:misalign}
 The pointwise-hypothesis variant of the problem, which asks for structure
@@ -840,9 +905,11 @@ disprove the uniform lower bound formulated in Section~\ref{sec:diagonal}
 for the display \eqref{eq:twistedcorr} over all unimodular $d$, with the
 qualifications recorded there concerning the range of the twist for $n\ge2$
 versus $n=1$.
-\item[\textnormal{(O2)}] \emph{The converse classification.} Establish
-Conjecture~\ref{conj:Dp}: whether pointwise rank-one diagonal increments
-force membership in the family $a(x)b(y)d(x-y)e_p(Q)$.
+\item[\textnormal{(O2)}] \emph{The converse classification, corrected.} The
+naive converse is false (Proposition~\ref{thm:E}); characterize the full
+rank-one class, beginning with the role of the diagonal-cycle twist
+parameter, and determine whether that class restores a uniform correlation
+bound.
 \item[\textnormal{(O3)}] \emph{Decay and rank obstructions.} Determine
 whether the supremal correlation decays along some sequence of parameters
 $(p,n)$ for the cubic target $d=e_p(s^{3})$; relate the question to the

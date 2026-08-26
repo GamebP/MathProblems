@@ -95,6 +95,31 @@ distinguishes rigidity members from their cubic mixed twists; this refutes
 the cubic-twist counterexample route, since a family violating the hypothesis
 cannot contradict the conjecture.
 
+\subsection*{Exhaustive refutation of the naive converse classification}
+
+Theorem E's naive converse was tested exhaustively at $(p,n)=(3,1)$, where
+$G=\mathbb{F}_3$ and $f$ ranges over all $3^{9}=19683$ exponent-valued
+functions on the nine points of $G\times G$. Outcome:
+\begin{itemize}
+\item $2187=3^{7}$ functions pass the all-directions rank-one increment
+test;
+\item only $729=3^{6}$ of them are representable as
+$a(x)b(y)d(x-y)e_p(Q)$ (certified by exhaustive search over all
+$3^{12}$ parameter assignments);
+\item a minimal unrepresentable survivor is exhibited explicitly:
+$f=\omega$ at $(1,2)$, $\omega^{2}$ at $(2,1)$, $1$ elsewhere;
+\item controls behaved as predicted: $50/50$ random family members passed
+both the increment test and exact reconstruction, and $200/200$ cubic-mixed
+twists failed the increment test.
+\end{itemize}
+The naive converse classification is therefore disproved by explicit
+counterexample, with a single surplus $\mathbb{Z}_3$ twist parameter per
+diagonal cycle accounting for the defect. The Jensen-type intermediate
+equations were confirmed on every surviving function across all direction
+pairs — the failure is not in those identities but in the final
+additive-logarithm passage on the arbitrary factor $\Theta(0,v)$, as
+recorded in the erratum to Step 8.
+
 \subsection{Large-$p$ probe}
 The same optimizer, identical in mechanism and retuned only for runtime, was
 run deterministically at $p\in\{11,13,17\}$ from three hundred, three

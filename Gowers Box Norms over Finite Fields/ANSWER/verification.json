@@ -1,21 +1,21 @@
 {
   "claim_id": "GREEN-028",
   "verdict": "UNRESOLVED",
-  "generated_at": "2026-08-26T11:17:47Z",
-  "manifest_sha256": "a7f685fba09ff97cb39e34f922decedc89531f62d130ab59c896c5bf32f74aa8",
+  "generated_at": "2026-08-26T13:30:20Z",
+  "manifest_sha256": "dc314f89b089cc0cf585b1f9306c7873711453d7f456074ac91a796116b281bc",
   "manifest_problems": [],
   "evidence": [
     {
       "ref": "report.tex",
       "kind": "file",
-      "sha256": "65a62fb20308a278294bf530697ead0b7d7fea73e0d64660da1ef878acab7d52",
-      "bytes": 41720
+      "sha256": "35f8634a6c37093b8b7e58bdf0f38c629dd3c82083c7137970eea6cbfb700bc0",
+      "bytes": 45655
     },
     {
       "ref": "verify_solution.py",
       "kind": "file",
-      "sha256": "5e1321690f060e917721505a0215d21700a5b4e30eb5671facb240072fc2843c",
-      "bytes": 28569
+      "sha256": "92f186f57e7e49fe4ac572e347e6e216e8d3d83a1668f04d14e8d05404429c77",
+      "bytes": 36972
     },
     {
       "ref": "data/experiment_p5_n1.txt",
@@ -37,13 +37,12 @@
   "verification_suite": {
     "command": "/usr/bin/python3 verify_solution.py",
     "exit_code": 0,
-    "seconds": 5.688,
+    "seconds": 6.378,
     "tail": [
-      "     control unperturbed g: 1.0000000000000002 (expect 1)",
-      "  (p=3,n=2): E_h||Delta f||_sq^4 = 0.5555555555555555  prediction (2p-1)/p^2 = 0.5555555555555556  |diff|=1.110e-16 -> PASS",
-      "     control unperturbed g: 0.9999999999999999 (expect 1)",
-      "  (p=5,n=2): E_h||Delta f||_sq^4 = 0.35999999999999993  prediction (2p-1)/p^2 = 0.36  |diff|=5.551e-17 -> PASS",
-      "     control unperturbed g: 0.9999999999999998 (expect 1)",
+      "    UNREPRESENTED survivor vector (0, 0, 0, 0, 0, 2, 0, 1, 0)",
+      "    UNREPRESENTED survivor vector (0, 0, 0, 0, 0, 2, 1, 2, 1)",
+      "  controls: family members rank-one+represented : 50/50 (seed 20261634)",
+      "  controls: cubic-mixed twists breaking rank-one: 200/200 (expected: >=190)",
       "============================================================================",
       "SUMMARY",
       "  CHECK 1 Proposition A spectral identity : PASS (all residuals <= 1e-9)",
@@ -53,6 +52,7 @@
       "  CHECK 5 negative perturbation           : MEASURED fraction failing h = 0.8",
       "  CHECK 6 counterexample experiment       : COMPLETED (raw data written to data/)",
       "  CHECK 7 collapse law (cubic twist)      : PASS ((2p-1)/p^2 confirmed)",
+      "  CHECK 8 naive converse refutation       : DOCUMENTED (2187 vs 729)",
       "EXIT 0"
     ]
   },
