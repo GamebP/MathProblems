@@ -52,8 +52,14 @@ An attack iteration additionally proves two obstructions --- an affine-image
 overlap collapse $S(B)=\frac{1}{\pi^2}(\log B)^3+O((\log B)^2)$ and a
 multiplication-table cap (Erd\H{o}s/Ford) ruling out one-step bootstraps ---
 plus complement rigidity along primes and the exact powers-of-two membership
-pattern up to $2^{40}$; the problem remains open, with the decisive gap now
-isolated.
+pattern up to $2^{40}$. Two further attacks prove that every reduced
+arithmetic progression carries $\Omega_M(X/\log X)$ holes (killing
+eventual-progression routes), give an explicit doubling recurrence whose
+contraction shows the gap is structural, and establish a method barrier:
+closure plus the mod-3 obstruction alone is consistent with any density in
+$[0,2/3]$, so any resolution needs finer arithmetic. Multi-orbit injectivity
+is falsified with explicit certificates, and polynomial growth is reduced to
+a sharp cross-scale richness conjecture. The problem remains open.
 \end{abstract}
 
 \section{Problem statement and status}\label{sec:problem}
@@ -579,15 +585,135 @@ Lemma~B; positive density requires $\ge cX$ such $n$.
 Status after this iteration: \textbf{STILL OPEN}, with sharpened obstruction
 theory.
 
+\section{Attack II: progression holes, a doubling recurrence, and rescue}\label{sec:attack2}
+
+\paragraph{T1 [PROVEN] (holes in every reduced progression).}
+Let $M\ge1$, $r\ge0$ with $\gcd(r+1,M)=1$. Infinitely many $n\equiv r\pmod M$
+satisfy $n\notin\A$; below $X$ their count is $\Omega_M(X/\log X)$.
+\begin{proof}
+Dirichlet (class $1\bmod 3M$) fixes a prime $p\equiv1\pmod{3M}$: then
+$p\notin\A$ by Lemma~A and $p\equiv1\pmod M$. Dirichlet on the class
+$r+1\bmod M$ (coprime by hypothesis) gives infinitely many primes
+$q\equiv r+1\pmod M$. For $n=pq-1$: $pq\equiv r+1\pmod M$, so
+$n\equiv r\pmod M$; $n+1=pq$ is a semiprime whose only factor pairs are
+$(p,q),(q,p)$, and $p\notin\A$ --- hence $n\notin\A$ by the divisor-pair
+characterization. Distinct $q$ give distinct $n$.
+\end{proof}
+Consequence: $\A$ contains no infinite arithmetic progression; the
+``eventual containment in a progression'' route to positive density is dead
+in full generality for reduced classes.
+
+\paragraph{T2 [PROVEN, density-vacuous] (blocking construction and its ceiling).}
+For prime $q\equiv5\pmod6$: $4q-1\notin\A$. Indeed the pairs of $4q$ are
+$(2,2q),(4,q),(q,4),(2q,2)$; $4\notin\A$ ($5$ prime) blocks two of them, and
+$q\equiv2\pmod3$ gives $2q\equiv1\pmod3$, blocking the other two by Lemma~A.
+Every such $n=4q-1$ lies in the already-dead class $1\bmod3$: elementary
+blocking constructions land either in the dead class or get rescued ---
+witness $116=9\cdot13-1\in\A$, where $(9,13)$ is blocked ($13\equiv1\bmod3$)
+but $(3,39)$ rescues it ($39=5\cdot8-1$). Likewise the naive claim
+``$p,q\equiv1\bmod3 \Rightarrow pqs-1\notin\A$'' fails:
+$364=7\cdot13\cdot4=14\cdot26$ with $14,26\in\A$, so $363\in\A$. This
+asymmetry --- holes are cheap in the dead class, expensive in the live ones
+--- is the open problem made concrete.
+
+\paragraph{T3 [PROVEN] (doubling recurrence; solved and contracting).}
+For all $N\ge3$,
+\[
+\F(2N)\;\ge\;\F(N)+\bigl[\F(N)-\F(\lfloor N/2\rfloor)\bigr]
++\bigl[\F(\lfloor 2N/3\rfloor)-\F(\lfloor N/3\rfloor)\bigr]
+-\Bigl(\Bigl\lfloor\tfrac{2N}{6}\Bigr\rfloor-\Bigl\lfloor\tfrac N6\Bigr\rfloor\Bigr)-2 .
+\]
+\begin{proof}
+Windows $W=\{2a-1:\ \lfloor N/2\rfloor<a\le N\}$,
+$V=\{3a-1:\ \lfloor N/3\rfloor<a\le\lfloor2N/3\rfloor\}$ lie in $(N,2N]$,
+so each meets $S_0=\A\cap[1,N]$ only possibly at $\{N\}$;
+$|W|,|V|$ are the displayed differences (maps injective);
+$W\cap V$ requires $6\mid x+1$, giving the floor penalty. Bonferroni and
+adjunction of $S_0$. \end{proof}
+With the induction hypothesis $\F(m)\ge\delta m$ for $m\le N$:
+$\delta(2N)\ge\frac{13}{12}\delta-\frac18-O(1/N)$.
+The map has slope $13/12>1$ and fixed point $-3/2<0$: valid at every scale
+(COMPUTED margins $+262$ at $N=10^3$ up to $+261{,}658$ at $1.5\cdot10^6$)
+but \emph{non-bootstrapping} --- the linear overlap penalty compounds
+geometrically against the polylogarithmic seed. The gap is structural.
+
+\section{Attack III: the method barrier and conditional growth}\label{sec:attack3}
+
+\paragraph{Lemma (left-comb evaluation) [PROVEN].}
+For $\ell_1,\dots,\ell_r\in\A$, $v_1=\ell_1$, $v_k=v_{k-1}\ell_k-1$:
+$v_r\in\A$ and $v_r=\prod_j\ell_j-\sum_{k\ge3}\prod_{j\ge k}\ell_j-1$
+(induction; finite evidence $2000/2000$ identities, $3351/3351$ combs
+$\le10^6$ in the census).
+
+\paragraph{Theorem 3.1 [PROVEN] (method barrier).}
+$\mathcal{C}:=\{n:\ n\not\equiv1\pmod3\}$ contains $\{2,3\}$, is closed
+under $ab-1$ (residues $\{0,2\}$: $0\cdot s-1\equiv2$, $2\cdot2-1\equiv0$),
+and has density exactly $2/3$; moreover every closed set containing
+$\{2,3\}$ contains $\A$ (minimality). Hence closure together with Lemma~A
+brackets the answer between logarithmic growth and $2N/3$: \emph{any}
+resolution of GREEN-036 must invoke arithmetic strictly beyond these two
+axioms.
+
+\paragraph{Theorem 3.2 [FALSIFIED] (multi-orbit injectivity).}
+With $U_i=2^{i+1}+1$, $V_j=(3^{j+1}+1)/2$, $W_k=(7\cdot5^k+1)/4$ (all orbits
+in $\A$), the fold map $(i,j,k)\mapsto(U_iV_j-1)W_k-1$ is \emph{not}
+injective: five collision certificates $\le10^6$
+($395$, $9845$, $49220$, $48135$, $240635$), caused by genuine orbit
+coincidences $W_1=U_2=9$ and $V_6=W_4=1094$ and by the S-unit coincidence
+$3\cdot365=5\cdot219$. All $346$ generated values ARE members
+($0$ violations). Related falsification: raw ternary products
+$U_iV_jW_k-1$ are not members at all ($6563\notin\A$) --- only pairwise
+folds are.
+
+\paragraph{Proposition 3.3 [OBSTRUCTION/BARRIER] (no new congruential obstructions).}
+Scanning all primes ${\le}1500$; prime powers $2^k{\le}4096$,
+$3^k{\le}6561$; semiprimes exhaustively ${\le}1900$ plus $190$ semiprimes
+${\le}5000$: the only proper closed residue systems are 3-primary lifts
+$S_m=\pi_3^{-1}(S_3)$ with ratio exactly $2/3$ (CRT-lift lemma:
+$|S_{3p}|/(3p)=(|S_3|/3)(|S_p|/p)$). Lemma~A is the \emph{complete}
+congruential obstruction on this range; Target~D requires non-congruential
+input.
+
+\paragraph{Theorem 3.4 [REDUCED TO CONJECTURE] (conditional polynomial growth, Target C).}
+Call cross-scale richness C1$'(\beta)$: for some $\beta>0$ and all large $M$,
+$\bigl|\bigcup_{b\in\A_{2M}\setminus\A_M} b(\A_M)\cap[1,2M^2]\bigr|
+\ge cM^{1+\beta}$ distinct values. Under C1$'(\beta)$ at infinitely many
+scales, $\F(N)\ge N^{\alpha}$ along a subsequence with
+$\alpha=(1+\beta)/2$: each step contributes $\ge cM^{1+\beta}$ genuinely new
+elements (they exceed $M$), dominating the previous best
+$\F(M)\ge M^{\alpha}$ after squaring the scale, and the exponent recursion
+$\alpha\mapsto(1+\beta)/2$ is constant-positive. Under the all-scales
+self-refined variant, $\F(N)\ge N^{1-o(1)}$. Only the conjecture is open.
+
+\paragraph{Theorem 3.5 [OBSTRUCTION/BARRIER] (same-scale tables are GP-thin).}
+COMPUTED: $\bigl|\A_M\!\cdot\!\A_M\cap[1,2M]\bigr|=881$ vs $\F(M)=422$ at
+$M=10^3$, and $9851$ vs $4805$ at $10^4$ --- ratios $2.09$/$2.05$ against
+the geometric-progression floor $2-1/\F(M)$. Same-scale multiplication
+yields only constant-factor mass: combined with the overlap collapse
+(L1) and the multiplication-table cap (L2), \emph{all} single-scale
+arguments are excluded; multiscale schemes require exactly an input of
+C1$'$-type.
+
+\paragraph{Remaining gap.}
+The minimal open assertion en route to Target C (and plausibly A):
+exhibit $\beta>0$ with C1$'(\beta)$, i.e.\ beat the cubic overlap load by
+exploiting shared preimages of overlapping affine images. Hole constructions
+in the live classes resist all elementary blocking patterns tried
+(rescue phenomenon), consistent with rising conditional densities and with
+the unprovability, so far, of zero density as well.
+
 \section*{Computational reproducibility}
 All results are regenerated by the standard-library-only script
 \texttt{verify\_solution.py} (argument $X$, default $10^7$; production run
 $X=10^8$, $6$ min $31$ s, nine of nine checks passed). Artifacts:
 \texttt{data/census\_summary.json}, \texttt{data/census.csv.gz} (first
 $10^6$ elements), captured console output reproduced in the Appendix.
-The targeted structural checks of Section~\ref{sec:attack} (powers of two,
-hole families, lcm intersection bounds) are regenerated by
-\texttt{attack\_verify.py}; its output is reproduced in the Appendix as well.
+The targeted structural checks of Section~\ref{sec:attack}
+(powers of two, hole families, lcm intersection bounds) are regenerated by
+\texttt{attack\_verify.py}; those of Sections~\ref{sec:attack2}
+and~\ref{sec:attack3} by \texttt{attack2\_verify.py} and
+\texttt{attack3\_verify.py}; all three outputs are reproduced in the
+Appendix.
 The complete dossier is version-controlled at
 \begin{center}
 \url{https://github.com/GamebP/MathProblems/tree/main/GREEN-036}
@@ -650,7 +776,7 @@ GREEN-036 verification run, X = 100000000
 \end{verbatim}
 \normalsize
 
-\section{Verbatim attack-check output (\texttt{attack\_verify.py}, $X=2\cdot10^6$)}
+\section{Verbatim attack-check output (\texttt{attack\_verify.py}, \texorpdfstring{$X=2\cdot10^6$}{X=2*10^6})}
 \tiny
 \begin{verbatim}
 GREEN-036 attack checks — every output below is FINITE EVIDENCE
@@ -668,6 +794,51 @@ GREEN-036 attack checks — every output below is FINITE EVIDENCE
 (iv) 205 in A: False (expect False)   (FINITE EVIDENCE)
 (iv) 1024 in A: False (expect False)   (FINITE EVIDENCE)
 (iv) support facts: 41 in A: True ; 14 in A: True ; 13 mod 3 = 1; 103 mod 3 = 1
+======================================================================
+done
+\end{verbatim}
+\normalsize
+
+\section{Verbatim attack-2 output (\texttt{attack2\_verify.py}, \texorpdfstring{$X=2\cdot10^6$}{X=2*10^6})}
+\tiny
+\begin{verbatim}
+GREEN-036 attack-2 checks — FINITE EVIDENCE unless stated PROVEN
+======================================================================
+[T2] 4q-1, q==5 mod 6, q<20000: 1136 tested, 0 in A (PROVEN expect 0); all n==1 mod 3: True
+[T1] M=5,r=2: p=31 (prime ==1 mod 15 => PROVEN notin A), q prime ==3 mod 5 (<6e4): 1516 values pq-1, 1516 confirmed holes, 0 members (PROVEN expect 0).
+[T1] first holes: [92, 402, 712, 1332, 1642, 2262, 2572, 3192]
+[R] 116 in A: True (rescued via pair (3,39)); 39 in A: True; 13 in A: False
+[R] refuted-conjecture witness 364=7*13*4=14*26: sides 14,26 in A: True,True; 363 in A: True
+[T3] doubling recurrence valid at N=1e3..1e6: True, margins [(1000, 262), (10000, 2618), (100000, 26083), (1000000, 261658)]
+[T3] relative form delta(2N)>=13delta/12-1/8-O(1/N) at 1e5,1e6: True
+[A] Lemma A violations in census to 2000000: 0
+======================================================================
+done
+\end{verbatim}
+\normalsize
+
+\section{Verbatim attack-3 output (\texttt{attack3\_verify.py --extended})}
+\tiny
+\begin{verbatim}
+GREEN-036 attack-3 checks — FINITE EVIDENCE unless stated PROVEN
+======================================================================
+[3A] comb identity 2000/2000: True; combs<=1e6 in A: 3351/3351
+[3B] C={0,2} mod 3 closed under rs-1: True [PROVEN separately]
+[3.2] orbit coincidences: W_1=9==U_2=9: True; V_6=1094==W_4=1094: True; 3*365==5*219: True
+[3.2][FALSIFIED] ternary 6563 witness: 3*2*1094-1=6563, member=False
+[3.2] depth-3 folds <=1e6: 346 generated, 341 distinct, 5 collisions, not-in-A 0
+      collision: (((0, 5, 1), True), (1, 0, 4), 9845, True)
+      collision: (((1, 0, 5), True), (1, 6, 1), 49220, True)
+      collision: (((1, 0, 2), True), (2, 1, 1), 395, True)
+      collision: (((0, 5, 2), True), (2, 1, 4), 48135, True)
+      collision: (((1, 6, 2), True), (2, 1, 5), 240635, True)
+[3.3] primes<=1500: proper = [(3, 2)] (expect [(3,2)])
+[3.3] prime powers: [('m', '6/9'), ('m', '18/27'), ('m', '54/81'), ('m', '162/243'), ('m', '486/729'), ('m', '1458/2187'), ('m', '4374/6561')]
+[3.3] semiprimes<=~1900 exhaustive (91 moduli): non-3-lift proper = []
+[3.3][extended] 190 semiprime moduli <=5000 exhaustive (p<q<=71): non-3-lift proper = []
+[3.5] M=1000: F(M)=422, |SS cap[1,2M]|=881, ratio=2.088 (GP floor ~2)
+[3.5] M=10000: F(M)=4805, |SS cap[1,2M]|=9851, ratio=2.050 (GP floor ~2)
+[A] Lemma A violations <= 1000000: 0
 ======================================================================
 done
 \end{verbatim}

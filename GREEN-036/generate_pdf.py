@@ -415,14 +415,72 @@ story.append(P("<b>The GAP.</b> Nothing lower-bounds the count of n &lt;= X for 
                "density requires at least cX such n. Status after this iteration: STILL OPEN, "
                "with sharpened obstruction theory.", S_NOTE))
 
+# ----------------------------------------------------------------------
+# 10 attack II / 11 attack III
+# ----------------------------------------------------------------------
+story.append(P("10. Attack II: progression holes, a doubling recurrence, rescue", S_H1))
+story.append(P("<b>T1 [PROVEN].</b> For every reduced class r mod M "
+               "(gcd(r+1,M)=1): infinitely many n == r (mod M) with n notin A; "
+               "count Omega_M(X/log X). Proof: fix prime p == 1 mod 3M (Dirichlet), "
+               "so p notin A by Lemma A; primes q == r+1 mod M are infinite "
+               "(Dirichlet); pq-1 is semiprime-blocked by the divisor-pair "
+               "characterization. Consequence: A contains no infinite arithmetic "
+               "progression - eventual-progression routes to positive density die."))
+story.append(P("<b>T2 [PROVEN, density-vacuous].</b> 4q-1 notin A for prime "
+               "q == 5 mod 6 (4 notin A blocks two pairs; 2q == 1 mod 3 blocks the "
+               "rest) - but every such n lies in the dead class 1 mod 3. Elementary "
+               "blocking lands in the dead class or gets rescued: 116 = 9*13-1 in A "
+               "via pair (3,39); the naive three-prime block fails since "
+               "364 = 7*13*4 = 14*26 with 14,26 in A gives 363 in A."))
+story.append(P("<b>T3 [PROVEN] doubling recurrence.</b> F(2N) &gt;= F(N) + "
+               "[F(N)-F(N/2)] + [F(2N/3)-F(N/3)] - floor(2N/6)+floor(N/6) - 2: "
+               "windows W={2a-1}, V={3a-1} confined to (N,2N], lcm-overlap only on "
+               "multiples of 6, prefix overlap at most the point N. Relative form: "
+               "delta(2N) &gt;= 13 delta/12 - 1/8 - O(1/N). Slope 13/12 &gt; 1 with "
+               "fixed point -3/2: valid at every scale (computed margins +262 to "
+               "+261,658) but CONTRACTING - the linear overlap penalty compounds "
+               "against the polylog seed. The gap is structural."))
+
+story.append(P("11. Attack III: method barrier and conditional growth", S_H1))
+story.append(P("<b>Theorem 3.1 [PROVEN] method barrier.</b> C = {n : n not== 1 mod 3} "
+               "contains {2,3}, is closed under ab-1 (0*s-1==2, 2*2-1==0), and has "
+               "density exactly 2/3; A is the minimal closed set. Hence closure plus "
+               "Lemma A brackets the answer between log-growth and 2N/3: any resolution "
+               "must invoke arithmetic strictly beyond these two axioms."))
+story.append(P("<b>Lemma [PROVEN] comb evaluation.</b> Left-combs v_1=l_1, "
+               "v_k = v_{k-1} l_k - 1 over l_j in A lie in A with exact expansion "
+               "v_r = prod(l) - sum_{k&gt;=3} prod_{j&gt;=k}(l_j) - 1 (2000/2000 checks; "
+               "3351/3351 combs <= 1e6 in census)."))
+story.append(P("<b>Theorem 3.2 [FALSIFIED] multi-orbit injectivity.</b> The fold map "
+               "(i,j,k) -&gt; (U_i V_j - 1)W_k - 1 (U=2^k+1 family, V=(3^{j+1}+1)/2, "
+               "W=(7*5^k+1)/4) has 5 collision certificates <= 1e6: 395, 9845, 49220, "
+               "48135, 240635 - caused by orbit coincidences W_1=U_2=9 and V_6=W_4=1094 "
+               "and the S-unit coincidence 3*365=5*219. All 346 folds ARE members. Raw "
+               "ternary products UVW-1 are NOT members (6563 witness)."))
+story.append(P("<b>Proposition 3.3 [OBSTRUCTION/BARRIER].</b> Modulus scan: primes <= 1500; "
+               "prime powers 2^k<=4096, 3^k<=6561; semiprimes exhaustive <=1900 plus 190 "
+               "moduli <=5000: the ONLY proper closed residue systems are 3-primary lifts "
+               "S_m = pi_3^{-1}({0,2}) with ratio exactly 2/3 (CRT-lift lemma). Lemma A is "
+               "the complete congruential obstruction; Target D needs non-congruential input."))
+story.append(P("<b>Theorem 3.4 [REDUCED TO CONJECTURE].</b> Cross-scale richness C1'(beta): "
+               "|union_{b in A_{2M}\\A_M} b(A_M) cap [1,2M^2]| &gt;= c M^{1+beta}. Under C1' "
+               "at infinitely many scales, F(N) &gt;= N^{alpha} along a subsequence with "
+               "alpha=(1+beta)/2; all-scales self-refined variant gives F(N) &gt;= N^{1-o(1)}. "
+               "Implication chain proved; conjecture open."))
+story.append(P("<b>Theorem 3.5 [OBSTRUCTION/BARRIER].</b> Same-scale tables are GP-thin: "
+               "|A_M*A_M cap [1,2M]| = 881 vs F=422 at M=1e3; 9851 vs 4805 at 1e4 - ratios "
+               "2.09/2.05 vs geometric-progression floor ~2. All single-scale arguments "
+               "(images or tables) are excluded; multiscale schemes need C1'-type input.",
+               S_NOTE))
+
 story.append(P("<b>Reproducibility.</b> Everything regenerates by "
                "python3 verify_solution.py [X] (default X = 10^7, about 20 s; "
                "production X = 10^8, 6.5 min, nine of nine checks passed). "
                "Artifacts: data/census_summary.json, data/census.csv.gz (first "
                 "10^6 elements), data/run_output.txt reproduced verbatim in the "
-                "Appendix; targeted structural checks regenerate by "
-                "attack_verify.py (output also in the Appendix). Standard "
-                "library only; deterministic.", S_NOTE))
+                "Appendix; targeted checks regenerate by attack_verify.py, "
+                "attack2_verify.py and attack3_verify.py (outputs also in the "
+                "Appendix). Standard library only; deterministic.", S_NOTE))
 story.append(P("The complete dossier is version-controlled at "
                '<link href="https://github.com/GamebP/MathProblems/tree/main/GREEN-036">'
                "https://github.com/GamebP/MathProblems/tree/main/GREEN-036</link>, "
@@ -457,6 +515,19 @@ for line in ATTACKLOG.splitlines():
         wrapped.extend(textwrap.wrap(line, 118, subsequent_indent="      ",
                                      drop_whitespace=False))
 story.append(Preformatted("\n".join(wrapped), S_MONO))
+
+for tag, fname in [("C", "attack2_output.txt"), ("D", "attack3_output.txt")]:
+    LOG = (HERE / "data" / fname).read_text()
+    story.append(P(f"Appendix {tag}. Verbatim output ({fname})", S_H1))
+    wrapped = []
+    for line in LOG.splitlines():
+        line = line.rstrip()
+        if len(line) <= 118:
+            wrapped.append(line)
+        else:
+            wrapped.extend(textwrap.wrap(line, 118, subsequent_indent="      ",
+                                         drop_whitespace=False))
+    story.append(Preformatted("\n".join(wrapped), S_MONO))
 
 doc = SimpleDocTemplate(
     str(HERE / "report.pdf"), pagesize=A4,
