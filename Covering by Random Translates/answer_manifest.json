@@ -70,6 +70,8 @@
   "artifacts": {
     "derivation": "derivation.md",
     "report": "report.md",
+    "report_latex": "report.tex",
+    "report_compile_status": "DRAFT (source only; no LaTeX engine available in environment)",
     "code": ["code/sim_random_translates.py", "code/sim_greedy_cover.py", "code/verify_exactness.py", "code/verify_theory.py"],
     "data": ["data/random_translates_threshold.csv", "data/gumbel_window.csv", "data/uncovered_counts.csv", "data/regime_100sqrtp.csv", "data/greedy_cover.csv", "data/greedy_curve_p20011.csv"]
   },
