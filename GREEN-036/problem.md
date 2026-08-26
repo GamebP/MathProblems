@@ -40,6 +40,8 @@ d(A) = lim_{N→∞} |A ∩ [1, N]| / N  > 0 ?
 | `attack_verify.py` | targeted checks behind attack.md (finite evidence) |
 | `attack2.md` | attack iteration 2: AP-hole theorem (reduced classes), doubling recurrence + solution, rescue certificates |
 | `attack2_verify.py` | targeted checks behind attack2.md (finite evidence) |
+| `attack3.md` | attack iteration 3: method-barrier theorem, orbit-coincidence structure, Target-D scan, conditional C1' chain |
+| `attack3_verify.py` | targeted checks behind attack3.md (finite evidence) |
 | `verify_solution.py` | exact census + all checks (CLI bound X, default 10^7) |
 | `data/run_output.txt` | verbatim captured output of the production run at X = 10^8 |
 | `data/census_summary.json` | machine-readable results of the production run |
