@@ -1,15 +1,15 @@
 {
   "claim_id": "GREEN-028",
   "verdict": "UNRESOLVED",
-  "generated_at": "2026-08-26T10:54:24Z",
-  "manifest_sha256": "7492729bf693c4b6d9964bcb9806968ec79be4f590da620596646187a8fb494e",
+  "generated_at": "2026-08-26T11:17:47Z",
+  "manifest_sha256": "a7f685fba09ff97cb39e34f922decedc89531f62d130ab59c896c5bf32f74aa8",
   "manifest_problems": [],
   "evidence": [
     {
       "ref": "report.tex",
       "kind": "file",
-      "sha256": "1fad2d5f35b3acd1af1cb7a4d138ce69a8a48e12f91829e5ba69b4ff5b57eca5",
-      "bytes": 38664
+      "sha256": "65a62fb20308a278294bf530697ead0b7d7fea73e0d64660da1ef878acab7d52",
+      "bytes": 41720
     },
     {
       "ref": "verify_solution.py",
@@ -37,7 +37,7 @@
   "verification_suite": {
     "command": "/usr/bin/python3 verify_solution.py",
     "exit_code": 0,
-    "seconds": 5.55,
+    "seconds": 5.688,
     "tail": [
       "     control unperturbed g: 1.0000000000000002 (expect 1)",
       "  (p=3,n=2): E_h||Delta f||_sq^4 = 0.5555555555555555  prediction (2p-1)/p^2 = 0.5555555555555556  |diff|=1.110e-16 -> PASS",

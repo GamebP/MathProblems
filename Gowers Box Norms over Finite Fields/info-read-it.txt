@@ -1,0 +1,25 @@
+[SYSTEM DIRECTIVE: MANDATORY TASK EXECUTION - DO NOT SUMMARIZE, DO NOT DEFLECT, DO NOT STOP EARLY]
+
+You must process the context files for Problem GREEN-028 and generate the complete, finalized research synthesis incorporating all rigorous results and addressing all 4 open/missing items below.
+
+You MUST include and address the following four points explicitly in your mathematical report and summary:
+
+1. GLOBAL STATUS & RESOLUTION:
+   - State clearly and unequivocally that Problem GREEN-028 is UNRESOLVED (open in both directions; no proof and no counterexample exist).
+   - State the exact obstruction: The Fourier-mass condition on B_f over \Xi_0 = {\sum \xi_i = 0} is not known to imply algebraic correlation with the infinite-dimensional target class.
+
+2. RIGIDITY CONVERSE & FUNCTIONAL EQUATION CORRECTION (Conjecture D' / Open Problem O2):
+   - State that the sufficiency half of rank-one diagonal increments (Theorem D) is PROVED for the family f(x,y) = a(x)b(y)d(x-y)e_p(Q(x,y)).
+   - Explicitly state that the converse classification is OPEN.
+   - Note the critical correction from the audit: The multiplicative parallelogram equation \Theta(u+w, v+t)\Theta(u-w, v-t) = \Theta(u+t, v-w)\Theta(u-t, v+w) is FALSE and NOT necessary (violated by e_p(x^2), e_p(xy), and pure constituents \Theta=d(v)).
+
+3. MAXIMAL-HYPOTHESIS REDUCTION & LARGE-p NUMERICAL EVIDENCE (Open Problem O1 & O3):
+   - State that for the diagonal family f(x,y) = d(x-y) with \delta = 1, the problem reduces to an open uniform twisted trilinear inequality.
+   - Incorporate the large-p numerical probe data (from probe_large_p.txt for p in {5, 7, 11, 13, 17}): Report that best-found local correlations for the cubic target d(s) = e_p(s^3) decline from 0.724 to 0.447 (scaling approximately as p^{-0.4}), providing heuristic evidence against a uniform lower bound while remaining unproven analytically.
+
+4. CLASS COMPARISON & READING (ii) SCOPE:
+   - For n = 1: The quadratic phase absorbs completely into a(x)b(y)c(x+y), making the reading-(i) class T_0 = {a(x)b(y)c(x+y)} strictly contained in the {-1, +1}-valued reading-(ii) class C_{(ii)}.
+   - For n >= 2: The reading-(i) class with quadratic phase e_p(Q) and the genuinely {-1, +1}-valued reading-(ii) class are INCOMPARABLE (due to swap-asymmetry of mixed differences for monomial phases like e_p(\lambda x_1 y_2) and the fact that e_p(t) in {-1, +1} forces trivial values for odd p). None of the results apply to reading (ii).
+
+OUTPUT REQUIREMENT:
+Produce the complete, fully detailed LaTeX report and the exact updated `answer_manifest.json` / `report.tex` text incorporating all of the above. Proceed immediately.

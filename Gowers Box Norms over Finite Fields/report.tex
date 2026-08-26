@@ -38,8 +38,11 @@ hypothesis contains, as a special case, a twisted trilinear correlation
 inequality for arbitrary unimodular data; an exact classification of one half
 of a rigidity property of pointwise rank-one diagonal increments, together
 with a sharpness example and a precise conjecture for the converse; and
-small-field numerical experiments indicating a degrees-of-freedom-dominated
-regime with no separation between structured and random diagonal data. No
+numerical experiments, including a probe at primes up to $17$, indicating a
+degrees-of-freedom-dominated regime at small sizes, where structured and
+random diagonal data remain unseparated, together with a decline of the
+largest-found cubic-target correlations with $p$ consistent with
+$p^{-0.4}$. No
 disproof of the problem and no proof of its full correlation statement are
 claimed.
 \end{abstract}
@@ -771,6 +774,61 @@ correlation along any sequence of parameters. Whether there exists a
 counterexample family, satisfying the hypothesis at $\delta=1$ while the
 optimal correlation tends to zero along some sequence of primes or
 dimensions, remains open.
+
+A deterministic probe extends the same optimizer to $p\in\{11,13,17\}$: the
+alternating phase maximization is identical, retuned only for runtime, run
+from three hundred, three hundred, and one hundred twenty random restarts at
+$p=11$, $13$, $17$ respectively, with at most two hundred fifty sweeps per
+restart and a single fixed deterministic seed. As in Table~\ref{tab:exp},
+the reported figures are the largest correlations found by local alternating
+maximization — lower bounds for the corresponding suprema, with global
+optimality neither claimed nor certified — accompanied by control runs in
+which $d$ was taken with uniformly random exponents. Results are collected
+in Table~\ref{tab:probe}.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{lllr}
+\toprule
+prime & target $d$ & statistic & value \\
+\midrule
+$p=11$ & $e_{11}(s^{3})$ & largest found & $0.542871078$ \\
+       &                 & mean          & $0.539892956$ \\
+       &                 & sd            & $3.777\times10^{-3}$ \\
+$p=13$ & $e_{13}(s^{3})$ & largest found & $0.534867710$ \\
+       &                 & mean          & $0.520684259$ \\
+       &                 & sd            & $8.575\times10^{-3}$ \\
+$p=17$ & $e_{17}(s^{3})$ & largest found & $0.446900156$ \\
+       &                 & mean          & $0.443358591$ \\
+       &                 & sd            & $3.393\times10^{-3}$ \\
+\midrule
+$p=11$ & random exponents & largest found correlation & $0.645124308$ \\
+$p=13$ & random exponents & largest found correlation & $0.672861647$ \\
+$p=17$ & random exponents & largest found correlation & $0.554490869$ \\
+\bottomrule
+\end{tabular}
+\caption{Largest correlations found by local alternating maximization against
+unimodular factors at $n=1$: lower bounds for the suprema; a certified global
+optimum is neither claimed nor obtainable by this method.}
+\label{tab:probe}
+\end{table}
+
+Taken together with the values at $p\le7$, the largest-found cubic-target
+correlations $0.724$, $0.677$, $0.543$, $0.535$, $0.447$ at
+$p\in\{5,7,11,13,17\}$ decline consistently with a power law $p^{-0.4}$; a
+log--log fit across this range gives slope approximately $-0.39$. The
+dispersion across restarts is at most $10^{-2}$ for the cubic target, the
+optimizer recovering the same basin at every prime, whereas the
+random-exponent controls attain larger and less stable values, with standard
+deviations reaching $6.473\times10^{-2}$. All of these figures are lower
+bounds found by local search, and global optimality is not certified, so the
+observed decay constitutes heuristic evidence \emph{against} a positive
+uniform lower bound on the maximal-hypothesis correlation for the cubic
+diagonal family, not a proof of one. Analytic confirmation remains open;
+it would refute the $\delta=1$ case of the problem via
+Observation~\ref{obs:C}, since every unimodular diagonal $d(x-y)$ meets the
+hypothesis with $\delta=1$.
 
 \section{What remains open}\label{sec:open}
 

@@ -94,3 +94,43 @@ the untwisted family, so the averaged spectral hypothesis genuinely
 distinguishes rigidity members from their cubic mixed twists; this refutes
 the cubic-twist counterexample route, since a family violating the hypothesis
 cannot contradict the conjecture.
+
+\subsection{Large-$p$ probe}
+The same optimizer, identical in mechanism and retuned only for runtime, was
+run deterministically at $p\in\{11,13,17\}$ from three hundred, three
+hundred, and one hundred twenty random restarts respectively, with at most
+two hundred fifty sweeps per restart, under a single fixed deterministic
+seed. As throughout this section, the tabulated values are the largest
+correlations found by local search — lower bounds for the suprema; global
+optimality is neither claimed nor certified.
+\begin{center}
+\begin{tabular}{llr}
+\toprule
+target $d$ & statistic & value \\
+\midrule
+$e_{11}(s^{3})$ & largest found / mean / sd &
+$0.542871078$ / $0.539892956$ / $3.777\times10^{-3}$ \\
+$e_{13}(s^{3})$ & largest found / mean / sd &
+$0.534867710$ / $0.520684259$ / $8.575\times10^{-3}$ \\
+$e_{17}(s^{3})$ & largest found / mean / sd &
+$0.446900156$ / $0.443358591$ / $3.393\times10^{-3}$ \\
+\midrule
+random exponents, $p=11$ & largest found & $0.645124308$ \\
+random exponents, $p=13$ & largest found & $0.672861647$ \\
+random exponents, $p=17$ & largest found & $0.554490869$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Interpretation: taken together with the values at $p\le7$, the largest-found
+cubic-target correlations $0.724$, $0.677$, $0.543$, $0.535$, $0.447$ at
+$p\in\{5,7,11,13,17\}$ decline consistently with a power law $p^{-0.4}$ — a
+\textbf{heuristic} log--log fit (slope approximately $-0.39$) computed from
+lower bounds produced by local search alone, with global optimality
+uncertified and no analytic claim made. Restart dispersion is at most
+$10^{-2}$ for the cubic target, while the random-exponent controls attain
+larger and less stable values (standard deviations up to
+$6.473\times10^{-2}$); this constitutes heuristic evidence against a
+positive uniform lower bound on the maximal-hypothesis correlation for the
+cubic diagonal family, whose analytic confirmation remains open and would
+refute the $\delta=1$ case of the problem.
