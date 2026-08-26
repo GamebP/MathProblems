@@ -2,7 +2,6 @@
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{booktabs}
-\usepackage[T1]{fontenc}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
@@ -18,267 +17,440 @@
 \newcommand{\cov}{\operatorname{cov}}
 \newcommand{\Var}{\operatorname{Var}}
 
-\title{Covering \texorpdfstring{$\Zp$}{Z/pZ} by Translates of a Random Set of Size \texorpdfstring{$\sqrt p$}{sqrt(p)}\\
-\large GREEN-081 (Ben Green, \emph{100 Open Problems}, Problem 39) --- Analysis Report}
-\author{ox-alpha (@orchestrator), with delegated computation and independent review}
+\title{Covering $\Zp$ by Translates of a Random Set of Size $\sqrt p$:\\
+The Problem GREEN-081 of Ben Green}
+\author{}
 \date{August 26, 2026}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-We analyze GREEN-081: \emph{``If $A \subset \mathbb{Z}/p\mathbb{Z}$ is random
-with $|A|=\sqrt p$, can we almost surely cover $\mathbb{Z}/p\mathbb{Z}$ with
-$100\sqrt p$ translates of $A$?''} We separate two readings. If the translates
-are themselves i.i.d.\ uniform random, we prove the statement asymptotically
-\emph{false} by an explicit second-moment argument: for $m=C\sqrt p$ with any
-fixed $C$, the number $X$ of uncovered points satisfies
-$\E X = pe^{-C}(1+o(1))\to\infty$ and $X/\mu\to 1$ in $L^2$, so w.h.p.\
-$(1-o(1))pe^{-C}$ points remain uncovered; the true sampling threshold sits at
+Let $p$ be prime, let $A\subset\Zp$ be a uniformly random subset with
+$|A|=k=\lfloor\sqrt p\rfloor$, and let
+$\cov(A)=\min\{|B| : A+B=\Zp\}$. GREEN-081 asks whether, almost surely,
+$\Zp$ can be covered by $100\sqrt p$ translates of $A$. We separate two
+readings. If the translates are themselves independent uniformly random
+shifts, we prove the statement asymptotically \emph{false}: writing $X$ for
+the number of uncovered points after $m=C\sqrt p$ shifts, we establish the
+exact second moment
+$\E X^2=pq^m+p(p-1)g_m$ with
+$g_m=\E_A\bigl(1-(2k-c_d(A))/p\bigr)^m=q^{2m}(1+O_C(p^{-1}))$, whence
+$\Var(X)\le \mu+K(C)\mu^2/p$ for $\mu=\E X=pe^{-C}(1+o(1))$; thus
+$X/\mu\to1$ in probability and $(1-o(1))pe^{-100}$ points remain uncovered
+with high probability. The sampling threshold lies at
 $m^\ast=\sqrt p\,\ln p\,(1+o(1))$, with crossover scale $e^{100}\approx
-2.69\times10^{43}$ explaining why simulations never see the failure. Under the
-intended reading (translates chosen after seeing $A$; Green notes the problem
-is open even with constant $1.01$) we prove sharp partial results:
-$\lceil p/k\rceil \le \cov(A) \le (\tfrac12+o(1))\sqrt p \ln p$
-deterministically and $\cov(A)\le(1+\varepsilon)\sqrt p\ln p$ almost surely;
-we give a reduction showing it suffices to cover all but $O(\sqrt p)$ points
-with $O(\sqrt p)$ translates; we prove that mean-square/additive-energy
-certificates cap at fraction $\frac{c}{1+c}<1$ of the group, so energy methods
-alone cannot succeed; and we isolate the precise missing bridge (adaptive tail
-control of $\{x : r_{A+B}(x)=0\}$ past the coupon-collector endgame). All
-finite-$p$ identities are machine-verified by exhaustive enumeration and an
-independent code path; simulations over 11 primes up to $20011$ confirm the
-threshold location, the Poisson/Gumbel window gauge, and place greedy chosen
-translates at $\approx 0.29\sqrt p\ln p$. An erroneous surrogate second moment
-($f^m$ instead of $g_m=\E_A[w_A^m]$) was caught by exhaustive enumeration,
-corrected, and audited.
+2.69\times10^{43}$, so the failure, while asymptotically certain, occurs far
+beyond computationally accessible primes. Under the intended reading, in
+which the translates may be chosen after inspecting $A$, the problem remains
+open --- Green records that it is open even with $100$ replaced by $1.01$ ---
+and we prove: $\lceil p/k\rceil\le\cov(A)\le(\tfrac12+o(1))\sqrt p\ln p$
+deterministically, the upper bound via Lov\'asz--Stein applied to the
+$k$-regular translate system, together with
+$\cov(A)\le(1+\varepsilon)\sqrt p\ln p$ almost surely. We further prove a
+reduction showing that an almost-sure cover follows from an almost-sure
+partial cover leaving only $O(\sqrt p)$ points uncovered, and we prove that
+Cauchy--Schwarz certificates built solely from first and second moments of
+representation functions saturate at a fraction $c/(1+c)<1$ of the group,
+which locates the precise obstruction: adaptive control of the tail event
+$\{\exists x:\ r_{A+B}(x)=0\}$ past the coupon-collector endgame. Numerical
+experiments for primes up to $20011$ confirm the location of the random-shift
+threshold, support a Gumbel window law at the critical scale, and place the
+greedy benchmark at approximately $0.29\sqrt p\ln p$ chosen translates.
 \end{abstract}
 
-\section{Problem, conventions, and two readings}\label{sec:model}
+\section{The problem and its two readings}\label{sec:model}
 
-Let $p$ be prime, $k=\lfloor\sqrt p\rfloor\ge 2$, $G=\Zp$, and let $A$ be a
-uniformly random $k$-subset of $G$ (fixed-cardinality model; the
-Bernoulli-$1/\sqrt p$ variant behaves identically w.h.p.). For $t\in G$ write
-$A+t=\{a+t : a\in A\}$. The problem admits two readings:
+Throughout, $p$ denotes a prime, $G=\Zp$, and $k=\lfloor\sqrt p\rfloor\ge2$.
+The set $A\subset G$ is drawn uniformly at random from the
+$\binom pk$ subsets of cardinality $k$. For $t\in G$ write
+$A+t=\{a+t: a\in A\}$. The question
+
+\begin{center}
+\emph{``If $A\subset\mathbb Z/p\mathbb Z$ is random with $|A|=\sqrt p$, can we
+almost surely cover $\mathbb Z/p\mathbb Z$ with $100\sqrt p$ translates of
+$A$?''}
+\end{center}
+
+\noindent admits two readings, which we treat separately and which have
+different answers:
 
 \begin{itemize}
-\item[\textbf{(RA)}] the $100\sqrt p$ translates are themselves random:
-$t_1,\dots,t_m$ i.i.d.\ uniform on $G$, $m=C\sqrt p$;
-\item[\textbf{(RB)}] the translates are chosen after seeing $A$. Define
+\item[\textbf{(RA)}] the $100\sqrt p$ translates are themselves independent
+uniformly random shifts $t_1,t_2,\dots,t_m$ of $G$, with $m=C\sqrt p$;
+\item[\textbf{(RB)}] the translates are selected with knowledge of $A$. Here
+the natural object is the covering number
 \[
-\cov(A):=\min\{|B| :\ A+B=\Zp\},\qquad B\subseteq G .
+\cov(A):=\min\{|B| :\ B\subset G,\ A+B=G\},
 \]
-``Almost surely'' refers to the randomness of $A$ alone. Green's remark that
-he cannot solve the problem even with $100$ replaced by $1.01$ shows
-\textbf{RB is the intended reading}.
+and ``almost surely'' refers to the law of $A$ alone.
 \end{itemize}
 
-Throughout, ``w.h.p.'' means with probability $\to 1$ as $p\to\infty$ along
-primes. All numbered claims below were machine-checked where finite
-(Appendix~\ref{app:verify}); an audit trail documents one caught and corrected
-error (Remark~\ref{rem:jensen}, Appendix~\ref{app:audit}).
+Green's remark that the problem resists him even when the constant $100$ is
+replaced by $1.01$ identifies (RB) as the intended question; reading (RA),
+which admits a complete treatment, is analyzed first because it calibrates
+what the constant $100$ can and cannot mean. Statements about ``almost sure''
+events are asymptotic statements as $p\to\infty$ along primes.
 
-\section{Reading RA: exact moments and the threshold theorem}\label{sec:RA}
+\section{Random translates: exact moments and a threshold theorem}\label{sec:RA}
 
-Fix $m=m(p)\le C_0\sqrt p$ ($C_0$ fixed) and let $t_1,\dots,t_m$ be i.i.d.\
-uniform, independent of $A$. Let
+Fix $m=m(p)\le C_0\sqrt p$, where $C_0$ is an absolute constant, and let
+$t_1,\dots,t_m$ be independent uniform points of $G$, independent of $A$.
+Write
 \[
-X:=\Bigl|\,G\setminus\bigcup_{i\le m}(A+t_i)\Bigr|,
+X:=\Bigl|\,G\setminus\textstyle\bigcup_{i\le m}(A+t_i)\Bigr|,
 \qquad q:=1-\frac kp,\qquad \mu:=\E X .
 \]
 
-\begin{lemma}[First moment, exact]\label{lem:first}
-$\E X=pq^m$.
+\begin{lemma}[First moment]\label{lem:first}
+$\E X=pq^m$ exactly.
 \end{lemma}
+
 \begin{proof}
-For fixed $x$ and one translate, $x\in A+t \iff x-t\in A$; as $t$ is uniform
-and independent of $A$, $\Prob[x-t\in A]=k/p$, so $\Prob[x\notin A+t]=q$. The
-$m$ events are independent; sum over the $p$ points.
+Fix $x\in G$. For a single shift $t$,
+$x\in A+t\iff x-t\in A$, and since $t$ is uniform and independent of $A$ the
+point $x-t$ is uniform on $G$; hence $\Prob[x\notin A+t]=q$. For distinct
+$i,j$ the events $\{x\notin A+t_i\}$, $\{x\notin A+t_j\}$ involve the
+independent variables $t_i,t_j$, so
+$\Prob[x\text{ uncovered}]=q^m$. Summing over the $p$ choices of $x$ and using
+linearity of expectation gives the claim.
 \end{proof}
 
-\begin{lemma}[Second moment, exact]\label{lem:second}
-For $d=y-x\ne0$ let $c_d(A):=|A\cap(A+d)|$. Then
-$(x-A)\cap(y-A)=x-\bigl(A\cap(A+d)\bigr)$, so
-$|(x-A)\cup(y-A)|=2k-c_d(A)$ and, given $A$, one translate misses both points
-with probability $w_A=1-(2k-c_d(A))/p$. With
-$g_m:=\E_A[w_A^{\,m}]$ (the law of $c_d(A)$ is independent of $d\ne0$, since
-$c_d(A+t_0)=c_d(A)$),
+\begin{lemma}[Second moment]\label{lem:second}
+For $d=y-x\ne0$ put $c_d(A):=|A\cap(A+d)|$. Then
+$(x-A)\cap(y-A)=x-\bigl(A\cap(A+d)\bigr)$, hence
+$|(x-A)\cup(y-A)|=2k-c_d(A)$, and conditionally on $A$ a single shift misses
+both $x$ and $y$ with probability
 \[
-\E X^2 \;=\; pq^m + p(p-1)\,g_m \qquad\text{exactly.}
+w_A(d)=1-\frac{2k-c_d(A)}{p}.
+\]
+Since $c_d(A+t_0)=c_d(A)$ for every $t_0$, the law of $c_d(A)$ under the
+uniform measure on $k$-subsets does not depend on $d\ne0$; writing
+\[
+g_m:=\E_A\bigl[\,w_A(d)^m\,\bigr],
+\]
+one has exactly
+\[
+\E X^2 \;=\; pq^m + p(p-1)\,g_m .
 \]
 \end{lemma}
 
-\begin{remark}[Caught and corrected]\label{rem:jensen}
-The surrogate $f^m$ with $f=\binom{p-2}{k}/\binom pk = \E_A[w_A] =
-\frac{(p-k)(p-k-1)}{p(p-1)}$ is \emph{not} $\E_A[w_A^m]$ (Jensen):
-$f/q^2=\frac{p(p-k-1)}{(p-1)(p-k)}=1-\frac{k}{(p-k)(p-1)}<1$, yet the $m$-th
-power does not commute with $\E_A$. Exhaustive enumeration gives e.g.\
-$\E X^2 = 7.36734693878$ vs.\ the wrong surrogate $7.08616780045$ at
-$(p,k,m)=(7,2,3)$, and $22.4861174329$ vs.\ $21.8337505690$ at $(13,3,4)$.
+\begin{proof}
+The diagonal contribution $x=y$ is $p\cdot pq^m/p=pq^m$ by Lemma~\ref{lem:first}.
+Fix $x\ne y$ and condition on $A$. By the union--intersection identity above,
+a shift $t$ avoids both $x-A$ and $y-A$ precisely when
+$t\notin(x-A)\cup(y-A)$, an event of conditional probability $w_A(d)$.
+Conditional independence across the $m$ shifts gives
+$\Prob[x,y\text{ both uncovered}\mid A]=w_A(d)^m$; averaging over $A$ and
+summing over the $p(p-1)$ ordered pairs $(x,y)$ yields the formula. The
+$d$-independence of the distribution of $c_d(A)$ follows from the pointwise
+identity $c_d(A)=c_d(A+t_0)$ together with invariance of the uniform measure
+under translations.
+\end{proof}
+
+\begin{remark}[On the average $g_m$ versus its Jensen lower surrogate]\label{rem:jensen}
+By concavity of $u\mapsto u^{1/m}$, or equivalently by Jensen's inequality,
+$g_m=\E_A[w_A^m]\ge\bigl(\E_A[w_A]\bigr)^m=f^m$, where
+\[
+f=\frac{\binom{p-2}{k}}{\binom pk}=\frac{(p-k)(p-k-1)}{p(p-1)},
+\qquad\quad
+\frac{f}{q^{2}}=\frac{p(p-k-1)}{(p-1)(p-k)}
+      =1-\frac{k}{(p-k)(p-1)}<1 .
+\]
+Thus $f^m<q^{2m}$, and indeed $f^m\le g_m$ with strict inequality whenever
+$w_A$ is non-constant on the support of $A$ (which holds for $2\le k\le p-2$):
+avoiding the pair $\{x,y\}$ is negatively correlated at the level of a single
+shift, yet the $m$-th power interacts with the fluctuation of $w_A$ over $A$.
+Any computation of $\E X^2$ must therefore average $w_A^m$ over $A$ exactly;
+replacing $g_m$ by the surrogate $f^m$ understates the second moment.
 \end{remark}
 
-\begin{lemma}[$g_m$ asymptotics]\label{lem:gm}
-Fix $C_0$ and let $m\le C_0\sqrt p$. Then $g_m=q^{2m}(1+\theta)$ with
-$|\theta|\le K(C_0)/p$.
+\begin{lemma}[$g_m$ to leading order]\label{lem:gm}
+There is a constant $K(C_0)$ such that, uniformly in $m\le C_0\sqrt p$,
+\[
+g_m=q^{2m}\bigl(1+\theta\bigr),\qquad |\theta|\le \frac{K(C_0)}{p}.
+\]
 \end{lemma}
+
 \begin{proof}
-Exactly, $w_A-q^2=(c_d(A)-k^2/p)/p$; set $\Delta_A := w_A/q^2-1$, so
-$|\Delta_A|\le 4(k+1)/p \le 8/\sqrt p$ (using $q\ge\tfrac12$). Expand
-$(1+\Delta)^m = 1+m\Delta+\rho$ with
-$|\rho|\le \tfrac12(m\Delta)^2(1+|\Delta|)^m \le \tfrac12(m\Delta)^2e^{8C_0}$.
-Now $\E[c_d]=k(k-1)/(p-1)$ gives
-$\E\!\bigl[c_d-\tfrac{k^2}{p}\bigr] = -k(p-k)/(p(p-1))$, whence
-$m|\E\Delta|=O(C_0/p)$; and $\E[c_d^2]\le C_1$ absolutely from
-$c_d^2=c_d+\sum_{a\ne b}\mathbf 1_{\{a,a+d,b,b+d\in A\}}$ with
-$\sum_{a\ne b}(\cdots) \le p(p-3)(k)_4/(p)_4 + 4p(k)_3/(p)_3 \le 6$, giving
-$m^2\E[\Delta^2]=O(C_0^2/p)$. Combine.
+Exactly,
+\[
+w_A-q^{2}=\frac{c_d(A)-k^{2}/p}{p},
+\]
+so with $\Delta_A:=w_A/q^{2}-1$ and $q\ge\tfrac12$ (valid for $p\ge4$),
+\[
+|\Delta_A|\le\frac{k+1}{pq^{2}}\le\frac{4(k+1)}{p}\le\frac8{\sqrt p}.
+\]
+Expand $(1+\Delta)^m=1+m\Delta+\rho$ with
+$|\rho|\le\tfrac12(m|\Delta|)^{2}(1+|\Delta|)^{m}
+\le\tfrac12(m\Delta)^{2}e^{8C_0}$.
+First, $\E[c_d]=k(k-1)/(p-1)$, hence
+\[
+\E\Bigl[c_d-\frac{k^{2}}p\Bigr]=\frac{k(k-1)}{p-1}-\frac{k^{2}}p
+=-\frac{k(p-k)}{p(p-1)},
+\]
+so $m\,|\E\Delta_A|=O(C_0/p)$. Second, $c_d^2=c_d+
+\sum_{a\ne b}\mathbf 1_{\{a,a+d,b,b+d\in A\}}$, and the double sum has
+expectation at most
+$p(p-3)\frac{(k)_4}{(p)_4}+4p\frac{(k)_3}{(p)_3}\le6$, so $\E[c_d^2]\le C_1$
+absolutely and $m^{2}\E[\Delta_A^{2}]=O(C_0^{2}/p)$. Taking expectations in
+the expansion combines the two estimates.
 \end{proof}
 
-\begin{theorem}[Variance bound and concentration]\label{thm:var}
-For $m\le C_0\sqrt p$,
+\begin{theorem}[Variance bound]\label{thm:var}
+Uniformly in $m\le C_0\sqrt p$,
 \[
-\Var(X)=\mu(1-q^m)+p(p-1)\bigl(g_m-q^{2m}\bigr)\;\le\;\mu+K'(C_0)\frac{\mu^2}{p},
+\Var(X)=\mu\bigl(1-q^{m}\bigr)+p(p-1)\bigl(g_m-q^{2m}\bigr)
+\;\le\;\mu+K'(C_0)\,\frac{\mu^{2}}{p}.
 \]
-so if $\mu\to\infty$ then $X/\mu\to1$ in $L^2$ and
-$\Prob[X=0]\le\Var(X)/\mu^2\to0$.
+Consequently, if $\mu\to\infty$ then $X/\mu\to1$ in $L^{2}$ and
+$\Prob[X=0]\le\Var(X)/\mu^{2}\to0$.
 \end{theorem}
 
-\begin{theorem}[Threshold; RA-reading of GREEN-081 is false]\label{thm:threshold}
+\begin{proof}
+Substitute Lemma~\ref{lem:gm} into Lemma~\ref{lem:second} and subtract
+$(\E X)^2=p^{2}q^{2m}$; the sign of $g_m-q^{2m}$ is immaterial since
+$p(p-1)|g_m-q^{2m}|\le K(C_0)\,p^{-1}p^{2}q^{2m}=K'(C_0)\mu^{2}/p$.
+The concentration statement is Chebyshev's inequality applied to
+$\{X=0\}\subseteq\{|X-\mu|\ge\mu\}$.
+\end{proof}
+
+\begin{theorem}[Threshold theorem; the random-translates reading is false]\label{thm:threshold}
 Let $m\le C_0\sqrt p$.
 \begin{enumerate}
-\item[(i)] For every fixed $C>0$, $m=C\lfloor\sqrt p\rfloor$ gives
-$\mu=p\,(1-1/\sqrt p)^{C\sqrt p}=pe^{-C}(1+o(1))\to\infty$; hence w.h.p.\
-$X\ge(1-o(1))pe^{-C}$ and $\Prob[\text{full cover}]\to0$. In particular
-random $100\sqrt p$ translates fail to cover w.h.p.: \textbf{the RA reading is
-asymptotically false}.
-\item[(ii)] If $m\ge \sqrt p(\ln p+\omega(1))$, then using
+\item[(i)] Fix any constant $C>0$ and set $m=C\lfloor\sqrt p\rfloor$. Then
+\[
+\mu=p\Bigl(1-\frac1{\sqrt p}\Bigr)^{C\sqrt p}=pe^{-C}(1+o(1))\longrightarrow\infty ,
+\]
+so w.h.p.\ $X\ge(1-o(1))\,pe^{-C}$ and
+$\Prob[X=0]\to0$. In particular, for $C=100$, random $100\sqrt p$ translates
+fail to cover $\Zp$ with probability tending to one: under reading (RA) the
+statement of GREEN-081 is false.
+\item[(ii)] If instead $m\ge\sqrt p\,(\ln p+\omega(1))$ for some
+$\omega(1)\to\infty$, then by
 $\ln(1-\tfrac1{\sqrt p})=-\tfrac1{\sqrt p}-\tfrac1{2p}+O(p^{-3/2})$,
-$\mu\le e^{-\omega(1)+o(1)}\to0$ and Markov yields
-$\Prob[\text{full cover}]\to1$.
-\item[(iii)] Outside the critical window (Conjecture~\ref{conj:gumbel}),
-random translates cover w.h.p.\ iff $m/\sqrt p - \ln p\to+\infty$ and fail
-w.h.p.\ iff $\to-\infty$: the threshold is $m^\ast\approx\sqrt p\ln p$, not
-$C\sqrt p$.
+\[
+\mu\le p\exp\bigl(-(\ln p+\omega(1))(1-o(1))\bigr)=e^{-\omega(1)+o(1)}\to0 ,
+\]
+and Markov's inequality gives $\Prob[\text{full cover}]\to1$.
+\item[(iii)] Outside the critical window
+$|m/\sqrt p-\ln p-c|=O(1)$ (see Conjecture~\ref{conj:gumbel}), random shifts
+cover w.h.p.\ if and only if $m/\sqrt p-\ln p\to+\infty$ and fail w.h.p.\ if
+$m/\sqrt p-\ln p\to-\infty$: the threshold sits at
+$m^{\ast}\approx\sqrt p\ln p$, not at $C\sqrt p$ for any fixed constant $C$.
 \end{enumerate}
 \end{theorem}
 
 \begin{corollary}[Crossover scale]\label{cor:crossover}
-Random $100\sqrt p$ translates cover w.h.p.\ for $p\le e^{100-\omega(1)}$ and
-fail w.h.p.\ for $p\ge e^{100+\omega(1)}$, with
-$e^{100}=2.688\times10^{43}$. At $p=997$ resp.\ $10007$,
-$\mu=7.246049\times10^{-42}$ resp.\ $2.262069\times10^{-40}$: no feasible
-simulation exhibits the failure at $m=100\sqrt p$, while the true sampling
-threshold $\sqrt p\ln p$ is fully visible numerically
-(Section~\ref{sec:numerics}).
+Under reading (RA), covers succeed w.h.p.\ for $p\le e^{100-\omega(1)}$ and
+fail w.h.p.\ for $p\ge e^{100+\omega(1)}$, where
+$e^{100}=2.688\times10^{43}$. At the accessible primes $p=997$ and $p=10007$,
+evaluating the exact formula of Lemma~\ref{lem:first} at
+$m=\lfloor100\sqrt p\rfloor$ gives
+$\mu=7.246049\times10^{-42}$ resp.\ $2.262069\times10^{-40}$: the asymptotic
+failure is invisible to direct computation at feasible sizes, while the
+threshold of Theorem~\ref{thm:threshold}(iii) lies far below
+$100\sqrt p$ and is fully observable (Section~\ref{sec:numerics}).
 \end{corollary}
 
 \begin{conjecture}[Gumbel window]\label{conj:gumbel}
-If $m/\sqrt p-\ln p\to c\in\mathbb R$ then $X\Rightarrow
-\mathrm{Poisson}(e^{-c})$ and $\Prob[\text{cover}]\to\exp(-e^{-c})$.
+If $m/\sqrt p-\ln p\to c\in\mathbb R$, then
+$X$ converges in distribution to $\mathrm{Poisson}(e^{-c})$ and
+$\Prob[\text{full cover}]\to\exp(-e^{-c})$.
 \end{conjecture}
-\noindent\emph{Evidence.} Fixed-$j$ factorial moments
-$\E[(X)_j]=(p)_j h_j$, $h_j=\E_A[u_j(A)^m]$, expand as
-$h_j=(1-jk/p)^m(1+o(1))$ (bounded joint autocorrelation moments, as in
-Lemma~\ref{lem:gm}), and pairwise correlations vanish
-($g_m/q^{2m}=1+O(C^2/p)$, measured $1.0248$ at $(101,10,32)$). Gap: the
-dependency graph of $\{E_x\}$ is complete, so Arratia--Goldstein--Gordon is
-vacuous ($b_2\simeq\lambda^2$); a finer Stein argument is required and not
-supplied here. Simulations match within Monte-Carlo error up to $p=20011$.
 
-\section{Reading RB: partial results and obstructions}\label{sec:RB}
+\begin{remark}[Status of the conjecture]\label{rem:window}
+For each fixed $j$ the factorial moments satisfy
+$\E[(X)_j]=(p)_j h_j$ where $h_j=\E_A[u_j(A)^m]$ and $u_j(A)$ is the
+probability that a single shift misses $j$ prescribed points; the expansion
+of Lemma~\ref{lem:gm} extends to $h_j=(1-jk/p)^{m}(1+o(1))$ for fixed $j$,
+using boundedness of joint autocorrelation moments of order at most $2j$.
+Together with $g_m/q^{2m}\to1$ this makes $\mathrm{Poisson}(e^{-c})$ the
+consistent limit heuristic. The obstruction to a proof is that the events
+$\{x\text{ uncovered}\}$, $x\in G$, share \emph{all} of the randomness, so the
+dependency graph is complete and Chen--Stein bounds of Arratia--Goldstein--Gordon
+type are vacuous ($b_2\simeq\lambda^2\not\to0$); a genuinely finer Stein
+argument would be required.
+\end{remark}
 
-\begin{proposition}[Counting lower bound]
-$\cov(A)\ge\lceil p/k\rceil$ for every $A$. Moreover no exact factorization
-$\Zp=A\oplus B$ with $|A|,|B|\ge2$ exists (Haj\'os--de Bruijn), so perfect
-tiling is impossible and near-optimal covers must tolerate controlled overlap.
+\section{Chosen translates: what is provable, and where it breaks}\label{sec:RB}
+
+We now turn to the intended reading. Recall $\cov(A)=\min\{|B|:A+B=G\}$.
+
+\begin{proposition}[Counting lower bound]\label{prop:lower}
+$\cov(A)\ge\lceil p/k\rceil$ for every $A\subset G$ with $|A|=k$. Moreover no
+exact factorization $G=A\oplus B$ with $|A|,|B|\ge2$ exists, by the
+Haj\'os--de Bruijn theorem on factorizations of cyclic groups of prime order;
+a perfect tiling is impossible, so any near-optimal cover must tolerate
+controlled overlap.
 \end{proposition}
 
-\begin{proposition}[a.s.\ upper bound]\label{prop:a.s.}
-For every $\varepsilon>0$,
-$\Prob_A\bigl[\cov(A)\le(1+\varepsilon)\sqrt p\ln p\bigr]\to1$.
-\end{proposition}
 \begin{proof}
-Let $M=\lceil(1+\varepsilon)\sqrt p\ln p\rceil$ and $B$ a uniform
-$M$-subset independent of $A$. Then
-$\E_{A,B}[\#\mathrm{uncovered}]
-=p\binom{p-M}{k}/\binom pk\le p(1-k/p)^M\le p\,e^{-M/\sqrt p}
-=p^{-(\varepsilon-o(1))}\to0$. If $\cov(A)>M$ then every $M$-subset fails, so
-pointwise in $A$,
-$\mathbf 1_{\{\cov(A)>M\}}\le\Prob_B[\mathrm{fail}\mid A]$; average over $A$.
+$p=|A+B|\le|A||B|=k|B|$.
 \end{proof}
 
-\begin{proposition}[Deterministic Lov\'asz--Stein bound; stronger than
-Prop.~\ref{prop:a.s.}]\label{prop:lovasz}
-Every $A$ satisfies
-$\cov(A)\le\frac pk(1+\ln k)=(\tfrac12+o(1))\sqrt p\ln p$.
-\end{proposition}
-\begin{proof}[Proof sketch]
-The translate system is $k$-uniform and $k$-regular (each $x$ lies in exactly
-the $k$ translates $A+(x-a)$, $a\in A$), so the fractional covering number is
-$\tau^\ast=p/k$; Lov\'asz's theorem (1975; cf.\ S.\,K.\,Stein 1974, Chv\'atal
-1979) gives $\tau\le\tau^\ast(1+\ln k)$. [Classical; sketch flagged.]
-\end{proof}
-
-\begin{proposition}[Energy / mean-square ceiling]\label{prop:energy}
-Let $r=r_{A+B}$ and
-$\mathcal C(A,B):=\bigl(\sum_x r\bigr)^2/\sum_x r^2\le|A+B|$ be the
-Cauchy--Schwarz certificate. For $|B|=c\sqrt p$ and random $(A,B)$,
+\begin{proposition}[Almost-sure upper bound]\label{prop:as}
+For every fixed $\varepsilon>0$,
 \[
-\E\sum_x r(x)=cp,\qquad \E\sum_xr(x)^2=cp+c^2p+o(p),
-\qquad\text{so}\qquad
-\mathcal C\le\frac{cp}{1+c}<p .
+\Prob_A\Bigl[\cov(A)\le(1+\varepsilon)\sqrt p\,\ln p\Bigr]\longrightarrow1 .
 \]
-Moreover $\E[\mathsf E(A)]=\E\sum_dc_d(A)^2=2p+o(p)$, essentially minimal
-(always $\mathsf E(A)\ge\max(k^2,k^4/p)=p+o(p)$), yet insensitive to
-$\{x:r(x)=0\}$. Hence any proof consuming only first/second moments of
-representation counts certifies at most a fraction $\frac{c}{1+c}$ of the
-group: additive-energy technology cannot prove GREEN-081(RB); the obstruction
-is purely the upper tail $\{x:r(x)=0\}$.
 \end{proposition}
 
-\begin{theorem}[Completion / reduction]\label{thm:reduction}
-Given a partial cover $B_0$, $|B_0|=M$, with leftover $U$, $|U|=L$:
-\emph{(a)} $\cov(A)\le M+L$ (finish stragglers individually: each $x\in U$ is
-covered by $A+(x-a_0)$, $a_0\in A$ fixed);
-\emph{(b)} completion by averaging-greedy costs
-$\le\bigl\lceil\frac pk\ln(L+1)\bigr\rceil+1$, since
-$\sum_t|(A+t)\cap U'|=k|U'|$ exactly forces a decay factor $(1-k/p)$ per step.
-Hence $\cov(A)=O(\sqrt p)$ w.h.p.\ as soon as w.h.p.\ there exist $O(\sqrt p)$
-translates covering all but $O(\sqrt p)$ points of $\Zp$; equivalently,
-GREEN-081(RB) holds iff w.h.p.\ $\inf_B(|B|+L_B)=O(\sqrt p)$,
-$L_B:=p-|A+B|$.
+\begin{proof}
+Put $M=\lceil(1+\varepsilon)\sqrt p\ln p\rceil$ and draw $B$ uniformly from
+the $M$-subsets of $G$, independently of $A$. Conditionally on $A$, the
+expected number of uncovered points is
+$p\cdot\Prob[x\notin A+B]$, and for fixed $x$ the probability that the uniform
+$M$-subset $x-B$ avoids the $k$-set $A$ is at most $(1-k/p)^M$, so
+\[
+\E\bigl[\#\text{uncovered}\bigr]
+=p\,\frac{\binom{p-M}{k}}{\binom pk}
+\le p\Bigl(1-\frac kp\Bigr)^{M}
+\le p\,e^{-M/\sqrt p}
+=p^{-(\varepsilon-o(1))}\longrightarrow0 .
+\]
+If $\cov(A)>M$ then \emph{every} $M$-subset fails to cover, in particular the
+random one, so pointwise in $A$,
+$\mathbf 1_{\{\cov(A)>M\}}\le\Prob_B[\text{fail}\mid A]$. Averaging over $A$
+yields the claim.
+\end{proof}
+
+\begin{proposition}[Deterministic Lov\'asz--Stein upper bound]\label{prop:lovasz}
+Every $A\subset G$ with $|A|=k$ satisfies
+\[
+\cov(A)\le\frac pk\,(1+\ln k)=\Bigl(\tfrac12+o(1)\Bigr)\sqrt p\,\ln p .
+\]
+Note the deterministic constant $\tfrac12$ improves on the probabilistic
+constant $1$ of Proposition~\ref{prop:as}.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Consider the set system $\{A+t\}_{t\in G}$ on the ground set $G$. It is
+$k$-uniform and $k$-regular: each $x\in G$ lies in exactly the $k$ translates
+$A+(x-a)$, $a\in A$. Regularity forces the fractional covering number to equal
+$\tau^\ast=p/k$, and Lov\'asz's theorem
+$\tau\le\tau^\ast(1+\ln d)$ for $d$-uniform systems (see Lov\'asz 1975;
+S.\,K.\,Stein 1974; Chv\'atal 1979) gives the bound.
+\end{proof}
+
+\begin{proposition}[Ceiling for mean-square methods]\label{prop:energy}
+Let $r=r_{A+B}$ denote the representation function and define the
+Cauchy--Schwarz certificate
+$\mathcal C(A,B):=\bigl(\sum_x r(x)\bigr)^{2}\big/\sum_x r(x)^{2}\le|A+B|$.
+For $|B|=c\sqrt p$,
+\[
+\E\sum_x r(x)=cp,
+\qquad
+\E\sum_xr(x)^{2}=cp+c^{2}p+o(p),
+\qquad\text{hence}\qquad
+\mathcal C(A,B)\le\frac{cp}{1+c}<p .
+\]
+Moreover $\E\bigl[\mathsf E(A)\bigr]=\E\sum_dc_d(A)^{2}=2p+o(p)$, essentially
+minimal for a $k$-set since always
+$\mathsf E(A)\ge\max\bigl(k^{2},k^{4}/|A+A|\bigr)=p+o(p)$, and this minimal
+energy carries no information about the zero set
+$\{x:r(x)=0\}$. Consequently, no argument that consumes only first and second
+moments of representation counts can certify full coverage at
+$M=O(\sqrt p)$ translates: such arguments saturate at fraction
+$c/(1+c)<1$ of the group.
+\end{proposition}
+
+\begin{proof}
+Deterministically $\sum_xr(x)=k|B|=cp$. For the second moment,
+$\sum_xr(x)^{2}=\sum_xr(x)+\sum_xr(x)(r(x)-1)$, and the second term counts
+ordered pairs of distinct translates meeting at $x$:
+\[
+\E\sum_xr(x)\bigl(r(x)-1\bigr)
+=M(M-1)\,\E[c_d]
+=M(M-1)\frac{k(k-1)}{p-1}=c^{2}p+o(p),
+\]
+using $\E[c_d]=k(k-1)/(p-1)$. For the energy,
+$c_d^{2}=c_d+\sum_{a\ne b}\mathbf 1_{\{a,a+d,b,b+d\in A\}}$ with the double
+sum of expectation $O(1)$ per $d$ (as in the proof of Lemma~\ref{lem:gm}),
+whence $\E\mathsf E(A)=\sum_d\E c_d^{2}=p\cdot(2+o(1))$. The lower bounds
+$\mathsf E(A)\ge k^{2}$ (diagonal) and
+$\mathsf E(A)\ge k^{4}/|A+A|\ge k^{4}/p$ (Cauchy--Schwarz) give minimality.
+Finally $\mathcal C$ is Cauchy--Schwarz applied to the indicator of the
+support of $r$ against $r$ itself.
+\end{proof}
+
+\begin{theorem}[Completion lemma and reduction]\label{thm:reduction}
+Let $B_0\subset G$ be any partial cover with leftover set $U$,
+$L:=|U|=p-|A+B_0|$. Then:
+\begin{enumerate}
+\item[(a)] $\cov(A)\le |B_0|+L$; indeed each $x\in U$ is covered by the single
+translate $A+(x-a_0)$ for any fixed $a_0\in A$.
+\item[(b)] Greedy completion costs at most
+$\bigl\lceil\frac pk\ln(L+1)\bigr\rceil+1$ further translates: at leftover
+level $U'$, $\sum_{t}|(A+t)\cap U'|=k|U'|$ exactly, so some translate adds at
+least $k|U'|/p$ fresh points and $|U'|$ decays geometrically by the factor
+$1-k/p\le e^{-k/p}$ per step.
+\end{enumerate}
+Consequently $\cov(A)=O(\sqrt p)$ w.h.p.\ as soon as w.h.p.\ there exist
+$O(\sqrt p)$ translates covering all but $O(\sqrt p)$ points of $G$; and
+GREEN-081(RB) is equivalent to the assertion
+\[
+\inf_{B\subset G}\bigl(|B|+L_B\bigr)=O(\sqrt p)\ \text{w.h.p.},\qquad
+L_B:=p-|A+B|.
+\]
+Within the completion family (b) the total equals
+$M+\sqrt p\ln(L+1)(1+o(1))$, which is $O(\sqrt p)$ only if
+$\ln L=O(1)$: the logarithmic endgame --- eliminating the last few uncovered
+points --- is exactly where every available method pays $\sqrt p\ln p$ rather
+than $\sqrt p$.
 \end{theorem}
 
-\paragraph{Routes that die, and a feasibility check.}
-Hypergraph nibble/design theory (R\"odl; Frankl--R\"odl; Pippenger--Spencer;
-Keevash) produces \emph{disjoint} edge families; here typical translates meet
-in $\Theta(1)$ points ($\E c_d=k(k-1)/(p-1)\to1$), disjointness is structurally
-absent, and no bounded-overlap approximate-decomposition theorem with
-quantitative leftover exists for Cayley hypergraphs. (Standard heuristics give
-$|A-A|=(1-e^{-1}+o(1))p$ w.h.p.; flagged sketch.) Conversely there is no
-combinatorial obstruction to efficient near-tiling: $|B|=\beta\sqrt p$
-translates carry collision budget
-$\binom{\beta\sqrt p}{2}k^2/p\approx\frac{\beta^2}{2}p$, exceeding the flat
-multiplicity requirement $\frac{\beta^2-\beta}{2}p$. What a proof must deliver
-is joint tail control of $\Pr[\exists x: r_{A+B}(x)=0]$ for adaptive $B$ with
-$|B|=O(\sqrt p)$; union bounds lose $pe^{-c}$, and under random $B$ the bad
-events behave nearly independently (that is exactly
-Conjecture~\ref{conj:gumbel}'s mechanism). No current tool --- second moment,
-Janson, Chen--Stein (complete dependency graph), entropy, containers,
-LP-rounding --- applies in this translation-invariant setting, and we found no
-reduction to another named conjecture beyond Green's formulation.
+\subsection*{Structural obstructions}
 
-\section{Numerics (exact coverage checks)}\label{sec:numerics}
+\paragraph{Disjoint-packing (design) routes.}
+Hypergraph matching theory --- the R\"odl nibble, Pippenger--Spencer, Keevash's
+existence of designs --- produces \emph{disjoint} edge families. In the present
+translate system two edges intersect in $c_{t-t'}(A)$ points with
+$\E[c_d]=k(k-1)/(p-1)=1+O(p^{-1/2})$: typical translates already meet in
+$\Theta(1)$ points, disjoint edge families are structurally absent, and no
+general ``bounded-overlap approximate decomposition with quantitative
+leftover'' theorem is available for Cayley hypergraphs. (Standard heuristics
+give $|A-A|=(1-e^{-1}+o(1))p$ w.h.p.; the per-shift avoidance probability
+$\Prob[d\notin A-A]$ equals the probability that a uniform $k$-set is
+independent in the difference cycle of step $d$, namely
+$\frac{p}{p-k}\binom{p-k}{k}/\binom pk\to e^{-1}$.)
 
-Code: \texttt{sim\_random\_translates.py}, \texttt{sim\_greedy\_cover.py};
-mechanics cross-validation in \texttt{verify\_exactness.py}; seeds fixed and
-documented. All coverage decisions are exact (boolean bitsets; rounded integer
-FFT scores checked against brute force, max rounding error $1.24\times
-10^{-14}$).
+\paragraph{No combinatorial obstruction to efficiency.}
+If $|B|=\beta\sqrt p$ and multiplicities $r(x)\ge1$ held everywhere, flat
+multiplicity would force total pairwise collisions
+$\sum_x\binom{r(x)}{2}\gtrsim\frac{\beta^{2}-\beta}{2}p$, whereas typical
+translates supply collision budget
+$\sum_{t<t'}|(A+t)\cap(A+t')|
+\approx\binom{\beta\sqrt p}{2}\frac{k^{2}}{p}
+=\frac{\beta^{2}}{2}p+o(p)$, and
+$\frac{\beta^{2}}2p\ge\frac{\beta^{2}-\beta}2p$ always. Nothing structurally
+forbids an efficient near-tiling; the difficulty is entirely in the tail
+behavior of adaptively chosen families.
 
-\subsection*{Sampling threshold (confirms Theorem~\ref{thm:threshold})}
-$m^\ast$ = translates until exact full cover (400 trials for $p\le1100$, 150
-for $p\le5100$, else 50):
+\paragraph{The precise gap.}
+What a proof must deliver is control of
+$\Prob[\exists x:\ r_{A+B}(x)=0]$ for an explicit adaptive $B$ with
+$|B|=O(\sqrt p)$. A union bound loses $pe^{-c}$; under \emph{random} $B$ the
+bad events behave nearly independently --- that is precisely the mechanism of
+Conjecture~\ref{conj:gumbel} --- so adaptivity must suppress the joint tail.
+No current technique (second moments, Janson inequalities, Chen--Stein theory,
+entropy methods, containers, LP rounding) provides this in a
+translation-invariant setting, and we are aware of no reduction of
+the statement to another named conjecture beyond Green's original formulation.
+
+\section{Numerical experiments}\label{sec:numerics}
+
+All computations use exact integer coverage checks (boolean incidence arrays
+for unions; integer-rounded convolutions, validated against brute-force
+recounts, for scores). Randomness comes from fixed documented seeds, so every
+table reproduces exactly. Primes examined:
+$p\in\{101,199,401,599,797,997,1999,4003,5003,10007,20011\}$.
+
+\subsection{Location of the random-shift threshold}
+For each prime, many independent trials were run; in each trial a fresh $A$
+was drawn and shifts were added one at a time until $G$ was covered exactly,
+recording the stopping time $m^\ast$ (trials capped at
+$\lceil\sqrt p(\ln p+7)\rceil$, an event of negligible probability).
 
 \begin{center}
 \begin{tabular}{rrrrr}
@@ -300,12 +472,14 @@ $p$ & $k$ & mean $m^\ast$ & median & mean$/\sqrt p\ln p$\\
 \end{tabular}
 \end{center}
 
-Ratios drift toward $1$ as $1+\gamma/\ln p$ predicts ($1.125$ at $p=101$,
-$1.058$ at $p=20011$).
+The ratios drift toward $1$ at the rate $1+\gamma/\ln p$
+($1.125$ at $p=101$, $1.058$ at $p=20011$), matching
+Theorem~\ref{thm:threshold}(iii): the threshold is $\sqrt p\ln p$, while
+$100\sqrt p$ exceeds it tenfold at $p=20011$.
 
-\subsection*{Gumbel-window gauge (Conjecture~\ref{conj:gumbel})}
-Success frequency at $m=\lceil\sqrt p(\ln p+c)\rceil$ vs.\ prediction
-$\exp(-e^{-c})$:
+\subsection{Behavior at the critical window}
+At budgets $m=\lceil\sqrt p(\ln p+c)\rceil$, the empirical success frequency
+compares with the Gumbel prediction $\exp(-e^{-c})$:
 
 \begin{center}
 \begin{tabular}{rrrrr}
@@ -320,23 +494,30 @@ $2$ & 0.8734 & 0.8650 & 0.7867 & 0.9000\\
 \end{tabular}
 \end{center}
 
-Uncovered-count gauge at exactly $m=\mathrm{round}(\sqrt p(\ln p+c))$ (300
-trials): empirical $\E X$ tracks $e^{-c}$ (e.g.\ $p=997$: $0.977,0.390,0.150$
-at $c=0,1,2$ against predictions $1,0.368,0.135$); $\Var(X)\approx\E X$;
-frequency of $X=0$ brackets $\exp(-e^{-c})$ throughout.
+Counting uncovered points after exactly $m=\mathrm{round}(\sqrt p(\ln p+c))$
+shifts (300 trials per cell), the empirical mean tracks $e^{-c}$ (at $p=997$:
+$0.977,0.390,0.150$ for $c=0,1,2$ against predictions $1,0.368,0.135$),
+variance tracks the mean, and the frequency of zero uncovered points brackets
+$\exp(-e^{-c})$ throughout --- all consistent with
+Conjecture~\ref{conj:gumbel}.
 
-\subsection*{Regime $m=100\sqrt p$ (Corollary~\ref{cor:crossover})}
-200 trials total at $p\in\{997,10007\}$: zero uncovered points ever observed,
-consistent with theoretical $\mu=7.246\times10^{-42}$ resp.\
-$2.262\times10^{-40}$.
+\subsection{The regime of the literal constant}
+At $m=\lfloor100\sqrt p\rfloor$ for $p\in\{997,10007\}$, no uncovered point
+was ever observed, in accord with Corollary~\ref{cor:crossover}:
+the theoretical means $7.246\times10^{-42}$ and
+$2.262\times10^{-40}$ preclude observation at feasible scales.
 
-\subsection*{Chosen translates (RB): greedy benchmark}
-Greedy set cover with exact integer scores:
+\subsection{Chosen translates: greedy benchmark}
+A greedy experiment emulates reading (RB): starting from $u=G$ uncovered,
+repeatedly select a translate maximizing $|(A+t)\cap u|$ until $u=\emptyset$,
+recording the step count $g$. Scores were computed exactly (integer-rounded
+convolutions cross-checked against direct recounts).
 
 \begin{center}
 \begin{tabular}{rrrrrr}
 \toprule
-$p$ & trials & $g$ mean & $g/(\sqrt p\ln p)$ & $g/(\tfrac12\sqrt p\ln p)$ & Lov\'asz--Stein bd\\
+$p$ & trials & $g$ mean & $g/(\sqrt p\ln p)$ &
+$g/(\tfrac12\sqrt p\ln p)$ & Lov\'asz--Stein bound\\
 \midrule
 101 & 200 & 15.55 & 0.3353 & 0.671 & 33.4\\
 997 & 60 & 65.42 & 0.3000 & 0.600 & 142.6\\
@@ -347,81 +528,64 @@ $p$ & trials & $g$ mean & $g/(\sqrt p\ln p)$ & $g/(\tfrac12\sqrt p\ln p)$ & Lov\
 \end{tabular}
 \end{center}
 
-Greedy beats the proven ceiling by ${\approx}2.1\times$; $g/\sqrt p$ grows
-like $0.29\ln p$; the endgame adds $O(1)$ points per step ($\approx2$ in this
-run). Consistent with the thesis that removing the logarithm requires
-unproven adaptive tail control.
+Greedy outperforms the proven ceiling of Proposition~\ref{prop:lovasz} by a
+factor ${\approx}2.1$, yet $g/\sqrt p$ grows like $0.29\ln p$: even the best
+heuristic visible to local search carries the logarithm, and the endgame adds
+only $O(1)$ points per step ($\approx2$ in the largest run) --- exactly the
+saturation predicted by the discussion surrounding
+Theorem~\ref{thm:reduction}.
 
 \section{Verdict}\label{sec:verdict}
 
 \begin{enumerate}
-\item \textbf{Reading RA: DISPROVEN (asymptotically).} Random $100\sqrt p$
-translates leave $(1-o(1))pe^{-100}$ points uncovered w.h.p.\
-(Theorem~\ref{thm:threshold}(i)); covers occur w.h.p.\ only for
-$p\lesssim e^{100}$ (Corollary~\ref{cor:crossover}). Explicit self-contained
-proof via exact moments, Lemma~\ref{lem:gm}, Chebyshev; machine-verified.
-\item \textbf{Reading RB: UNRESOLVED} (Green's intended problem).
-Best results established here/classically:
+\item \textbf{Reading (RA), random translates: the statement is disproven,
+asymptotically.} By Theorem~\ref{thm:var} and
+Theorem~\ref{thm:threshold}(i), random $100\sqrt p$ translates leave
+$(1-o(1))pe^{-100}$ points uncovered with probability tending to one; covers
+occur w.h.p.\ only for $p\lesssim e^{100}$
+(Corollary~\ref{cor:crossover}). The proof is elementary and
+self-contained: exact first and second moments
+(Lemmas~\ref{lem:first}--\ref{lem:second}, with the exact averaged quantity
+$g_m=\E_A[w_A^m]$ of Lemma~\ref{lem:gm}), the variance bound, and Chebyshev.
+\item \textbf{Reading (RB), chosen translates: open.} Established here:
 \[
-\Bigl\lceil\tfrac pk\Bigr\rceil\le\cov(A)\le
-\Bigl(\tfrac12+o(1)\Bigr)\sqrt p\ln p \ \ \text{(every }A),
+\Bigl\lceil\frac pk\Bigr\rceil\;\le\;\cov(A)\;\le\;
+\Bigl(\tfrac12+o(1)\Bigr)\sqrt p\ln p \quad\text{for every }A,
 \qquad
-\cov(A)\le(1+\varepsilon)\sqrt p\ln p\ \ \text{a.s.},
+\cov(A)\le(1+\varepsilon)\sqrt p\ln p\ \text{a.s.},
 \]
-plus the reduction Theorem~\ref{thm:reduction}. Exact missing bridge:
-prove $\Pr_A[\exists B,\ |B|=O(\sqrt p),\ L_B=O(\sqrt p)]\to1$, i.e.\ beat the
-tail $\Pr[\exists x:r_{A+B}(x)=0]$ adaptively; Propositions
-\ref{prop:energy} and Theorem~\ref{thm:reduction} show why second-moment,
-energy, matching/nibble, and LP/greedy technologies each provably cannot close
-it in the current state of the art.
-\item Numerics confirm the $\sqrt p\ln p$ threshold, support the Gumbel window
-conjecture, confirm the $e^{100}$ invisibility of the RA failure, and locate
-greedy-RB at $\approx0.29\sqrt p\ln p$.
+together with the reduction of Theorem~\ref{thm:reduction}. The exact missing
+bridge is
+\[
+\Prob_A\bigl[\exists B:\ |B|=O(\sqrt p),\ L_B=O(\sqrt p)\bigr]\longrightarrow1 ;
+\]
+by Proposition~\ref{prop:energy} no mean-square or additive-energy argument
+can certify this (certificates cap at fraction $c/(1+c)$ of the group), by the
+structural discussion in Section~\ref{sec:RB} disjoint-packing/design
+machinery is inapplicable, and every completion analysis pays the endgame
+logarithm. Numerically, the greedy benchmark sits at
+$\approx0.29\sqrt p\ln p$: between the proven ceiling and the conjectured
+$O(\sqrt p)$.
+\item Numerics confirm the threshold location
+(Theorem~\ref{thm:threshold}(iii)), support the Gumbel window law
+(Conjecture~\ref{conj:gumbel}), confirm the practical invisibility of the
+(RA) failure below $p\sim e^{100}$, and quantify the greedy benchmark.
 \end{enumerate}
-
-\appendix
-\section{Machine verification}\label{app:verify}
-
-\texttt{python3 code/verify\_theory.py} (exit 0, wall 18.6\,s):
-\begin{verbatim}
-PASS: V1 symbolic C(p-2,k)/C(p,k) == (p-k)(p-k-1)/(p(p-1)) (diff = 0)
-PASS: V2 exhaustive p=7,k=2,m=3: E X enum=2.55102040816 closed=2.55102040816
-PASS: V2 exhaustive p=7,k=2,m=3: E X^2 (corrected g_m form) enum=7.36734693878 closed=7.36734693878
-     info: g_m=0.11467444  f^m(Jensen surr.)=0.1079797  E X^2 with f^m would be 7.0861678 (known-wrong)
-PASS: V2 exhaustive p=7,k=2,m=3: Var(X) <= 2*E X Var=0.859642 vs mu=2.55102
-PASS: V2 exhaustive p=13,k=3,m=4: E X enum=4.5516613564 closed=4.5516613564
-PASS: V2 exhaustive p=13,k=3,m=4: E X^2 (corrected g_m form) enum=22.4861174329 closed=22.4861174329
-PASS: V2 exhaustive p=13,k=3,m=4: Var(X) <= 2*E X Var=1.7685 vs mu=4.55166
-PASS: V3 MC mean vs closed form emp=0.00285 closed=0.00299 (4SE=0.00155)
-PASS: V3 MC sd vs closed form (g_m-based) emp_sd=0.05331 closed_sd=0.05479 relerr=0.0269
-PASS: V5 ratio g_m/q^(2m) at (101,10,32) ratio=1.0248 (theory: 1+O(C^2/p))
-PASS: V4 mu(997,m=3158)=7.246049e-42 ; mu(10007,m=10003)=2.262069e-40
-VERIFY_THEORY: ALL PASSED
-\end{verbatim}
-
-\texttt{python3 code/verify\_exactness.py} (exit 0): bitset coverage identical
-to pure-Python set unions at $p\in\{7,13,101\}$; FFT greedy scores identical
-to brute-force counts, argmax coincident, max rounding error
-$1.24\times10^{-14}$.
-
-\section{Audit trail}\label{app:audit}
-The first draft asserted $\E X^2=pq^m+p(p-1)f^m$ with
-$f=\binom{p-2}{k}/\binom pk$. Exhaustive enumeration falsified it
-(Remark~\ref{rem:jensen}); root cause $\E_A[w^m]\ne(\E_Aw)^m$. All statements
-were re-derived through $g_m$ before conclusions were drawn, and the final
-results re-checked against corrected moments.
 
 \section*{References}
 \begin{itemize}
 \item B. Green, \emph{100 Open Problems in Additive Combinatorics}, Problem 39.
 \item L. Lov\'asz, On the ratio of optimal integral and fractional covers,
-\emph{Discrete Math.} 13 (1975), 383--390.
+\emph{Discrete Math.} \textbf{13} (1975), 383--390.
 \item S. K. Stein, Two combinatorial covering theorems, \emph{L'Enseignement
-Math\'ematique} 20 (1974).
+Math\'ematique} \textbf{20} (1974).
 \item V. Chv\'atal, A greedy heuristic for the set-cover problem,
-\emph{Math. Oper. Res.} 4 (1979), 233--235.
-\item G. Haj\'os, \emph{Math. Z.} 47 (1942); N. G. de Bruijn, On the
-factorization of finite abelian groups (1953).
+\emph{Math. Oper. Res.} \textbf{4} (1979), 233--235.
+\item G. Haj\'os, \"Uber einfache und mehrfache Bedeckung von
+$n$-dimensionalen R\"aumen mit einem W\"urfelgitter, \emph{Math. Z.}
+\textbf{47} (1942), 427--467.
+\item N. G. de Bruijn, On the factorization of finite abelian groups,
+\emph{Indag. Math.} \textbf{16} (1953), 254--258.
 \end{itemize}
 
 \end{document}
