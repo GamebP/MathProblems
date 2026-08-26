@@ -28,8 +28,8 @@ We consider the alternating series $\sum_{n\ge1}(-1)^n n/p_n$, where $p_n$ denot
 \emph{(ii)}~Convergence holds under the Quantitative Hardy--Littlewood prime tuples conjecture (Conjecture~1.3 and Theorem~1.4 of Tao \cite{Ta23}; published in \cite{Ta24}).
 \emph{(iii)}~Exact fixed-point computations (scale $10^{60}$, rigorous rounding control) verify convergence-consistency through $N=10^7$.
 \emph{(iv)}~The classical alternating-series machinery is provably inapplicable: bounded gaps kill monotonicity, GPY positive-density small gaps force total variation $\gg\ln\ln N$, killing the Dirichlet criterion.
-\emph{(v)}~A counterexample ``world'' $W(\theta,\rho)$ reproducing every published unconditional prime statistic (now including the full second-order Cipolla term) while its paired series diverges shows that current unconditional technology cannot decide the problem.
-\emph{(vi)}~The exact missing implication --- uniform parity-resolved gap statistics equivalent to parity equidistribution of $\pi(m)$ in log-length intervals --- is isolated; it is supplied today only by Hardy--Littlewood strength input.
+\emph{(v)}~An adversarial model world $W(\theta,\rho)$ --- matching PNT main terms through the full second-order Cipolla term and every statistic on a verified finite unconditional list (bounded gaps at positive density, BHP-type upper bounds, sparse large gaps) --- while its paired series diverges shows that main-term statistics alone cannot decide the problem.
+\emph{(vi)}~The exact missing implication --- a one-way bridge from uniform parity-resolved gap equidistribution (equivalently, cancellation of $\sum(-1)^{\pi(m)}$) to convergence --- is isolated; it is supplied today only by Hardy--Littlewood strength input.
 \end{abstract}
 
 \section{Problem and verdict}\label{sec:problem}
@@ -157,7 +157,7 @@ and we fix the truncation
 \[
 E(n):=n\Bigl(L+\ell-1+\frac{\ell-2}{L}-\frac{\ell^2-6\ell+11}{2L^2}\Bigr),\qquad f(n):=\frac{n}{E(n)},
 \]
-so that $|p_n-E(n)|\ll n\,\ell^3/L^3$ (omitted-term scale) and moreover $|p_n-E(n)|\ll ne^{-c\sqrt{\ln n}}$ by inversion of the de la Vall\'ee Poussin error $\pi(x)=\operatorname{li}(x)+O(xe^{-c\sqrt{\ln x}})$ \cite{vK01,DVLP}.
+so that in fact $|p_n-E(n)|\asymp n\,\ell^3/L^3$: the omitted Cipolla terms live on scales $n\,\mathrm{poly}(\ell)/L^{j}$ ($j\ge3$), which dominate every stretched exponential since $e^{-c\sqrt L}=o(L^{-A})$ for each fixed $A$. \emph{Audit correction:} de la Vall\'ee Poussin inversion $\pi(x)=\operatorname{li}(x)+O(xe^{-c\sqrt{\ln x}})$ \cite{vK01,DVLP} bounds $p_n-\operatorname{li}^{-1}(n)$, \emph{not} $p_n-E(n)$; no exponential envelope is available against the fixed truncation $E$.
 
 \begin{lemma}[$f$ is eventually strictly decreasing]\label{lem:f}
 Writing $u=\ln n$ and $G(u)=L+\ell-1+\frac{\ell-2}{L}-\frac{\ell^2-6\ell+11}{2L^2}$ (so $E(n)=nG(u)$, $f(n)=1/G(u)$),
@@ -176,7 +176,8 @@ With
 \]
 and $p_n,E(n)\asymp n\ln n$ (PNT),
 \begin{equation}\label{eq:env}
-|\delta_n|\ \lesssim\ \frac{|p_n-E(n)|}{n\ln^2 n}\ \ll\ \min\Bigl(\frac{\ell^3}{L^3},\ e^{-c\sqrt{\ln n}}\Bigr).
+|\delta_n|\ \asymp\ \frac{|p_n-E(n)|}{n\ln^2 n}\ =\ O\!\Bigl(\frac{\ell^3}{L^5}\Bigr)
+=O\!\Bigl(\frac{(\ln\ln n)^3}{(\ln n)^5}\Bigr)\quad\text{unconditionally (vs.\ the fixed truncation }E\text{)};
 \end{equation}
 Consequently the original series converges $\iff \sum(-1)^n\delta_n$ converges.
 \end{lemma}
@@ -185,7 +186,7 @@ Consequently the original series converges $\iff \sum(-1)^n\delta_n$ converges.
 The envelope \eqref{eq:env} decays slower than any power and is non-summable; worse, $\delta_n$ inherits the erratic sign of $p_n-E(n)$ and no monotonicity or parity structure is known for it. All zero-free-region technology bounds the envelope $|p_n-E(n)|$ and is \emph{parity-blind}: it provides no information on $(-1)^n$-correlations of the fluctuations.
 
 \paragraph{What RH-grade input would (and would not) give [CONDITIONAL: RH].}
-Under RH, von Koch \cite{vK01}: $\pi(x)=\operatorname{li}(x)+O(\sqrt{x}\ln x)$; inversion yields $p_n=\operatorname{li}^{-1}(n)+O(\sqrt n\ln^2n)$, whence $|\delta_n|=O(n^{-1/2+o(1)})$. But envelope decay alone does not suffice: the comparison sequence $\delta'_n=(-1)^n/(\sqrt n\ln n)$ meets the same envelope while $\sum(-1)^n\delta'_n=\sum1/(\sqrt n\ln n)$ diverges. The Dirichlet-eta phenomenon ($\sum(-1)^nn^{-s+i\tau}$ convergent for $\Re s>0$) relies on rigid monomial structure; interchanging limits over zeros (explicit-formula expansions followed by alternating summation) is not available in any published form. \emph{No published unconditional or RH-only proof exists; the published conditional route is HL-strength (Tao).} Marked honestly: Lemmas~\ref{lem:f}--\ref{lem:delta} and \eqref{eq:env} are theorems; ``RH reopens an eta-type argument'' is plausible-but-unpublished.
+Under RH, von Koch \cite{vK01}: $\pi(x)=\operatorname{li}(x)+O(\sqrt{x}\ln x)$; inversion yields $p_n=\operatorname{li}^{-1}(n)+O(\sqrt n\ln^2n)$, whence the \emph{model residual} $n/p_n-n/\operatorname{li}^{-1}(n)$ satisfies $O(n^{-1/2+o(1)})$; against the fixed truncation $E$ the $\ell^3/L^5$ envelope of \eqref{eq:env} continues to dominate, since $n\ell^3/L^3\gg\sqrt n\,\mathrm{polylog}$. But envelope decay alone does not suffice: the comparison sequence $\delta'_n=(-1)^n/(\sqrt n\ln n)$ meets the same envelope while $\sum(-1)^n\delta'_n=\sum1/(\sqrt n\ln n)$ diverges. The Dirichlet-eta phenomenon ($\sum(-1)^nn^{-s+i\tau}$ convergent for $\Re s>0$) relies on rigid monomial structure; interchanging limits over zeros (explicit-formula expansions followed by alternating summation) is not available in any published form. \emph{No published unconditional or RH-only proof exists; the published conditional route is HL-strength (Tao).} Marked honestly: Lemmas~\ref{lem:f}--\ref{lem:delta} and \eqref{eq:env} are theorems; ``RH reopens an eta-type argument'' is plausible-but-unpublished.
 
 \paragraph{Cross-reference to the published route.}
 Tao \cite{Ta23}, recording an unpublished observation of Said \cite{MO}, proves the asymptotic relation
@@ -215,11 +216,11 @@ At leading order, with $p_{2k-1},p_{2k}\asymp2kL_k$,
 \begin{equation}\label{eq:lead}
 b_k\asymp\frac{L_k-g_{2k-1}}{2kL_k^2}=\frac{1-g_{2k-1}/L_k}{2kL_k},
 \end{equation}
-so $|b_k|$ has typical size $\asymp1/(k\ln k)$ --- matching the observed $TV(N)\sim0.55\ln\ln N$ --- while its \emph{sign} is governed by whether the odd-indexed normalized gap falls below $1$. Convergence of $\sum_kb_k$ is thus a statement about \emph{parity-resolved statistics of normalized gaps}: persistent odd/even bias creates a one-signed drift $\sim\frac{|1-\theta|}{2}\ln\ln K$. This is the isolated open subproblem, equivalent via \eqref{eq:said} to parity-equidistribution of $\pi(m)$ in log-length intervals.
+so $|b_k|$ has typical size $\asymp1/(k\ln k)$ --- matching the observed $TV(N)\sim0.55\ln\ln N$ --- while its \emph{sign} is governed by whether the odd-indexed normalized gap falls below $1$. Convergence of $\sum_kb_k$ is thus a statement about \emph{parity-resolved statistics of normalized gaps}: persistent odd/even bias creates a one-signed drift $\sim\frac{|1-\theta|}{2}\ln\ln K$. This is the isolated open subproblem; via \eqref{eq:said} it is linked to cancellation in $\sum_m(-1)^{\pi(m)}/(m\ln m)$ --- an equivalence of convergence statements, not of the stronger equidistribution forms.
 
 \section{R5: counterexample world \texorpdfstring{$W(\theta,\rho)$}{W(theta,rho)}}\label{sec:r5}
 
-We construct a hypothetical arithmetic world --- a strictly increasing integer sequence $(\tilde p_j)$ playing the role of primes --- exhibiting persistent odd/even gap bias yet satisfying every published unconditional property of the primes at current strength. Items marked (P) are proved here; compatibility items marked [HEURISTIC] are enforced by construction up to standard balancing arguments.
+We construct a hypothetical arithmetic world --- a strictly increasing integer sequence $(\tilde p_j)$ playing the role of primes --- exhibiting persistent odd/even gap bias yet satisfying the prime number theorem through the second-order Cipolla term together with every statistic on a verified finite unconditional list (bounded gaps at positive density, BHP-type upper bounds, sparse large gaps). Items marked (P) are proved here; compatibility items outside this list are marked [HEURISTIC] and are not claimed as theorems.
 
 \begin{definition}[$W(\theta,\rho)$]\label{def:world}
 Fix $\theta\in(0,2)$, $\theta\ne1$, $\rho\in[0,1)$; recall $L_k=\ln(2k)$, $\ell_k=\ln\ln(2k)$, $\Lambda_k=L_k+\ell_k$.
@@ -290,11 +291,11 @@ Consequently $\tilde\psi(x),\tilde\vartheta(x)$ match the true-prime PNT scale w
 \item \emph{Large-gap limsup lower bounds} (Westzynthius/Erd\H{o}s--Rankin/Ford--Green--Konyagin--Maynard--Tao): insert Rankin-scale gaps at super-exponentially sparse positions $n_j$ (both parities; even ones pulse-compensated). Cost to $\sum_k\tilde b_k$ per event $\lesssim\Delta_j/(n_j\ln n_j)$ (odd), resp.\ baseline class $\lesssim\Delta_j/(n_j^2\ln n_j)$ (even); choosing $n_j=2^{2^j}$ gives $\sum_j\Delta_j/(n_j\operatorname{polylog})<\infty$ since $\Delta_j\le n_j^{o(1)}$. (P)
 \item \emph{Maier-matrix irregularities, GPY positive-proportion-$\eta$ small gaps, LDG distributional statements:} accommodated by tuning $\xi$-statistics and the sprinkle profile. [HEURISTIC]
 \end{itemize}
-Every currently published unconditional theorem about primes is an upper-bound/existence statement compatible with these choices.
+Every theorem on the verified list above is compatible with these choices. Compatibility with statements outside the list has not been established and is not claimed.
 
 \subsection{Conclusion of conditional independence}
 
-There is a self-consistent world $W(\theta,\rho)$, indistinguishable at the level of all proven prime statistics, in which $\sum_k\tilde b_k$ diverges like $\frac{1-\theta}{2}\ln\ln K$. Therefore \textbf{no currently unconditional theorem distinguishes our primes from a world where the series diverges.} The missing information is exactly \emph{parity-resolved local gap correlation} --- how $g_{2k-1}$ distributes around $p_{2k-1}/(2k-1)$ versus $g_{2k}$ around $p_{2k}/(2k)$. This is supplied by Hardy--Littlewood: Gallagher's calculation (HL implies Poissonian counts in $(x,x+\lambda\log x]$, mean parity $e^{-2\lambda}$), quantified via Kuperberg's singular-series moment estimates and the Banks--Ford--Tao random sifted model, yielding Tao's bound $\bigl|\sum_{n\le x}(-1)^{\pi(n)}\bigr|\ll x/(\log\log x)^{1.1}$ \cite{Ta23}.
+There is a self-consistent world $W(\theta,\rho)$ --- proved to match the primes at PNT scale through the second-order Cipolla term and to satisfy every statistic on the verified finite list --- in which $\sum_k\tilde b_k$ diverges like $\frac{1-\theta}{2}\ln\ln K$. Therefore \textbf{main-term information alone provably cannot decide EP-15, and no theorem on the verified list decides it}; whether some as-yet-unfound unconditional input of different type could decide it is a metamathematical question on which we draw no theorem, though the model is strong evidence that parity-resolved information is indispensable. The missing information is exactly \emph{parity-resolved local gap correlation} --- how $g_{2k-1}$ distributes around $p_{2k-1}/(2k-1)$ versus $g_{2k}$ around $p_{2k}/(2k)$. This is supplied by Hardy--Littlewood: Gallagher's calculation (HL implies Poissonian counts in $(x,x+\lambda\log x]$, mean parity $e^{-2\lambda}$), quantified via Kuperberg's singular-series moment estimates and the Banks--Ford--Tao random sifted model, yielding Tao's bound $\bigl|\sum_{n\le x}(-1)^{\pi(n)}\bigr|\ll x/(\log\log x)^{1.1}$ \cite{Ta23}.
 
 \section{Numerical evidence}\label{sec:num}
 
@@ -367,7 +368,7 @@ Removing the weight ($1/g_n$ instead of $n/p_n$-type decay) destroys term-to-zer
 
 \noindent\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{
 \textbf{Obstruction (the deliverable).}\enspace
-The series $\sum_{n\ge1}(-1)^n n/p_n$ sits exactly in the dead zone of alternating-series theory: its terms $a_n=n/p_n$ decay only like $1/\ln n$, far too slowly for absolute convergence ($\sum1/\ln n$ diverges); the bounded-gaps theorems of Zhang--Maynard force $a_{n+1}>a_n$ infinitely often (indeed $a_{n+1}<a_n\iff ng_n>p_n$, and $g_n\le246\ll p_n/n$ i.o.), so Leibniz's monotonicity hypothesis is provably false in both directions; the exact step identity $a_{n+1}-a_n=(p_n-ng_n)/(p_np_{n+1})$, evaluated on the GPY positive-density set of gaps $\le\eta\ln p_n$, gives total variation $\gg\sum1/(n\ln n)\sim\ln\ln N\to\infty$ (observed: $TV(N)\approx0.55\ln\ln N$), killing the Dirichlet--BV criterion; and after subtracting the smooth Cipolla model $f(n)=n/E(n)$ --- whose alternating sum converges --- the residual $\sum(-1)^n\delta_n$, $\delta_n=-n(p_n-E(n))/(p_nE(n))$, has envelope $|\delta_n|\ll e^{-c\sqrt{\ln n}}$ (RH would merely sharpen it to $n^{-1/2+o(1)}$, which by itself decides nothing: $(-1)^nn^{-1/2}/\ln n$ meets that envelope with divergent alternating sum). All unconditional error-term technology is parity-blind and monotonicity-free: it bounds $|p_n-E(n)|$ but says nothing about the odd/even correlation that drives the exact pair terms $b_k=\bigl(p_{2k-1}-(2k-1)g_{2k-1}\bigr)/(p_{2k-1}p_{2k})$, on which convergence is exactly pinned by $S_{2K}=\sum_{k\le K}b_k$. The counterexample world $W(\theta,\rho)$ --- parity-biased bulk gaps whose pair-means $2\Lambda_k$, $\Lambda_k=\ln(2k)+\ln\ln(2k)$, telescope to $\tilde p_N=N(\ln N+\ln\ln N-1)+O(N/\ln N)=N\cdot$(full Cipolla main terms)$+o(N)$, compensated bounded-gap sprinkle, sparse huge gaps --- satisfies every published unconditional prime statistic while its pair series diverges like $\frac{1-\theta}{2}\ln\ln K$ (the systematic non-parity pieces of $\tilde b_k$ form convergent series $\sum O(1/(k\ln^2k))$); hence resolution demands genuinely new, \emph{parity-resolved local prime statistics}. Exact missing bridge: \emph{``uniform-in-$\lambda$ parity-resolved asymptotics for $\#\{k\le K:\ g_{2k-1}\le\lambda p_{2k-1}/(2k-1)\}$ (equivalently parity-equidistribution of $\pi(m)$ in log-length intervals / a power-saving $\sum_{n\le x}(-1)^{\pi(n)}\ll x/(\log\log x)^{1.1}$) $\Rightarrow\sum_kb_k$ converges $\Rightarrow$ EP-15 convergent''} --- supplied today only by the Quantitative Hardy--Littlewood prime-tuples conjecture via Tao's random-sifted-model proof; nothing weaker is known, and nothing weaker can suffice by Section~\ref{sec:r5}.
+The series $\sum_{n\ge1}(-1)^n n/p_n$ sits exactly in the dead zone of alternating-series theory: its terms $a_n=n/p_n$ decay only like $1/\ln n$, far too slowly for absolute convergence ($\sum1/\ln n$ diverges); the bounded-gaps theorems of Zhang--Maynard force $a_{n+1}>a_n$ infinitely often (indeed $a_{n+1}<a_n\iff ng_n>p_n$, and $g_n\le246\ll p_n/n$ i.o.), so Leibniz's monotonicity hypothesis is provably false in both directions; the exact step identity $a_{n+1}-a_n=(p_n-ng_n)/(p_np_{n+1})$, evaluated on the GPY positive-density set of gaps $\le\eta\ln p_n$, gives total variation $\gg\sum1/(n\ln n)\sim\ln\ln N\to\infty$ (observed: $TV(N)\approx0.55\ln\ln N$), killing the Dirichlet--BV criterion; and after subtracting the smooth Cipolla model $f(n)=n/E(n)$ --- whose alternating sum converges --- the residual $\sum(-1)^n\delta_n$, $\delta_n=-n(p_n-E(n))/(p_nE(n))$, has unconditional envelope $|\delta_n|=O\bigl((\ln\ln n)^3/(\ln n)^5\bigr)$ (truncation-dominated; an exponential or RH-scale envelope requires replacing $E$ by $\operatorname{li}^{-1}$), which is far too weak: non-summable, and carrying no monotonicity or parity structure. All unconditional error-term technology is parity-blind and monotonicity-free: it bounds $|p_n-E(n)|$ but says nothing about the odd/even correlation that drives the exact pair terms $b_k=\bigl(p_{2k-1}-(2k-1)g_{2k-1}\bigr)/(p_{2k-1}p_{2k})$, on which convergence is exactly pinned by $S_{2K}=\sum_{k\le K}b_k$. The counterexample world $W(\theta,\rho)$ --- parity-biased bulk gaps whose pair-means $2\Lambda_k$, $\Lambda_k=\ln(2k)+\ln\ln(2k)$, telescope to $\tilde p_N=N(\ln N+\ln\ln N-1)+O(N/\ln N)=N\cdot$(full Cipolla main terms)$+o(N)$, compensated bounded-gap sprinkle, sparse huge gaps --- matches full Cipolla main terms and every statistic on the verified finite unconditional list while its pair series diverges like $\frac{1-\theta}{2}\ln\ln K$ (the systematic non-parity pieces of $\tilde b_k$ form convergent series $\sum O(1/(k\ln^2k))$); hence resolution demands genuinely new, \emph{parity-resolved local prime statistics}. Exact missing bridge: \emph{``uniform-in-$\lambda$ parity-resolved asymptotics for $\#\{k\le K:\ g_{2k-1}\le\lambda p_{2k-1}/(2k-1)\}$ (equivalently parity-equidistribution of $\pi(m)$ in log-length intervals / a power-saving $\sum_{n\le x}(-1)^{\pi(n)}\ll x/(\log\log x)^{1.1}$) $\Rightarrow\sum_kb_k$ converges $\Rightarrow$ EP-15 convergent''} --- supplied today only by the Quantitative Hardy--Littlewood prime-tuples conjecture via Tao's random-sifted-model proof; nothing weaker is known, and nothing weaker can suffice by Section~\ref{sec:r5}.
 }}
 
 \section{Exact missing implication}\label{sec:chain}
@@ -377,7 +378,7 @@ The series $\sum_{n\ge1}(-1)^n n/p_n$ sits exactly in the dead zone of alternati
 \begin{gathered}
 \text{uniform-in-}\lambda\text{ parity-resolved asymptotics}\\
 \#\{k\le K:\ g_{2k-1}\le\lambda\, p_{2k-1}/(2k-1)\}=\mu(\lambda)K+o(K)\ \ (\lambda\ \text{in a range}),\\
-\Updownarrow\ \text{(equiv.)}\\
+\Downarrow\ \text{(one-way; a converse equivalence is not proved)}\\
 \text{equidistribution of the parity of }\pi(m)\text{ in intervals }(x,x+\lambda\log x],\ \text{i.e.}\ \sum_{n\le x}(-1)^{\pi(n)}\ll x/(\log\log x)^{1.1},\\
 \Downarrow\\
 \text{the signed pair series }\sum_kb_k\text{ converges}\\
@@ -385,7 +386,7 @@ The series $\sum_{n\ge1}(-1)^n n/p_n$ sits exactly in the dead zone of alternati
 \textstyle\sum(-1)^n n/p_n\ \text{converges.}
 \end{gathered}}
 \]
-Tao \cite{Ta23} establishes the needed consequence of this chain modulo his Conjecture~1.3 (Quantitative HL prime tuples); nothing weaker is known to supply it --- and by Section~\ref{sec:r5}, anything compatible with $W(\theta\ne1,\rho)$ provably cannot.
+Tao \cite{Ta23} establishes the needed consequence of this chain modulo his Conjecture~1.3 (Quantitative HL prime tuples); nothing weaker is known to supply it --- and by Section~\ref{sec:r5}, any input confined to the statistics matched by $W(\theta\ne1,\rho)$ provably cannot suffice.
 
 \section*{Errata recorded against the original tasking sheet}
 \addcontentsline{toc}{section}{Errata recorded against the original tasking sheet}
