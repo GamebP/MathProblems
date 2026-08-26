@@ -1,0 +1,103 @@
+{
+  "problem_id": "EP-15",
+  "claim_id": "EP-15-convergence",
+  "statement": "Is it true that sum_{n=1}^infty (-1)^n n/p_n converges (p_n = nth prime)? UnsolvedMath EP-15 marks it Open.",
+  "target": "Decide convergence of S = sum (-1)^n n/p_n; this investigation delivers reductions, obstruction isolation, and conditional/numerical status only.",
+  "assumptions": [
+    "Quantitative Hardy-Littlewood prime tuples conjecture, Conjecture 1.3 of Tao arXiv:2308.07205 (k <= (log log x)^5, tuples in [0, log^2 x], error C x^{1-eps}) for the conditional convergence result",
+    "Unconditional inputs used: PNT; Zhang/Maynard/Polymath bounded gaps (liminf g_n <= 246); Westzynthius large gaps; GPY positive-proportion small gaps (Publ. Math. Debrecen 79 (2011), Thm 1)"
+  ],
+  "verdict": {
+    "unconditional": "OPEN",
+    "conditional_on_HL_strong": "CONVERGENT (Tao 2023)",
+    "numerical_status": "CONVERGENCE-CONSISTENT THROUGH N=1e7"
+  },
+  "direct_answer": "Not known unconditionally; the problem remains open. Proven convergent assuming strong uniform HL prime-tuples (Tao 2023). All classical alternating-series criteria are provably inapplicable (R1, R2); convergence is exactly equivalent to convergence of the parity-resolved pair series sum_k b_k = sum_k (p_{2k-1} - (2k-1) g_{2k-1})/(p_{2k-1} p_{2k}) (R4), and no unconditional theorem can decide it (counterexample world W(theta,rho), R5).",
+  "proof_status": "No unconditional proof or disproof. Conditional proof under HL-strong: Ta23 Thm 1.4. Reductions R1-R5 proved in ANALYSIS.md.",
+  "counterexample_status": "No counterexample to convergence exists (numerics and heuristics favor convergence); a model world W(theta != 1, rho) with divergent pair series is constructed that satisfies all published unconditional prime statistics, showing current technology cannot decide the problem.",
+  "unconditional_results": [
+    "R1: {n/p_n} not eventually monotone in either direction (up-steps i.o. via Maynard/Polymath246 + p_n/n ~ ln n -> infinity; down-steps i.o. via Westzynthius)",
+    "R2: total variation TV(N) >> ln ln N unconditionally via exact step identity a_{n+1}-a_n = (p_n - n g_n)/(p_n p_{n+1}) on the GPY positive-density set {g_n <= (1/4) ln p_n}; Dirichlet-BV criterion provably inapplicable",
+    "R3: exact reduction to delta_n = -n(p_n-E(n))/(p_n E(n)) with E = Cipolla truncation; |delta_n| << e^{-c sqrt(ln n)} unconditionally, O(n^{-1/2+o(1)}) under RH [CONDITIONAL]; envelope decay alone insufficient (explicit countersequence)",
+    "R4: exact identity S_{2K} = sum_{k<=K} b_k, b_k = (p_{2k-1}-(2k-1)g_{2k-1})/(p_{2k-1}p_{2k}), b_k>0 <=> g_{2k-1} < p_{2k-1}/(2k-1); verified exactly for all k<=50000 against independent sieve; b_1=1/6 matches max|B_K|=1/6 at K=1",
+    "R5: counterexample world W(theta,rho): bulk odd gaps theta*Lambda_k, even gaps (2-theta)*Lambda_k with Lambda_k = ln(2k) + lnln(2k), so bulk pair totals 2Lambda_k telescope (Stirling + integral of ln ln via x lnln x - li(x)) to p~_N = N(ln N + ln ln N - 1) + O(N/ln N): FULL Cipolla main terms through the constant -1, honest residual o(N); parity bias theta forces drift ~(1-theta)/2 * ln ln K (divergent; systematic non-parity pieces form convergent series sum O(1/(k ln^2 k))); compensated sprinkle of bounded gaps contributes an absolutely convergent series O(sum 1/(k^{3/2} ln k)); all published unconditional theorems satisfiable in W",
+    "D.1: sibling series sum (-1)^n / g_n diverges unconditionally (terms >= 1/246 infinitely often by Maynard/Polymath; numerically #{g_n=2, n<=1e7} = 738597)",
+    "D.2: U_c = sum 1/(n g_n (lnln n)^c) converges for c > 2 (dyadic sieve-class argument reproduced in-file) and diverges for c <= 1 (GPY-based, proved in-file); V_2 diverges under Conj 1.3 (Ta23/Ford); V_c open for 0<=c<2 even under Conj 1.3"
+  ],
+  "missing_bridge": "Uniform-in-lambda parity-resolved asymptotics for #{k <= K : g_{2k-1} <= lambda p_{2k-1}/(2k-1)} (equivalently parity-equidistribution of pi(m) in log-length intervals, i.e. a power-saving bound for sum_{n<=x} (-1)^{pi(n)}, e.g. Ta23's << x/(log log x)^{1.1}) => signed pair series sum_k b_k converges => EP-15 convergent. Supplied today only by Quantitative HL prime-tuples via Tao's random-sifted-model proof; nothing weaker is known, and by R5 nothing compatible with W(theta!=1, rho) can suffice.",
+  "scope": "Analysis + reduction + obstruction isolation + numerical integration. No claim is made that EP-15 is solved or disproved.",
+  "key_values": {
+    "S_partial_sums": {
+      "1000":      "0.0118688917373843595188635122441718349053",
+      "10000":     "-0.0032901791643098451810940216336951591445",
+      "100000":    "-0.0135356832245282824221422477921787955820",
+      "1000000":   "-0.0198592162984378367239838621029168996347",
+      "10000000":  "-0.0242870341777922639490327584168847121429"
+    },
+    "delta_half_decade": [-8.081e-3, -3.068e-3, -2.507e-3, -1.611e-3, -1.202e-3],
+    "tv": {"TV_1e6": "1.43466943279242579609", "TV_1e7": "1.52628251693632145974", "TV_over_lnln": "0.5464 -> 0.5490 (growing)"},
+    "max_BK": "1/6 exactly, attained at K=1 (transient first pair 2/3-1/2)",
+    "cancellation_ratio": "0.2212 (max|B_K| / TV_pair(1e7))",
+    "companion_C": {"C_1e6": "-0.969706102197659", "C_1e7": "-0.969826739960779", "half_decade_drift_max": "2.87e-05"},
+    "twin_gap_count": 738597,
+    "a_N_scale": "0.1263 (1e3) -> 0.0557 (1e7)",
+    "down_step_ratio": "0.4213 at N=1e7 (non-monotone empirically)",
+    "tao_limit_estimate": "-0.052161 (reported in Ta23); consistent with slow O((log log x)^{-0.1}) conditional rate"
+  },
+  "error_control": {
+    "method": "fixed-point scale 1e60 round-half-up",
+    "accumulated_rounding_bound_at_1e7": "5e-54",
+    "fraction_crosscheck_diff_at_5000": "1.581e-59",
+    "cross_scale_agreement_digits": 40,
+    "sieve_self_checks": "p_1e6=15485863, p_1e7=179424673"
+  },
+  "obstruction": "The series sum (-1)^n n/p_n sits exactly in the dead zone of alternating-series theory: its terms n/p_n decay only like 1/ln n, far too slowly for absolute convergence; the bounded-gaps theorems of Zhang-Maynard force a_{n+1}>a_n infinitely often (indeed a_{n+1}<a_n iff n g_n > p_n, and g_n <= 246 << p_n/n i.o.), so Leibniz monotonicity is provably false in both directions; the exact step identity a_{n+1}-a_n = (p_n - n g_n)/(p_n p_{n+1}), evaluated on the GPY positive-density set of gaps <= eta ln p_n, gives total variation >> sum 1/(n ln n) ~ ln ln N -> infinity (observed TV(N) ~= 0.55 ln ln N), killing Dirichlet-BV; and after subtracting the smooth Cipolla model f(n)=n/E(n) — whose alternating sum converges — the residual sum (-1)^n delta_n, delta_n = -n(p_n-E(n))/(p_n E(n)), has envelope |delta_n| << e^{-c sqrt(ln n)} (RH would merely sharpen it to n^{-1/2+o(1)}, which by itself decides nothing: (-1)^n n^{-1/2}/ln n meets that envelope with divergent alternating sum). All unconditional error-term technology is parity-blind and monotonicity-free: it bounds |p_n - E(n)| but says nothing about the odd/even correlation driving the exact pair terms b_k = (p_{2k-1} - (2k-1) g_{2k-1})/(p_{2k-1} p_{2k}), on which convergence is exactly pinned by S_{2K} = sum b_k. The counterexample world W(theta,rho) — parity-biased bulk gaps whose pair-means 2*Lambda_k (Lambda_k = ln(2k)+lnln(2k)) telescope to p~_N = N(ln N + ln ln N - 1) + O(N/ln N), i.e. the full Cipolla main terms plus o(N), compensated bounded-gap sprinkle, sparse huge gaps — satisfies every published unconditional prime statistic while its pair series diverges like (1-theta)/2 ln ln K (the systematic non-parity pieces of b~_k form convergent series sum O(1/(k ln^2 k))); hence resolution demands genuinely new parity-resolved local prime statistics. Exact missing bridge quoted in missing_implication; supplied today only by Quantitative HL prime-tuples via Tao 2023; nothing weaker is known, and nothing weaker can suffice by R5.",
+  "missing_implication": "uniform parity-resolved asymptotic for #{k<=K : g_{2k-1} <= lambda p_{2k-1}/(2k-1)} across lambda (equiv. equidistribution of parity of pi(m) in log-length intervals / power-saving bound for sum_{n<=x} (-1)^{pi(n)}) => convergence of sum_k b_k => convergence of sum (-1)^n n/p_n; Tao 2023 gives this modulo Conjecture 1.3 (strong uniform HL prime tuples)",
+  "counterexample_analysis": {
+    "model": "W(theta,rho): bulk odd gaps g~_{2k-1}=theta Lambda_k(1+xi), even gaps (2-theta)Lambda_k(1+xi'), Lambda_k = L_k + ell_k = ln(2k) + lnln(2k), plus density-rho sprinkling of gaps <=246 on odd positions with same-parity mass redistribution within k^{1/2}-windows and pulse compensation on even gaps",
+    "theta_drift_formula": "(1-theta)*sum_{k<=K} 1/(2k L_k) ~ ((1-theta)/2) ln ln K  [CORRECTED from page's (theta-1)*sum 1/(2k L_k^2); see erratum]",
+    "values": {
+      "executed_page_values_L2_sum_K_1e6": {"sum_inv": "1.4442906399044022", "theta_0.5": "-0.722145", "theta_0.9": "-0.144429", "theta_0.99": "-0.014443", "note": "L^2-sum has CONVERGENT total; does not itself exhibit ln ln divergence"},
+      "corrected_drift_first_power_K_1e6": {"sum_1_over_2kLk": "1.9979182415529024", "theta_0.5": "+0.998959", "theta_0.9": "+0.199792", "theta_0.99": "+0.019979", "note": "sign corrected: sub-average odd gaps push S_{2K} upward; partial sums genuinely diverge like ((1-theta)/2) ln ln K"}
+    },
+    "sprinkle_cost": "absolutely convergent: per-event mismatch <= O(1/(k^{3/2} ln k)) via same-parity redistribution; pulse baseline effects <= O(sum 1/(k^2 ln k))",
+    "psi_indistinguishable": true,
+    "psi_reason": "per-pair gap totals telescope to exactly 2 Lambda_k in bulk and pulses redistribute locally, so p~_{2K} = 2 + 2 sum_{k<=K} Lambda_k + O(rho K^{1/2} ln K); Euler-Maclaurin: sum ln(2k) = K ln(2K) - K + O(ln K) (Stirling) and sum lnln(2k) = K lnln(2K) - li(2K)/2 + O(lnln K) with li(2K)/2 = K/ln(2K)(1+o(1)), giving p~_N = N(ln N + ln ln N - 1) + O(N/ln N) = full Cipolla main terms through the constant -1 plus o(N); theta-dependence cancels exactly in even-indexed cumulatives (theta*Sigma + (2-theta)*Sigma = 2*Sigma), and the corrected pair drift b~_k = ((1-theta)Lambda_k)/(2k Lambda_k^2) + O(1/(k Lambda_k^2)) is untouched to leading order since the systematic pieces form convergent series sum O(1/(k ln^2 k)); hence pi~/psi~ match PNT-scale statistics up to local perturbations while the pair series diverges"
+  },
+  "sibling_series": {
+    "diverges_and_why": "sum (-1)^n/g_n diverges UNCONDITIONALLY: Maynard/Polymath give g_n <= 246 infinitely often, so |term| >= 1/246 along an infinite sequence => terms do not tend to zero; numerically #{n<=1e7 : g_n=2} = 738597; also recorded in Ta23 Sec 5",
+    "weighted_absolute_c_gt_2_and_why": "U_c = sum 1/(n g_n (lnln n)^c) < infinity for c > 2: dyadic sieve-class count #{g in [eps ln n, 2 eps ln n)} << eps Y per block makes each class contribute O(1/(ln Y (lnln Y)^c)), J ~ log ln Y classes fold into (lnln Y)^{1-c}, and sum_m (ln m)^{1-c}/m converges iff c > 2 (Erdos-Nathanson per page; Sawhney Selberg-sieve proof per page [UNVERIFIED-citation]); U_c diverges for c <= 1 by GPY positive-density small gaps (proved in ANALYSIS.md D.2b); V_c converges absolutely for c>2, V_2 diverges under Conj 1.3 (Ta23/Ford), V_c open for 0<=c<2 even under Conj 1.3"
+  },
+  "errata_vs_tasking": [
+    "R4 sign: correct chain is 2k p_{2k-1} - (2k-1) p_{2k} = p_{2k-1} - (2k-1) g_{2k-1}, hence b_k > 0 iff g_{2k-1} < p_{2k-1}/(2k-1); tasking sheet's 'g > p/(2k-1)' direction was inverted (verified exactly for k <= 50000; b_1 = 1/6 sanity check passes)",
+    "R5 probe: executed script summed (theta-1)*sum 1/(2k L_k^2) whose total converges; the modeled pair term b_k = (L_k - g)/(2k L_k^2) with g = theta L_k gives (1-theta)/(2k L_k), whose partial sums genuinely diverge like ((1-theta)/2) ln ln K; sign also corrected (tasking sheet's printed inequality direction inverted)",
+    "D.2: tasking sheet's 'absolute divergence for every c' is incorrect as stated (drops the 1/ln n factor); correct regimes: U_c infinite for c<=1, finite for c>2, borderline resolved conditionally at c=2 (divergence of V_2 under Conj 1.3)"
+  ],
+  "artifacts": [
+    "Erdos problem EP-15/ANALYSIS.md",
+    "Erdos problem EP-15/ANSWER/answer_manifest.json",
+    "Erdos problem EP-15/verify_solution.py",
+    "Erdos problem EP-15/ep15_partial_sums.py (pre-existing probe)",
+    "Erdos problem EP-15/results.json (pre-existing fixed-point records)"
+  ],
+  "review": {
+    "reviewer": "internal adversarial self-audit (mandated @reviewer delegation unavailable: environment subagent depth limit reached; limitation recorded here)",
+    "conclusion": "APPROVED AFTER FIXES — objections found and repaired: (1) R2/D.2(b) per-dyadic-block density step not licensed by GPY total lower density; replaced by multiplicative Window Lemma (lower density delta>0 => disjoint windows W_j=(x_j/r,x_j], r=4/delta, each contributing >= delta/(2 ln x_j); sum >>_delta ln ln N) [ANALYSIS.md R2 Step 2, D.2(b)]; (2) corrected model drift values were mis-halved in first draft (+0.998959/+0.199792/+0.019979 now, = (1-theta)*1.997918 at K=1e6); (3) verify_solution.py operator-precedence bug in L^2-sum check fixed; (4) R1 Claim 2 wording tightened. Independently re-verified: exact pair identity for all k<=50000 vs fresh sieve; b_1=1/6; monotonicity chain equivalence; S_1000 reproduces fixed-point record; JSON parses with all required keys.",
+    "cycles": 1
+  },
+  "references": [
+    "Ta23: T. Tao, The convergence of an alternating series of Erdos, assuming the Hardy-Littlewood prime tuples conjecture, arXiv:2308.07205 (2023); Comm. Amer. Math. Soc. 4 (2024), no. 3, 80-96 [VERIFIED]",
+    "Er98: P. Erdos, Some of my new and almost new problems..., Number theory (Eger, 1996), de Gruyter, 1998, pp. 169-180 [as relayed; E7 at p. 203 via Ta23]",
+    "Zh14: Y. Zhang, Bounded gaps between primes, Ann. of Math. (2) 179 (2014), 1121-1174 [VERIFIED]",
+    "Ma15: J. Maynard, Small gaps between primes, Ann. of Math. (2) 181 (2015), 383-413 [standard citation]",
+    "Po14: D.H.J. Polymath, Variants of the Selberg sieve..., J. Aust. Math. Soc. 97 (2014), 321-347 [liminf g_n <= 246]",
+    "GPY11: Goldston-Pintz-Yildirim, Positive proportion of small gaps between consecutive primes, Publ. Math. Debrecen 79 (2011), 433-444, arXiv:1103.3986 [VERIFIED: Thm 1 P(x,eta)>>eta 1, Thm 2 sparsity]",
+    "We31: Westzynthius, Comment. Phys.-Math. Soc. Sci. Fennicae 5 (1931), no. 25 [large gaps]",
+    "Ci02: M. Cipolla, Matematiche (Catania) 8 (1902), 132-146 [pn expansion]",
+    "vK01: H. von Koch, Acta Math. 24 (1901), 159-182 [RH error term]",
+    "Ga76: P.X. Gallagher, Israel J. Math. 23 (1976), 193-198 [Poisson statistics from HL]",
+    "Banks-Ford-Tao random sifted model and V. Kuperberg quantitative moments, as referenced in Ta23 [coordinates UNVERIFIED-citation]",
+    "Bl: erdosproblems.com/15 (Bloom) [page facts relayed; Sawhney/Weisenberg remarks UNVERIFIED-citation]",
+    "UM: UnsolvedMath EP-15 [status Open]"
+  ]
+}
