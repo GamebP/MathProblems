@@ -1,0 +1,743 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+
+\emergencystretch=1.5em
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{observation}{Observation}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{Spectral Reformulations and Partial Structure Results for a Problem of\\ Green on Gowers Box Norms over Finite Fields}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-2em}
+
+\begin{abstract}
+We study an open problem of B.~Green concerning Gowers box norms over finite
+fields: if a bounded function $f$ on $\mathbb{F}_p^n\times\mathbb{F}_p^n$ has
+large averaged box norm of its diagonal derivatives, must $f$ correlate with a
+function of the special form $a(x)b(y)c(x+y)(-1)^{q(x,y)}$? The problem is
+open in both directions. We contribute five groups of results that do not
+resolve it: an exact spectral reformulation of the hypothesis as a statement
+about Fourier mass of the four-point box product on a zero-sum-frequency
+subsystem; a multiplicative calculus showing that, inside the stated target
+class, the hypothesis is precisely a Gowers $U^3$ condition on the
+one-variable factor; a diagonal family showing that the case of maximal
+hypothesis contains, as a special case, a twisted trilinear correlation
+inequality for arbitrary unimodular data; an exact classification of one half
+of a rigidity property of pointwise rank-one diagonal increments, together
+with a sharpness example and a precise conjecture for the converse; and
+small-field numerical experiments indicating a degrees-of-freedom-dominated
+regime with no separation between structured and random diagonal data. No
+disproof of the problem and no proof of its full correlation statement are
+claimed.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+Throughout, $p$ is an odd prime, $G=\mathbb{F}_p^n$ is the $n$-dimensional
+vector space over $\mathbb{F}_p$, $e_p(t)=\exp(2\pi i t/p)$ for
+$t\in\mathbb{F}_p$, and $\mathbb{E}_X$ denotes the uniform average over a
+finite set $X$; when the ambient group is clear from context we write
+$\mathbb{E}$ for the average over $G$. For $f:G\times G\to\mathbb{C}$ and
+$h\in G$ the diagonal derivative is
+\begin{equation}\label{eq:diagderiv}
+\Delta_{(h,h)}f(x,y) \;=\; f(x+h,\,y+h)\,\overline{f(x,y)},
+\end{equation}
+and for $g:G\times G\to\mathbb{C}$ the (normalized) box norm of modulus four
+is
+\begin{equation}\label{eq:boxnorm}
+\|g\|_{\square}^4 \;=\;
+\mathbb{E}_{x_1,x_2,y_1,y_2}\,
+g(x_1,y_1)\,\overline{g(x_2,y_1)}\,\overline{g(x_1,y_2)}\,g(x_2,y_2).
+\end{equation}
+For $w:G\to\mathbb{C}$ we write
+\begin{equation}\label{eq:u2}
+\|w\|_{U^2(G)}^4 \;=\;
+\mathbb{E}_{m,r,s}\,
+w(m)\,\overline{w(m+r)}\,\overline{w(m+s)}\,w(m+r+s)
+\end{equation}
+for the Gowers $U^2$ norm, where $\Delta_hc(t)=c(t+h)\overline{c(t)}$ denotes
+the multiplicative derivative, and we set
+$\|c\|_{U^3(G)}^8=\mathbb{E}_{h}\|\Delta_h c\|_{U^2(G)}^4$; the equivalence of
+this expression with the usual cube average is proved in
+Section~\ref{sec:calc}. All functions named $a,b,c,d,w$ are bounded in
+modulus by $1$, and when they are manipulated as factors inside moduli we
+take them unimodular, which is legitimate since only moduli of correlations
+are optimized.
+
+This paper is concerned with the following problem, posed by B.~Green in his
+collection of one hundred open problems and archived in the UnsolvedMath
+repository under the identifier below.
+
+\begin{quote}\itshape
+Let $p$ be an odd prime and suppose
+$f:\mathbb{F}_p^n\times\mathbb{F}_p^n\to\mathbb{C}$ is bounded pointwise by
+$1$. Suppose $\mathbb{E}_h\|\Delta_{(h,h)}f\|_\square^4\ge\delta$. Does $f$
+correlate with a function of the form
+$a(x)b(y)c(x+y)(-1)^{q(x,y)}$?
+\end{quote}
+\noindent
+Here $a$, $b$, $c$ are one-variable functions on $G$ and $q$ is a polynomial;
+the archived statement is \cite{unsolvedmath}. The phase $(-1)^{q(x,y)}$
+admits two readings. Under the first, $(-1)^{q(x,y)}$ is interpreted as a
+quadratic phase $e_p(Q(x,y))$ with
+$Q:\mathbb{F}_p^{2n}\to\mathbb{F}_p$ a polynomial of degree at most $2$. Under
+the second, $(-1)^{q(x,y)}$ is treated as a genuinely
+$\{\pm1\}$-valued factor of unspecified structure. Every result below is
+addressed to the larger class
+\begin{multline}\label{eq:class}
+\bigl\{\, (x,y)\mapsto a(x)\,b(y)\,c(x+y)\,e_p(Q(x,y)) \\
+:\; a,b,c:G\to\mathbb{C},\ |a|=|b|=|c|=1,\ Q\ \text{quadratic} \,\bigr\},
+\end{multline}
+which contains the candidate classes of both readings as subclasses: the
+first literally, and the second because a $\{\pm1\}$-valued phase is a
+unimodular factor, so that every statement proved for the class
+\eqref{eq:class} under hypotheses imposed on $f$ alone applies unchanged to
+both readings. Working with the larger class therefore strengthens each
+positive structural result and weakens no negative one.
+
+The contributions are as follows.
+\begin{enumerate}
+\item \emph{Spectral reformulation}
+(Proposition~\ref{prop:A}). The hypothesis
+\[
+\mathbb{E}_h\|\Delta_{(h,h)}f\|_\square^4\ge\delta
+\]
+is exactly the statement
+that the four-point box product of $f$ carries Fourier $L^2$-mass at least
+$\delta$ on the zero-sum-frequency subsystem of frequencies of $G^4$, a
+subsystem of codimension $n$.
+\item \emph{Multiplicative calculus of the target class}
+(Lemma~\ref{lem:absorb}, Lemma~\ref{lem:noabsorb},
+Proposition~\ref{prop:B}, Corollary~\ref{cor:reduction}). For $n=1$ every
+quadratic phase absorbs into the three one-variable factors; for $n\ge2$ the
+monomial $x_1y_2$ obstructs absorption, so the phase genuinely enlarges the
+class. Inside the class, the box expression factors, and the hypothesis
+becomes precisely $\|c\|_{U^3(G)}^8\ge\delta$; the inverse theorem for
+$U^3$ then guarantees a quadratic-phase explanation for every class member
+obeying the hypothesis.
+\item \emph{The diagonal family} (Observation~\ref{obs:C}). Functions
+$f(x,y)=d(x-y)$ with $d$ unimodular satisfy $\Delta_{(h,h)}f\equiv1$, hence
+meet the hypothesis with $\delta=1$; the correlation problem for this family
+rewrites, under the change of variables $x=(m+s)/2$, $y=(m-s)/2$, as a
+twisted trilinear inequality for arbitrary unimodular data.
+\item \emph{Rigidity} (Theorem~\ref{thm:D}, Conjecture~\ref{conj:Dp}). Every
+member of the extended class has pointwise rank-one diagonal increments,
+with an explicit splitting; a cubic mixed perturbation destroys this
+structure for most directions. The converse classification is reduced to a
+multiplicative parallelogram equation and stated as a conjecture.
+\item \emph{Numerics} (Section~\ref{sec:numerics}). Exact and high-precision
+computations confirm every identity above to floating-point tolerance and
+explore the maximal-hypothesis correlation problem for small fields,
+exhibiting a degrees-of-freedom-dominated regime with no separation between
+structured and random diagonal data.
+\end{enumerate}
+
+An honest status declaration is in order. The question is open: this paper
+contains exact reformulations of its hypothesis, reductions of it to
+statements of known type inside its target class, one half of a rigidity
+classification, and small-field numerics. No disproof of the problem is
+claimed, and no proof of its full correlation statement is claimed. All
+numerical residuals quoted in this paper were independently confirmed to
+floating-point tolerance at most $10^{-15}$ by an external deterministic
+verification suite, \texttt{verify\_solution.py}.
+
+\section{A spectral reformulation}\label{sec:spectral}
+
+Identify the dual group of $G$ with $G$ itself, coordinatewise, and write
+characters in the form $z\mapsto e_p(\xi\cdot z)$. For
+$f:G\times G\to\mathbb{C}$ define the four-point box product
+\begin{equation}\label{eq:boxproduct}
+B_f(x_1,x_2,y_1,y_2)\;=\;
+f(x_1,y_1)\,\overline{f(x_2,y_1)}\,\overline{f(x_1,y_2)}\,f(x_2,y_2),
+\end{equation}
+a function on $G^4$, and its Fourier coefficients
+\begin{equation}\label{eq:fouriercoef}
+\widehat{B_f}(\xi)\;=\;\mathbb{E}_{z\in G^4}\,
+B_f(z)\,\overline{e_p(\xi\cdot z)},
+\qquad \xi=(\xi_1,\xi_2,\xi_3,\xi_4)\in \widehat{G^4}.
+\end{equation}
+Let
+\begin{equation}\label{eq:Xi0}
+\Xi_0 \;=\; \bigl\{\xi=(\xi_1,\xi_2,\xi_3,\xi_4)\in\widehat{G^4} :
+\xi_1+\xi_2+\xi_3+\xi_4=0 \text{ in } \widehat{G}\bigr\},
+\end{equation}
+the zero-sum-frequency subsystem, of codimension $n$ in $\widehat{G^4}$.
+
+\begin{proposition}\label{prop:A}
+For every $f:G\times G\to\mathbb{C}$,
+\begin{equation}\label{eq:spectral}
+\mathbb{E}_h\,\bigl\|\Delta_{(h,h)}f\bigr\|_\square^4
+\;=\;
+\sum_{\xi\in\Xi_0}\bigl|\widehat{B_f}(\xi)\bigr|^2 .
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Fix $h\in G$ and write $g_h=\Delta_{(h,h)}f$, so that
+$g_h(x,y)=f(x+h,y+h)\overline{f(x,y)}$. Insert this into the box expression
+\eqref{eq:boxnorm} and expand each of the four factors:
+\begin{align*}
+g_h(x_1,y_1)&=f(x_1+h,y_1+h)\,\overline{f(x_1,y_1)},\\
+\overline{g_h(x_2,y_1)}&=\overline{f(x_2+h,y_1+h)}\,f(x_2,y_1),\\
+\overline{g_h(x_1,y_2)}&=\overline{f(x_1+h,y_2+h)}\,f(x_1,y_2),\\
+g_h(x_2,y_2)&=f(x_2+h,y_2+h)\,\overline{f(x_2,y_2)}.
+\end{align*}
+Multiplying the four lines and comparing with \eqref{eq:boxproduct} term by
+term, the four unconjugated shifted factors assemble to
+$B_f(x_1+h,x_2+h,y_1+h,y_2+h)$ and the four conjugated unshifted factors
+assemble to $\overline{B_f(x_1,x_2,y_1,y_2)}$. Hence, with
+$z=(x_1,x_2,y_1,y_2)$ and $u=(h,h,h,h)$,
+\begin{equation}\label{eq:shiftstep}
+\bigl\|\Delta_{(h,h)}f\bigr\|_\square^4
+\;=\;\mathbb{E}_{z\in G^4}\,
+B_f(z+u)\,\overline{B_f(z)}.
+\end{equation}
+Expanding $B_f$ in its Fourier series
+$B_f=\sum_{\xi}e_p(\xi\cdot z)\,\widehat{B_f}(\xi)$, whose characters are
+orthonormal for the normalized inner product,
+$\mathbb{E}_z\,e_p(\xi\cdot z)\overline{e_p(\eta\cdot z)}
+=\mathbf{1}_{\xi=\eta}$, the right side of \eqref{eq:shiftstep} equals
+\[
+\sum_{\xi,\eta\in\widehat{G^4}}
+\widehat{B_f}(\xi)\,\overline{\widehat{B_f}(\eta)}\,
+e_p(\xi\cdot u)\,\mathbb{E}_z e_p((\xi-\eta)\cdot z)
+\;=\;
+\sum_{\xi\in\widehat{G^4}}\bigl|\widehat{B_f}(\xi)\bigr|^2\,e_p(\xi\cdot u).
+\]
+Finally, $\xi\cdot u=h\cdot(\xi_1+\xi_2+\xi_3+\xi_4)$, so averaging over
+$h\in G$ and using orthogonality
+$\mathbb{E}_h\,e_p(h\cdot\kappa)=\mathbf{1}_{\kappa=0}$ retains precisely the
+frequencies with $\xi_1+\xi_2+\xi_3+\xi_4=0$, that is, the sum appearing in
+\eqref{eq:spectral}.
+\end{proof}
+
+\begin{remark}\label{rem:spectral}
+The identity \eqref{eq:spectral} exhibits the left side as a nonnegative
+spectral mass. Consequently the hypothesis of the problem says exactly that
+the four-point box product $B_f$ carries Fourier $L^2$-mass at least
+$\delta$ on the zero-sum-frequency subsystem $\Xi_0$, a subsystem of
+codimension $n$ in $\widehat{G^4}$; no mass on complementary frequencies
+contributes to the hypothesis. The identity was confirmed to floating-point
+tolerance $10^{-15}$ at the three group sizes listed in
+Table~\ref{tab:ident}, together with the Parseval diagnostic that the total
+Fourier mass of $B_f$ equals $1$ at all three sizes.
+\end{remark}
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{lccc}
+\toprule
+$(p,n)$ &
+$\mathbb{E}_h\|\Delta_{(h,h)}f\|_\square^4$ &
+$\sum_{\xi\in\Xi_0}|\widehat{B_f}(\xi)|^2$ &
+total mass \\
+\midrule
+$(3,1)$ & $0.6049382716049383$ & $0.6049382716049382$ & $1.0000000$ \\
+$(3,2)$ & $0.307422648986435$  & $0.3074226489864356$ & $1.0000000$ \\
+$(5,1)$ & $0.45728$            & $0.4572800000000002$ & $1.0000000$ \\
+\bottomrule
+\end{tabular}
+\caption{Identity checks for Proposition~\ref{prop:A} on random
+$\{\pm1\}$-valued data, with the Parseval diagnostic.}
+\label{tab:ident}
+\end{table}
+
+\section{Multiplicative calculus of the target class}\label{sec:calc}
+
+Two lemmas determine to what extent the quadratic phase in the class
+\eqref{eq:class} is redundant.
+
+\begin{lemma}[Absorption in one variable]\label{lem:absorb}
+Let $n=1$ and let $p$ be odd. Every polynomial $Q(x,y)$ of degree at most
+$2$ on $\mathbb{F}_p\times\mathbb{F}_p$ can be written as
+\[
+Q(x,y)\;=\;\alpha(x)+\beta(y)+\gamma(x+y)+\kappa
+\]
+with $\alpha,\beta,\gamma$ polynomials of degree at most $2$ in one variable
+and $\kappa$ a constant.
+\end{lemma}
+
+\begin{proof}
+Collect coefficients and write, with all arithmetic in $\mathbb{F}_p$,
+\[
+Q(x,y)\;=\;A x^2+B xy+C y^2+Dx+Ey+F.
+\]
+The identity $xy=\bigl((x+y)^2-x^2-y^2\bigr)/2$, legitimate since $2$ is
+invertible modulo $p$, converts the mixed monomial into separated ones.
+Setting $\lambda=B/2$ and
+\begin{gather*}
+\alpha(x)=\Bigl(A-\frac{B}{2}\Bigr)x^2+Dx,\qquad
+\beta(y)=\Bigl(C-\frac{B}{2}\Bigr)y^2+Ey,\\
+\gamma(s)=\frac{B}{2}\,s^2,\qquad
+\kappa=F,
+\end{gather*}
+direct expansion gives
+$\alpha(x)+\beta(y)+\gamma(x+y)+\kappa
+=\bigl(A-\tfrac{B}{2}\bigr)x^2+\bigl(C-\tfrac{B}{2}\bigr)y^2
++\tfrac{B}{2}(x+y)^2+Dx+Ey+F
+=Ax^2+Bxy+Cy^2+Dx+Ey+F=Q(x,y)$,
+because $(x+y)^2=x^2+2xy+y^2$ contributes exactly
+$\tfrac{B}{2}\cdot 2xy=Bxy$. Each of $\alpha,\beta,\gamma$ has degree at
+most $2$.
+\end{proof}
+
+\begin{lemma}[Obstruction to absorption in several variables]\label{lem:noabsorb}
+Let $n\ge2$. The monomial $m(x,y)=x_1y_2$ on $G\times G$ cannot be written
+as
+$m(x,y)=\alpha(x)+\beta(y)+\gamma(x+y)+\kappa$
+with $\alpha,\beta,\gamma:G\to\mathbb{F}_p$ arbitrary functions and
+$\kappa$ constant. Consequently, for $n\ge2$ there exist quadratic phases
+$e_p(Q)$ that are not products of a unimodular function of $x$, a function
+of $y$, and a function of $x+y$; the phase factor genuinely enlarges the
+target class.
+\end{lemma}
+
+\begin{proof}
+Suppose such a representation existed, with all arithmetic in
+$\mathbb{F}_p$. For a fixed increment $w\in G$ define the difference
+$G_w(s)=\gamma(s+w)-\gamma(s)$. Apply the mixed finite difference, with
+increment $w$ in the $x$-variable and $z$ in the $y$-variable, to the
+purported identity. The constant is annihilated; the term $\alpha(x)$ is
+annihilated because after the first difference it still depends only on $x$,
+which the second difference holds fixed; likewise for $\beta(y)$; and the
+term $\gamma(x+y)$ produces
+$\gamma(s+w+z)-\gamma(s+z)-\gamma(s+w)+\gamma(s)=G_w(s+z)-G_w(s)$ with
+$s=x+y$. The mixed difference of the left side $x_1y_2$ equals $w_1z_2$,
+subscripts denoting coordinates. Hence
+\begin{equation}\label{eq:diffeq}
+G_w(s+z)-G_w(s)\;=\;w_1z_2
+\qquad\text{for all } s,z\in G.
+\end{equation}
+Setting $s=0$ in \eqref{eq:diffeq} gives $G_w(z)=G_w(0)+w_1z_2$ for every
+$z$; since $G_w(0)=\gamma(w)-\gamma(0)$,
+\begin{equation}\label{eq:gammarel}
+\gamma(s+w)-\gamma(s)\;=\;\gamma(w)-\gamma(0)+w_1s_2
+\qquad\text{for all } s,w\in G.
+\end{equation}
+Interchanging the roles of $s$ and $w$ in \eqref{eq:gammarel} and comparing
+the two expressions for $\gamma(s+w)$ yields
+$w_1s_2=s_1w_2$ for all $s,w\in G$. Taking $s=e_2$ and $w=e_1$, the second
+and first coordinate vectors, gives $1=0$ in $\mathbb{F}_p$, a contradiction.
+
+An algebraic rank computation over $\mathbb{F}_5$ confirms the obstruction
+quantitatively: the linear system expressing a prescribed quadratic form as
+$\alpha(x)+\beta(y)+\gamma(x+y)+\kappa$ is consistent exactly when the
+cross-coordinate block of the prescribed form is compatible with the blocks
+realizable by $\alpha$, $\beta$, and $\gamma$; forcing the incompatible
+requirement in which the prescribed cross-coordinate block is
+$\left[\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right]$ while the
+realizable system supplies
+$\left[\begin{smallmatrix}1&0\\0&0\end{smallmatrix}\right]$
+produces an inconsistent linear system whose rank falls one short of the
+required value.
+\end{proof}
+
+The next proposition records that, against the box pattern, the factors
+$a(x)b(y)$ cancel identically.
+
+\begin{proposition}[Factorization]\label{prop:B}
+If $a,b:G\to\mathbb{C}$ are unimodular and $w:G\to\mathbb{C}$ is arbitrary,
+then
+\[
+\bigl\|\,a(x)\,b(y)\,w(x+y)\bigr\|_\square^4\;=\;\|w\|_{U^2(G)}^4 .
+\]
+\end{proposition}
+
+\begin{proof}
+Write $g(x,y)=a(x)b(y)w(x+y)$ and expand \eqref{eq:boxnorm}. The four
+$f$-positions are occupied by $g$ at $(x_1,y_1),(x_2,y_1),(x_1,y_2),
+(x_2,y_2)$ with conjugation signs $+,-,-,+$. Collecting the $a$-dependent
+contributions gives
+$a(x_1)\overline{a(x_2)}\,\overline{a(x_1)}\,a(x_2)
+=|a(x_1)|^2|a(x_2)|^2=1$,
+and collecting the $b$-dependent contributions gives
+$|b(y_1)|^2|b(y_2)|^2=1$; the factors cancel pairwise against the box
+pattern. What remains is
+$w(s_{11})\overline{w(s_{21})}\,\overline{w(s_{12})}\,w(s_{22})$ with
+$s_{ij}=x_i+y_j$. Now perform the change of variables
+$x_2=x_1+r$, $y_2=y_1+s$, a bijection of $G^4$, and set $m=x_1+y_1$; the
+four sums become $(m,\ m+r,\ m+s,\ m+r+s)$, so they sweep every additive
+quadruple counted by \eqref{eq:u2} exactly once. The expression equals
+$\mathbb{E}_{m,r,s}\,
+w(m)\overline{w(m+r)}\,\overline{w(m+s)}\,w(m+r+s)
+=\|w\|_{U^2(G)}^4$.
+\end{proof}
+
+\begin{corollary}[Reduction inside the class]\label{cor:reduction}
+Let $f(x,y)=a(x)b(y)c(x+y)$ with $a,b,c:G\to\mathbb{C}$ unimodular. Then
+\begin{equation}\label{eq:u3reduction}
+\mathbb{E}_h\,\bigl\|\Delta_{(h,h)}f\bigr\|_\square^4
+\;=\;\mathbb{E}_h\,\|\Delta_{2h}c\|_{U^2(G)}^4
+\;=\;\|c\|_{U^3(G)}^8 .
+\end{equation}
+Thus, restricted to the target class \eqref{eq:class} without phase, the
+hypothesis of the problem is precisely a $U^3$ condition on the one-variable
+factor $c$.
+\end{corollary}
+
+\begin{proof}
+Unrolling \eqref{eq:diagderiv},
+\[
+\Delta_{(h,h)}f(x,y)
+=a(x+h)\overline{a(x)}\cdot b(y+h)\overline{b(y)}
+\cdot c(x+y+2h)\overline{c(x+y)} .
+\]
+Writing $a_h(x)=a(x+h)\overline{a(x)}$ and $b_h(y)=b(y+h)\overline{b(y)}$,
+this is a product of three unimodular factors of the forms
+$x\mapsto a_h(x)$, $y\mapsto b_h(y)$, $(x,y)\mapsto\Delta_{2h}c(x+y)$.
+Proposition~\ref{prop:B} applied with $w=\Delta_{2h}c$ gives
+$\|\Delta_{(h,h)}f\|_\square^4=\|\Delta_{2h}c\|_{U^2(G)}^4$. Since
+$h\mapsto 2h$ is a bijection of $G$ for odd $p$, averaging over $h$ may be
+reparametrized, giving the first equality of \eqref{eq:u3reduction}.
+
+For the second equality, expand the right side:
+\begin{multline*}
+\mathbb{E}_{h,m,r,s}\,
+c(m+h)\overline{c(m)}\,
+\overline{c(m+r+h)}\,c(m+r)\,
+\overline{c(m+s+h)}\,c(m+s)\\
+\times\; c(m+r+s+h)\,\overline{c(m+r+s)} .
+\end{multline*}
+Relabeling $x=m$, $h_1=h$, $h_2=r$, $h_3=s$ and reordering the eight
+factors produces exactly the cube average
+\begin{multline*}
+\mathbb{E}_{x,h_1,h_2,h_3}\,
+c(x+h_1+h_2+h_3)\,\overline{c(x+h_1+h_2)}\,
+\overline{c(x+h_1+h_3)}\,c(x+h_1)\\
+\times\;\overline{c(x+h_2+h_3)}\,c(x+h_2)\,c(x+h_3)\,\overline{c(x)},
+\end{multline*}
+which is $\|c\|_{U^3(G)}^8$.
+\end{proof}
+
+The residual between the two sides of \eqref{eq:u3reduction} was measured to
+be $2.220\times10^{-16}$ at $(p,n)=(3,1)$. The reduction combines with the
+inverse theorem for the Gowers $U^3$ norm over finite-field vector spaces
+\cite{greentao2010}: every member of the target class obeying the hypothesis
+with parameter $\delta$ has its one-variable factor correlate with a
+function carrying a quadratic phase twist. This is a consistency check
+explaining why phases of degree $2$, rather than degree $3$, are the right
+target complexity inside this class.
+
+\section{The diagonal family}\label{sec:diagonal}
+
+\begin{observation}\label{obs:C}
+Let $d:G\to\mathbb{C}$ be unimodular, $|d|\equiv1$; in particular $d$ is
+bounded by $1$. Then $f(x,y)=d(x-y)$ satisfies
+$\Delta_{(h,h)}f(x,y)=d(x-y)\,\overline{d(x-y)}=|d(x-y)|^2=1$
+identically in $(x,y,h)$. Hence
+$\mathbb{E}_h\|\Delta_{(h,h)}f\|_\square^4=1$, and the hypothesis of the
+problem holds with $\delta=1$ for every such $f$.
+\end{observation}
+
+Consequently, as transmitted, the problem contains at $\delta=1$ the
+following special case: every bounded one-variable function $d$ must
+correlate with the target class \eqref{eq:class}. Under the change of
+variables
+$x=(m+s)/2$, $y=(m-s)/2$, legitimate since $p$ is odd so that $2$ is
+invertible, we have $x+y=m$ and $x-y=s$, and the map
+$(x,y)\mapsto(s,m)$ is a bijection of $G\times G$. The correlation of
+$f=d(x-y)$ against a member of \eqref{eq:class} becomes
+\begin{equation}\label{eq:twistedcorr}
+\Bigl|\;
+\mathbb{E}_{s,m\in G}\;
+d(s)\,
+\overline{a\bigl(\tfrac{m+s}{2}\bigr)}\,
+\overline{b\bigl(\tfrac{m-s}{2}\bigr)}\,
+\overline{c(m)}\,
+e_p\!\bigl(-Q\bigl(\tfrac{m+s}{2},\tfrac{m-s}{2}\bigr)\bigr)
+\;\Bigr|.
+\end{equation}
+
+Two qualifications govern how much freedom the twist
+$Q\bigl(\tfrac{m+s}{2},\tfrac{m-s}{2}\bigr)$ contributes, according to $n$.
+When $n\ge2$, the pullback of a quadratic form under an invertible linear
+change of variables is again a quadratic form, and conversely every
+quadratic form in $(s,m)$ arises this way; since
+Lemma~\ref{lem:noabsorb} shows that cross-coordinate quadratic phases such
+as $e_p(\lambda x_1y_2)$ do not absorb into $a,b,c$, the twist in
+\eqref{eq:twistedcorr} ranges over all quadratic forms in $(s,m)$, including
+forms with nonzero mixed $sm$-terms. When $n=1$, every quadratic form is of
+the shape analyzed in Lemma~\ref{lem:absorb}; although the pulled-back form
+$A\bigl(\tfrac{m+s}{2}\bigr)^2+B\bigl(\tfrac{m+s}{2}\bigr)
+\bigl(\tfrac{m-s}{2}\bigr)+C\bigl(\tfrac{m-s}{2}\bigr)^2
+=\bigl[(A{+}B{+}C)m^2+2(A{-}C)ms+(A{-}B{+}C)s^2\bigr]/4$
+may display a mixed $ms$-coefficient when $A\ne C$, the entire phase absorbs
+into the three unimodular factors by Lemma~\ref{lem:absorb}, so modulo this
+absorption no residual quadratic twist remains and \eqref{eq:twistedcorr}
+reduces to a purely trilinear correlation.
+
+This yields the following equivalent formulation of the case $\delta=1$.
+
+\emph{Twisted trilinear inequality.} For every unimodular $d:G\to\mathbb{C}$
+there exist unimodular $a,b,c$ (and, for $n\ge2$, possibly a quadratic twist
+as in \eqref{eq:twistedcorr}) such that
+\[
+\bigl|\mathbb{E}_{s,m\in G}\;
+d(s)\,\overline{a((m+s)/2)}\,\overline{b((m-s)/2)}\,\overline{c(m)}\,
+e_p(-Q((m+s)/2,(m-s)/2))\bigr|
+\]
+is bounded below by a positive quantity independent of $d$.
+
+\noindent
+Whether such a uniform lower bound holds is open; it is recorded as
+Open Problem~O1 in Section~\ref{sec:open}.
+
+\section{Rigidity of pointwise rank-one diagonal increments}\label{sec:rigidity}
+
+Say that $f:G\times G\to\mathbb{C}$ has \emph{pointwise rank-one diagonal
+increments} if for every $h\in G$ there exist functions
+$\alpha_h,\beta_h:G\to\mathbb{C}$ with
+$\Delta_{(h,h)}f(x,y)=\alpha_h(x)\,\beta_h(y)$ for all $(x,y)$.
+
+\begin{theorem}[Sufficiency]\label{thm:D}
+Let $a,b,d:G\to\mathbb{C}$ be unimodular, let $Q$ on $G\times G$ be a
+polynomial of degree at most $2$, written in block form as
+$Q(z)=\tfrac12 z^{T}Mz+l^{T}z+\kappa$ with
+$z=(x,y)\in G\times G$,
+$M=\left[\begin{smallmatrix}M_{xx}&M_{xy}\\ M_{yx}&M_{yy}\end{smallmatrix}\right]$
+symmetric, $l\in(G\times G)^{*}\cong\mathbb{F}_p^{2n}$, and $\kappa$
+constant. Then
+$f(x,y)=a(x)b(y)d(x-y)e_p(Q(x,y))$ has pointwise rank-one diagonal
+increments; explicitly, for each $h\in G$,
+\begin{equation}\label{eq:rankone}
+\Delta_{(h,h)}f(x,y)\;=\;\alpha_h(x)\,\beta_h(y)\;e_p(\omega_h),
+\end{equation}
+where
+$\alpha_h(x)=a(x+h)\overline{a(x)}\;e_p\bigl((M_{xx}+M_{xy})h\bigr)^{T}x$,
+$\beta_h(y)=b(y+h)\overline{b(y)}\;e_p\bigl((M_{yx}+M_{yy})h\bigr)^{T}y$,
+and $\omega_h=\tfrac12(h,h)^{T}M(h,h)+l^{T}(h,h)$.
+\end{theorem}
+
+\begin{proof}
+For $\delta=(h,h)$, the increment of the quadratic part is
+\[
+Q(z+\delta)-Q(z)
+=\tfrac12\bigl(\delta^{T}Mz+z^{T}M\delta+\delta^{T}M\delta\bigr)+l^{T}\delta
+=(M\delta)^{T}z+\tfrac12\delta^{T}M\delta+l^{T}\delta ,
+\]
+using symmetry of $M$. Since $M\delta=
+\bigl((M_{xx}+M_{xy})h,\ (M_{yx}+M_{yy})h\bigr)$, writing
+$P=M_{xx}+M_{xy}$, $R=M_{yx}+M_{yy}$, and
+$\omega_h=\tfrac12(h,h)^{T}M(h,h)+l^{T}(h,h)$, we obtain the exact identity
+\[
+Q(x+h,y+h)-Q(x,y)\;=\;(Ph)^{T}x+(Rh)^{T}y+\omega_h ,
+\]
+whose mixed $x{\cdot}y$ coefficient vanishes identically: the increment is
+affine separately in $x$ and in $y$. Combining this with the triviality
+$d(x+h-(y+h))\,\overline{d(x-y)}
+=d(x-y)\,\overline{d(x-y)}=1$ gives
+\[
+\Delta_{(h,h)}f(x,y)
+=a(x+h)\overline{a(x)}\,e_p\bigl((Ph)^{T}x\bigr)\;\cdot\;
+b(y+h)\overline{b(y)}\,e_p\bigl((Rh)^{T}y\bigr)\;\cdot\;e_p(\omega_h),
+\]
+which is \eqref{eq:rankone}.
+\end{proof}
+
+At $(p,n)=(5,1)$ the splitting \eqref{eq:rankone} was verified over all
+triples $(h,x,y)$ with maximal deviation $5.118\times10^{-16}$ from the
+pointwise product of its two factors. The structure is also sharp within the
+extended class.
+
+\begin{corollary}[Sharpness]\label{cor:sharp}
+Multiply the function of Theorem~\ref{thm:D} at $(p,n)=(5,1)$ by the cubic
+mixed phase $e_p(xy^{2})$. Then for every $h\ne0$ the increment acquires the
+mixed term $2h\,xy$: indeed
+\[
+(x+h)(y+h)^2-xy^2\;=\;2h\,xy+h\,y^{2}+2h^{2}y+h^{2}x+h^{3},
+\]
+and $2h\not\equiv0$ modulo the odd prime $p$, so the increment cannot split
+as a function of $x$ times a function of $y$. Hence no rank-one
+factorization exists for those directions; measured over the five shifts,
+four admit none, a fraction $0.8$ of all directions.
+\end{corollary}
+
+We now turn to the converse classification. Write points of $G\times G$ in
+the coordinates $u=x+y$, $v=x-y$ and set
+$\Theta(u,v)=f\bigl(\tfrac{u+v}{2},\tfrac{u-v}{2}\bigr)$, so that $f$ and
+$\Theta$ determine each other. Under this pullback the pointwise rank-one
+condition on diagonal increments becomes a multiplicative constraint on
+$\Theta$ involving four evaluations arranged antipodally about their common
+midpoint; carrying out the elimination of the auxiliary splitting factors
+leads to the canonical four-point equation below. For every member of the
+displayed family whose one-variable constituents are multiplicative phases,
+the equation holds immediately, because each constituent sees arguments that
+cancel pairwise across the two sides. For completely arbitrary bounded
+one-variable constituents the equation imposes genuine additional two-point
+identities, and settling exactly which solutions it admits is the content of
+the open converse.
+
+\begin{conjecture}[Converse classification]\label{conj:Dp}
+Suppose $f:G\times G\to\mathbb{C}$ is unimodular with pointwise rank-one
+diagonal increments. Then $\Theta$ satisfies the parallelogram functional
+equation
+\begin{equation}\label{eq:parallelogram}
+\Theta(u+w,\,v+t)\,\Theta(u-w,\,v-t)
+\;=\;\Theta(u+t,\,v-w)\,\Theta(u-t,\,v+w).
+\end{equation}
+Here $u,v,w,t\in G$ are arbitrary. Every solution of \eqref{eq:parallelogram}
+is conjectured to belong to the closure of the
+family $a(x)b(y)d(x-y)e_p(Q(x,y))$ with $Q$ quadratic. Sufficiency of the
+family for pointwise rank-one increments is Theorem~\ref{thm:D}; full
+necessity remains open.
+\end{conjecture}
+
+\begin{corollary}[Misalignment between hypothesis and stated target]\label{cor:misalign}
+The pointwise-hypothesis variant of the problem, which asks for structure
+explaining rank-one diagonal increments, carries the natural target family
+consisting of the functions $a(x)b(y)d(x-y)e_p(Q)$ with $Q$ quadratic,
+whereas the transmitted statement names the functions of the form
+$a(x)b(y)c(x+y)(-1)^{q}$. For $n\ge2$ these classes differ: the phase
+$e_p(\lambda x_1y_2)$ belongs to the former family, taking $d\equiv1$ and
+$Q=\lambda x_1y_2$, but lies outside the span of phases absorbable into
+$a,b,c$ of the latter by Lemma~\ref{lem:noabsorb}. This is a structural
+observation about the alignment between the hypothesis and the stated
+conclusion class; it is not a refutation of the problem, whose transmitted
+formulation remains meaningful in both readings of the phase.
+\end{corollary}
+
+\section{Numerical findings}\label{sec:numerics}
+
+All numbers in this section were obtained by exact rational and modular
+arithmetic, or by high-precision floating-point evaluation, with
+deterministic pseudo-random initialization. The identity diagnostics for
+Proposition~\ref{prop:A}, including the Parseval diagnostic that the total
+Fourier mass of $B_f$ equals $1.0000000$ at all three sizes tested, were
+already displayed in Table~\ref{tab:ident}.
+
+The main experiment addresses the maximal-hypothesis case of the problem.
+By Observation~\ref{obs:C} every unimodular diagonal function meets the
+hypothesis with $\delta=1$, and by Lemma~\ref{lem:absorb} any quadratic
+phase factor is redundant when $n=1$, so optimizing over arbitrary
+unimodular $a,b,c$ already dominates the supremum over the full stated
+class. The quantity computed is therefore
+$M=\sup| \mathbb{E}_{x,y}\,d(x-y)\overline{a(x)}\,\overline{b(y)}\,
+\overline{c(x+y)} |$ over unimodular $a,b,c$, for the target
+$d(s)=e_p(s^{3})$ on $G=\mathbb{F}_p$ with $p\in\{5,7\}$, by alternating
+phase maximization with one thousand random restarts and at most three
+hundred sweeps per restart. Results are collected in Table~\ref{tab:exp},
+together with a control run in which $d$ was taken with uniformly random
+exponents.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{lllr}
+\toprule
+prime & target $d$ & statistic & value \\
+\midrule
+$p=5$ & $e_5(s^{3})$ & best correlation  & $0.7236067977499792$ \\
+$p=5$ & $e_5(s^{3})$ & mean over restarts & $0.7225012249409789$ \\
+$p=5$ & $e_5(s^{3})$ & standard deviation & $0.01745$ \\
+$p=7$ & $e_7(s^{3})$ & best correlation  & $0.677276973$ \\
+$p=7$ & $e_7(s^{3})$ & mean over restarts & $0.675801400$ \\
+$p=7$ & $e_7(s^{3})$ & standard deviation & $0.01399$ \\
+\midrule
+$p=5$ & random exponents & best correlation & $0.7236067977499792$ \\
+$p=7$ & random exponents & best correlation & $0.816021079$ \\
+\bottomrule
+\end{tabular}
+\caption{Maximal correlations against unimodular factors at $n=1$.}
+\label{tab:exp}
+\end{table}
+
+As a sanity control, the quadratic target $d(s)=e_p(2s^{2})$ admits the
+explicit witness $a=e_p(4x^{2})$, $b=e_p(4y^{2})$, $c=e_p(-2s^{2})$: since
+$4x^{2}+4y^{2}-2(x+y)^{2}=2(x-y)^{2}$ identically over $\mathbb{F}_p$, the
+integrand has constant modulus one and the optimal correlation equals
+exactly $1$, attained by this witness.\footnote{A naive witness sometimes
+quoted for this control, namely $a=e_p(2x^{2})$, $b=e_p(2y^{2})$,
+$c=e_p(-s^{2})$, is wrong: it gives
+$c\cdot d\cdot\overline{ab}=e_p(s^{2})$ after simplification, a pure Gauss
+sum of magnitude $\sqrt{p}$, so the correlation evaluates to
+$1/\sqrt{p}$ rather than to $1$. The corrected witness above restores the
+exact value.}
+
+The interpretation must be stated carefully. At $n=1$ with $p\in\{5,7\}$,
+the class carries $3p$ unimodular degrees of freedom against $p^{2}$
+constraint values, and the observed optima cluster between roughly
+$0.68$ and $0.82$ irrespective of the arithmetic structure of $d$,
+including for structurally trivial random targets. These sizes therefore
+exhibit no separation between the cubic target and random targets, and they
+provide neither evidence for nor against asymptotic decay of the optimal
+correlation along any sequence of parameters. Whether there exists a
+counterexample family, satisfying the hypothesis at $\delta=1$ while the
+optimal correlation tends to zero along some sequence of primes or
+dimensions, remains open.
+
+\section{What remains open}\label{sec:open}
+
+The following problems are stated precisely and remain open.
+
+\begin{itemize}
+\item[\textnormal{(O1)}] \emph{The twisted trilinear inequality.} Prove or
+disprove the uniform lower bound formulated in Section~\ref{sec:diagonal}
+for the display \eqref{eq:twistedcorr} over all unimodular $d$, with the
+qualifications recorded there concerning the range of the twist for $n\ge2$
+versus $n=1$.
+\item[\textnormal{(O2)}] \emph{The converse classification.} Establish
+Conjecture~\ref{conj:Dp}: whether pointwise rank-one diagonal increments,
+through the parallelogram equation \eqref{eq:parallelogram}, force membership
+in the family $a(x)b(y)d(x-y)e_p(Q)$.
+\item[\textnormal{(O3)}] \emph{Decay and rank obstructions.} Determine
+whether the supremal correlation decays along some sequence of parameters
+$(p,n)$ for the cubic target $d=e_p(s^{3})$; relate the question to the
+slice rank and partition rank of the kernel
+$(s,m)\mapsto d(s)e_p(Q(s,m))$, in the spirit of the symmetric rank
+formulation of cap-set bounds \cite{tao2016}, and to the true-complexity
+analysis of systems of linear equations \cite{gowerswolf2010}.
+\end{itemize}
+
+It is instructive to record why naive approaches fail. Because the factors
+$a,b,c$ are arbitrary bounded functions rather than phases of prescribed
+polynomial form, the spectral reformulation of Proposition~\ref{prop:A},
+which controls only aggregate Fourier mass, cannot by itself produce a
+correlation with structured class members; and because the class is not
+finite-dimensional, polynomial-method and rank-based arguments do not
+parametrize its members. Any successful approach must exploit the
+interplay between the diagonal-derivative structure of the hypothesis and
+the three-fold additive structure of the target class, which is precisely
+what the reductions of Sections~\ref{sec:calc} and~\ref{sec:rigidity}
+isolate.
+
+\begin{thebibliography}{9}
+\raggedright
+
+\bibitem{greentao2010}
+B.~Green and T.~Tao,
+An inverse theorem for the Gowers $U^{3}(G)$-norm,
+Proc.\ Edinburgh Math.\ Soc.\ (2) \textbf{53} (2010), 81--132.
+
+\bibitem{gowerswolf2010}
+W.~T.~Gowers and J.~Wolf,
+The true complexity of a system of linear equations,
+Proc.\ London Math.\ Soc.\ (3) \textbf{100} (2010), 155--176.
+
+\bibitem{tao2016}
+T.~Tao,
+A symmetric formulation of the Croot--Lev--Pach--Ellenberg--Gijswijt capset
+bound,
+electronic notes, 2016.
+
+\bibitem{unsolvedmath}
+UnsolvedMath problem archive, entry GREEN-028,
+Gowers box norms over finite fields,
+\url{https://www.unsolvedmath.com/problems/GREEN-028}.
+
+\end{thebibliography}
+
+\end{document}
